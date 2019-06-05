@@ -8,9 +8,9 @@
 3. ES6，ES7
 4. jQuery
 5. JS模块化
-  1. commonjs
-  2. AMD
-  3. ES6模块化
+   1. commonjs
+   2. AMD
+   3. ES6模块化
 ## html与css
 1. HTML基础
 2. CSS基础
