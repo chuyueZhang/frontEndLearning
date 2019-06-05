@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>checkbox练习</title>
+</head>
+<body>
+    <div class="container">
+        <span>你的爱好是什么？</span>
+        全选/全不选:<input type="radio" name="hobby" id="inputall">
+        <br>
+        <label for="football">足球</label>
+        <input type="checkbox" value="football" id="football" >
+        <label for="basketball">篮球</label>
+        <input type="checkbox" value="basketball" id="basketball">
+        <label for="pingpang">乒乓</label>
+        <input type="checkbox" value="pingpang" id="pingpang">
+        <br>
+        <button id="all">全选</button>
+        <button id="not">全不选</button>
+        <button id="exchange">反选</button>
+        <button id="submit">提交</button>
+    </div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    $(function(){
+        var $checkboxs = $(':checkbox')
+        var $inputall = $('#inputall')
+        $('#all').click(function(){
+            $checkboxs.prop('checked',true)
+            $inputall.prop('checked', $checkboxs.not(':checked').length === 0)
+        })
+        $('#not').click(function(){
+            $checkboxs.prop('checked',false)
+            $inputall.prop('checked', $checkboxs.not(':checked').length === 0)
+        })
+        $('#exchange').click(function(){
+            $checkboxs.each(function(){
+                this.checked = !this.checked
+            })
+            $inputall.prop('checked', $checkboxs.not(':checked').length === 0)
+        })
+        // $('#inputall').click(function(){
+        //     $checkboxs.prop('checked',true)
+        // })
+        $checkboxs.click(function(){
+            $inputall.prop('checked', $checkboxs.not(':checked').length === 0)
+        })
+        $('#submit').click(function(){
+            $checkboxs.each(function(){
+                if(this.checked){
+                    alert($(this).prev('label').text())
+                }
+            })
+        })
+    })
+</script>
+</html>

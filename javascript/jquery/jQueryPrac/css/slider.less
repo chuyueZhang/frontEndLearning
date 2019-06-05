@@ -1,0 +1,68 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 600px;
+    height: 400px;
+    overflow: hidden;
+    .img{
+        position: relative;
+        width: 4200px;  //600*7张图
+        height: 400px;
+        font-size: 0;
+        img{
+            width: 600px;
+            height: 400px;
+        }
+    }
+    .bottompoint{
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        div{
+            float: left;
+            background-color: #aaa;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid red;
+            margin: 0 2px;
+            cursor: pointer;
+            &:hover{
+                background-color: #acf;
+            }
+        }
+        .on{
+            background-color: #acf;
+        }
+    }
+    a{
+        position: absolute;
+        top:0;
+        bottom: 0;
+        margin: auto;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #black;
+        opacity: 0.7;
+        text-decoration: none;
+        color: white;
+        font-size: 48px;
+        text-align: center;
+        line-height: 20px;
+        &.prevpoint{
+            left: 10px;
+        }
+        &.nextpoint{
+            right: 20px;
+        }
+        
+    }
+}

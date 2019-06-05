@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <style>
+        *{
+            margin: 0;
+        }
+
+    </style>
+    <script type="text/javascript">
+    window.onload = function(){
+        var prev = document.getElementById("prev");
+        var next = document.getElementById("next");
+        var imgarr = ["img/1.png", "img/2.png", "img/3.png", "img/4.png", "img/5.png", "img/6.png"];
+        var index = 0;
+        var img = document.getElementsByTagName("img")[0];
+        var info = document.getElementById("info");
+        info.innerHTML = "总共" + imgarr.length + "张，当前第" + (index + 1) + "张";
+        prev.onclick=function(){
+            if(index == 0){
+                index = imgarr.length - 1;
+            }else{
+                index--;
+            }
+            img.src = imgarr[index];
+            info.innerHTML = "总共" + imgarr.length + "张，当前第" + (index + 1) + "张";
+        }
+        next.onclick=function(){
+            if(index == imgarr.length - 1){
+                index = 0;
+            }else{
+                index++;
+            } 
+            img.src = imgarr[index];
+            info.innerHTML = "总共" + imgarr.length + "张，当前第" + (index + 1) + "张";
+        }
+        var outer = document.getElementById("outer");
+        console.log(outer.previousElementSibling.id);
+    }
+    </script>
+</head>
+<body>
+    <p id="info"></p>
+    <div id="outer">
+        <img src="img/1.png" alt="hhh">
+        <button id="prev">上一张</button>
+        <button id="next">下一张</button>
+    </div>
+</body>
+</html>

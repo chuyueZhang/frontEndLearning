@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>签名练习</title>
+    <link rel="stylesheet" href="css/sign.css">
+</head>
+<body>
+    <canvas id="canvas" width="300px" height="300px">
+        <span>更新浏览器</span>
+    </canvas>
+</body>
+<script>
+window.onload = function(){
+    var canvas = document.getElementById('canvas')
+    var ct = canvas.getContext('2d')
+    canvas.onmousedown = function(e){
+        e = e || event
+        if(canvas.setCapture){
+            canvas.setCapture()
+        }
+        var pointer_postion_x = e.clientX - canvas.offsetLeft
+        var pointer_postion_y = e.clientY - canvas.offsetTop
+        ct.beginPath()
+        ct.moveTo(pointer_postion_x, pointer_postion_y)
+        document.onmousemove = function(e){
+            e = e||window.event
+            pointer_postion_x = e.clientX - canvas.offsetLeft
+            pointer_postion_y = e.clientY - canvas.offsetTop
+            ct.lineTo(pointer_postion_x, pointer_postion_y)
+            ct.stroke()
+        }
+        document.onmouseup = function(){
+            document.onmousemove = null
+            if(canvas.releaseCapture){
+                canvas.releaseCapture()
+            }
+            
+        }
+        return false
+    }
+}
+</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>钟表练习</title>
+    <link rel="stylesheet" href="css/clock.css">
+</head>
+<body>
+        <canvas id="canvas" width="300px" height="300px">
+                <span>更新浏览器</span>
+            </canvas>
+</body>
+<script>
+    window.onload = function(){
+        var canvas = document.getElementById('canvas')
+        var ct = canvas.getContext('2d')
+        setInterval(function(){
+            ct.clearRect(0, 0, canvas.width, canvas.height)
+            clock()
+        }, 1000)
+        clock()
+        function clock(){
+        ct.save()
+        ct.translate(150, 150)
+        ct.rotate(-90*Math.PI/180)
+        //绘制表盘
+        ct.save()
+        ct.lineWidth = 10
+        ct.strokeStyle='#acf'
+        ct.beginPath()
+        ct.arc(0, 0, 130, 0, 2*Math.PI)
+        ct.stroke()
+        ct.restore()
+        //绘制刻度
+        ct.save()
+        ct.lineWidth = 6
+        ct.strokeStyle='black'
+        for(var i=0; i<60; i++){
+            var end_point = 115
+            if(i%5===0){
+                end_point = 115
+            }else{
+                end_point = 123
+            }
+            ct.beginPath()
+            ct.moveTo(0, 130)
+            ct.lineTo(0, end_point)
+            ct.stroke()
+            ct.rotate(6*Math.PI/180)
+        }
+        ct.restore()
+        // 绘制时针
+        var d = new Date()
+        var s = d.getSeconds()
+        var m = d.getMinutes() + s/60
+        var h = d.getHours() + m/60
+        h = h>12 ? h-12 : h
+        ct.save()
+        ct.lineWidth = 9
+        ct.strokeStyle='#aaa'
+        ct.rotate(h*30*Math.PI/180)
+        ct.beginPath()
+        ct.moveTo(0, 0)
+        ct.lineTo(50, 0)
+        ct.stroke()
+        ct.restore()
+        //分针
+        ct.save()
+        ct.lineWidth = 7
+        ct.strokeStyle='#aaa'
+        ct.rotate(m*6*Math.PI/180)
+        ct.beginPath()
+        ct.moveTo(0, 0)
+        ct.lineTo(65, 0)
+        ct.stroke()
+        ct.restore()
+        //秒针
+        ct.save()
+        ct.lineWidth = 6
+        ct.strokeStyle='red'
+        ct.fillStyle='red'
+        ct.rotate(s*6*Math.PI/180)
+        ct.beginPath()
+        ct.moveTo(0, 0)
+        ct.lineTo(90, 0)
+        ct.stroke()
+        ct.beginPath()
+        ct.arc(103, 0, 10, 0, 2*Math.PI)
+        ct.stroke()
+        //表底
+        ct.beginPath()
+        ct.arc(0, 0, 10, 0, 2*Math.PI)
+        ct.fill()
+        ct.restore()
+        ct.restore()
+        }
+    }
+</script>
+</html>

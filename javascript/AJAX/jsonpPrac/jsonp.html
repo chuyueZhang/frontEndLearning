@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function jsonp(src, data, callback){
+    let script = document.createElement('script')
+    let symbolCode = 'jsonp_' + Date.now() + (Math.random()+'').slice(2)
+    let arr = []
+    for(let name in data){
+        arr.push(`${name}=${data[name]}`)
+    }
+    let obj = arr.join('&')
+    script.src = src + '?'+ obj +'&callback=' + symbolCode 
+    document.body.appendChild(script)
+    window[symbolCode] = function(res){
+      delete window[symbolCode]
+      script.parentNode.removeChild(script)
+      callback(res)
+    }
+}
+jsonp('http://localhost:4000',{'name': 'aaaa'}, res=>{
+    console.log(res)
+})
+</script>
+</html>

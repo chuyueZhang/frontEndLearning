@@ -1,0 +1,34 @@
+@grid-num: 12;
+.make-column(@index){
+    .col(@index){
+        @items: "col-xs-@{index}";
+        .col((@index + 1), @items);
+    }
+    .col(@index, @list) when (@index <= @grid-num){
+        @items: "col-xs-@{index}";
+        .col((@index + 1), ~"@{items}, @{list}");
+    }
+    .col(@index, @list) when (@index > @grid-num){
+        @{list}{
+            float: left;
+        } 
+    }
+    .col(1);
+}
+.make-column(6);
+// .float-grid-columns(@class) {
+//     .col(@index) { // initial
+//       @item: ~".col-@{class}-@{index}";
+//       .col((@index + 1), @item);
+//     }
+//     .col(@index, @list) when (@index =< @grid-columns) { // general
+//       @item: ~".col-@{class}-@{index}";
+//       .col((@index + 1), ~"@{list}, @{item}");
+//     }
+//     .col(@index, @list) when (@index > @grid-columns) { // terminal
+//       @{list} {
+//         float: left;
+//       }
+//     }
+//     .col(1); // kickstart it
+//   }

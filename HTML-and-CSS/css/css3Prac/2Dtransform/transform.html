@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2D变换</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html,body{
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrap{
+            position: absolute;
+            right: 55px;
+            bottom: 55px;
+            border: 1px solid;
+        }
+        img{
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 50%;
+        }
+        .wrap>img{
+            transition: 1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="inner">
+            <img src="./img/full.png" alt="full">
+            <img src="./img/clos.png" alt="clos">
+            <img src="./img/open.png" alt="open">
+            <img src="./img/prev.png" alt="prev">
+            <img src="./img/refresh.png" alt="refresh">
+        </div>
+        <img src="./img/home.png" alt="home">
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var home = document.querySelector(".wrap>img");
+        var img = document.querySelectorAll(".inner img");
+        var flag = true;
+        function func(){
+            var origin = this.style.transform;
+            origin = origin.replace("scale(1.5)", "scale(1)");
+            this.style.transform = origin;
+            this.style.opacity = "1";
+            this.removeEventListener("transitionend", func);
+        }
+        for(var i = 0; i < img.length; i++){
+            img[i].onclick = function(){
+                this.style.transition = "0.3s";
+                var origin = this.style.transform;
+                origin = origin.replace("scale(1)", "scale(1.5)");
+                this.style.transform = origin;
+                this.style.opacity = "0.1";
+                this.addEventListener("transitionend", func);
+            };
+        }
+        home.onclick = function(){
+            if(flag){
+                this.style.transform = "rotate(720deg)";
+                for(var i = 0; i < img.length; i++){
+                    img[i].style.transition = "0.6s " + i*0.1 +"s";
+                    var absposition = position(200, 90/4*i);
+                    img[i].style.transform = "translateX(" + (-absposition.left) + "px) translateY(" + (-absposition.top) + "px) " + "rotate(720deg) scale(1)";
+                }
+            }else{
+                this.style.transform = "rotate(0deg)";
+                for(var i = 0; i < img.length; i++){
+                    img[i].style.transition = "0.6s " + (img.length - 1 - i)*0.1 +"s";
+                    img[i].style.transform = "translateX(0px) translateY(0px) rotate(0deg)  scale(1)";
+                }
+            }
+            flag = !flag;
+        };
+        var position = function(c, deg){
+            var x = c * Math.sin(deg * Math.PI  / 180);
+            var y = c * Math.cos(deg * Math.PI  / 180);
+            return{left: x, top: y};
+        };
+    };
+</script>
+</html>

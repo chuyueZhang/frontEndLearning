@@ -1,0 +1,222 @@
+
+/*右侧的产品详细*/
+#product_detail
+{
+    position:relative;
+    padding-top: 2px;
+    background: url(../images/tab.png) 0 -41px repeat-x;
+    margin-bottom: 10px;
+}
+
+/*加入购物车*/
+#minicart
+{
+    padding:1px;
+    position: absolute;
+    right: 0;
+    top: 1px;
+    font-size: 12px;
+    width: 229px;
+    margin: -1px -1px 0 0;
+}
+div.minicart
+{
+    border: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 0 0 5px #DDD;
+}
+#minicart p
+{
+    text-align:right;
+}
+#minicart p a
+{
+    display: inline-block;
+    width: 105px;
+    height: 21px;
+    background-position: 0 -46px;
+    background-image: url(../images/iconlist_3.png);
+    background-repeat: no-repeat;
+    line-height: 100px;
+    overflow: hidden;
+    margin: 3px 3px 0 0;
+    cursor: pointer;
+}
+#minicart img
+{
+    float: left;
+    margin: 5px 10px;
+}
+#minicart h1
+{
+    line-height: 1.5em;
+    height: 4.5em;
+    margin: 10px;
+    color: #333;
+    font-weight: 400;
+    font-size:12px;
+}
+#minicart h2
+{
+    line-height: 1.2em;
+    color: #999;
+    font-weight: 400;
+    font-size:12px;
+}
+#minicart h2 b
+{
+    font-weight: 700;
+    color: #e4393c;
+}
+
+/*商品介绍*/
+#product_info
+{
+    clear:both;
+}
+ul.detail_list
+{
+    padding: 8px;
+    border:1px solid #DEDFDE;
+    border-width: 0 1px 1px;
+    overflow: hidden;
+}
+ul.detail_list li
+{
+    float: left;
+    width: 33%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 4px 0;
+}
+.detail_correct
+{
+    padding:8px 0;
+}
+.detail_correct b
+{
+    display: inline-block;
+    width: 18px;
+    height: 15px;
+    background-position: -260px -270px;
+    background-image: url(../images/iconlist_1.png);
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.detail_correct a
+{
+    color:#005aa0;
+}
+.detail_content
+{
+    text-align:center;
+}
+.detail_content>div
+{
+    width: 753px;
+}
+/*虚线分隔线，京东分隔线*/
+.dotted_split,.jd_split
+{
+    overflow: hidden;
+    width: 100%;
+    padding: 5px 0;
+    border-bottom: 1px dashed #e6e6e6;
+    line-height: 23px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    margin:0px auto;
+    margin-bottom:10px;
+}
+.jd_split
+{
+    text-align: left;
+    border:0;
+    background-position: 0 -90px;
+    background-image: url(../images/iconlist_6.png);
+    background-repeat: no-repeat;
+    height:30px;
+    font-family: "\5fae\8f6f\96c5\9ed1";
+    font-size:12px;
+}
+.jd_split b
+{
+    font-size: 18px;
+    color: #C90014;
+    padding-left: 2px;
+    padding-top: 12px;
+    line-height: 25px;
+    font-weight:normal;
+}
+.jd_split span
+{
+    color: #666;
+    padding-left: 10px;
+    line-height: 25px;
+    padding-top: 16px;
+}
+/*商品详细*/
+.detail_content table
+{
+    width:750px;
+    border-collapse: separate;
+    border-spacing: 6px;
+    text-align:left;
+    vertical-align:middle;
+    margin:0px auto;
+}
+.detail_content table h1
+{
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom:10px;
+}
+.detail_content table p
+{
+    line-height: 22px;
+    font-size: 12px;
+}
+/*规格参数*/
+#product_data
+{
+    display:none;
+}
+#product_data table
+{
+    margin: 10px 0;
+    border-collapse:collapse;
+    width: 100%;
+    border:1px solid #ccc;
+}
+#product_data table td
+{
+    border:1px solid #ccc;
+    padding: 2px 5px;
+    font-size: 12px;
+    text-align:left;
+}
+#product_data table th
+{
+    background: #F5FAFE;
+    font-weight:bold;
+    padding:5px;
+    text-align:center;
+}
+#product_data td.td_title
+{
+    text-align: right;
+    width: 110px;
+    background: #F5FAFE;
+}
+/*包装清单，售后保障*/
+#product_package,#product_saleAfter
+{
+    display:none;
+}
+#product_package p,#product_saleAfter p
+{
+    padding: 10px;    
+}

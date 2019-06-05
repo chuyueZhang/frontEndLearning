@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发廊图练习</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .wrap{
+            width: 30px;
+            height: 200px;
+            border: 1px solid;
+            overflow: hidden;
+            margin: 100px auto;
+        }
+        .content{
+            height: 800px;
+            background-image: repeating-linear-gradient(135deg, black 0px, black 10px, white 10px, white 20px);
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="content"></div>
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var wrap = document.querySelector(".wrap");
+        var content = document.querySelector(".content");
+        var margintop = 0;
+        
+        wrap.onmouseover = function(){
+            wrap.timer = setInterval(() => {
+            if(margintop == 600){
+                margintop = 0;
+            }
+            margintop += 1;
+            content.style.marginTop = -margintop + "px";
+        }, 1000/60);
+        };
+        wrap.onmouseout = function(){
+            clearInterval(wrap.timer);
+        }
+    }
+</script>
+</html>

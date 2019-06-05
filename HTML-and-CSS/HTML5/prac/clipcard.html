@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>刮刮卡练习</title>
+    <link rel="stylesheet" href="css/clipcard.css">
+</head>
+<body>
+    <div id="wrap">
+        <canvas>
+                <span>升级浏览器</span>
+            </canvas>
+            <ul>
+                <li>
+
+                </li>
+            </ul>
+    </div>
+    
+</body>
+<script>
+    window.onload= function(){
+        var img = new Image()
+        var canvas = document.getElementsByTagName('canvas')[0]
+        var wrap = document.getElementById('wrap')
+        var clientWidth = document.documentElement.clientWidth===0 ? document.body.clientWidth : document.documentElement.clientWidth
+        var clientHeight = document.documentElement.clientHeight===0 ? document.body.clientHeight : document.documentElement.clientHeight
+        canvas.width = clientWidth
+        canvas.height = clientHeight
+        var ct = canvas.getContext('2d')
+        img.src = 'img/1.jpg'
+        img.onload = function(){
+            draw()
+            ct.lineWidth = 40
+            ct.lineCap = 'round'
+            ct.lineJoin = 'round'
+            ct.globalCompositeOperation = 'destination-out'
+            canvas.transitionend = function(){
+                canvas.remove()
+            }
+            canvas.addEventListener('touchstart', function(e){
+                e = e||window.event
+                var finger = e.changedTouches[0]
+                var flag = 0
+                var ImageData = ct.getImageData(0, 0, canvas.width, canvas.height)
+                ct.moveTo(finger.clientX-canvas.offsetLeft, finger.clientY-canvas.offsetTop)
+                ct.lineTo(finger.clientX-canvas.offsetLeft+1, finger.clientY-canvas.offsetTop+1)
+                ct.stroke()
+                canvas.addEventListener('touchmove', touchmoveEvent)
+                canvas.addEventListener('touchend', function(){
+                canvas.removeEventListener('touchmove', touchmoveEvent)
+                //判断透明像素数量是否过半
+                if(flag>(ImageData.width*ImageData.height/2)){
+                    canvas.style.opacity = 0
+                }
+                })
+                function touchmoveEvent(e){
+                    e = e||window.event
+                    var finger = e.changedTouches[0]
+                    flag = 0
+                    ImageData = ct.getImageData(0, 0, canvas.width, canvas.height)
+                    ct.lineTo(finger.clientX-canvas.offsetLeft, finger.clientY-canvas.offsetTop)
+                    ct.stroke()
+                    //获取透明像素的数量
+                    for(var i=0; i<(ImageData.width*ImageData.height); i++){
+                        if(ImageData.data[i*4+3]===0){
+                            flag++
+                        }
+                    }
+                }
+            })
+        }
+        function draw(){
+            ct.drawImage(img, 0, 0, canvas.width, canvas.height)
+        }
+    }
+</script>
+</html>

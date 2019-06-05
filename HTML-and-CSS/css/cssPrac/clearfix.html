@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>clearfix</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box1{
+            border: 1px solid;
+            background-color: #acf;
+        }
+        .clearfix:after{
+            content: "";
+            display: block;
+            clear: left;
+        }
+        .clearfix{
+            zoom: 1;
+        }
+        .box2{
+            width: 100px;
+            height: 100px;
+            background-color: #1cf;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1 clearfix">
+            <div class="box2"></div>
+    </div>
+    
+    
+</body>
+</html>

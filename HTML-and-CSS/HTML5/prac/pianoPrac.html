@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音阶练习</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 20%;
+        }
+        ul{
+            border: 1px solid black;
+            list-style: none;
+            overflow: hidden;
+        }
+        li{
+            line-height: 30px;
+            text-align: center; 
+            float: left;
+            width: 70px;
+            height: 30px;
+            border-right: 1px solid black;
+            overflow: hidden;
+            position: relative;
+        }
+        li:nth-child(7){
+            border-right: none;
+        }
+        .nav div{
+            position: absolute;
+            top: 30px;
+            width: 70px;
+            height: 30px;
+            background-color: #ccc;
+            z-index: -1;
+            transition: .5s;
+        }
+    </style>
+</head>
+<body>
+    <audio></audio>
+    <div class="wrap">
+        <ul class="nav">
+            <li class="a">a<div></div></li>
+            <li class="b">b<div></div></li>
+            <li class="c">c<div></div></li>
+            <li class="d">d<div></div></li>
+            <li class="e">e<div></div></li>
+            <li class="f">f<div></div></li>
+            <li class="g">g<div></div></li>
+        </ul>
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var lis = document.getElementsByClassName('nav')[0].children
+        var audio = document.getElementsByTagName('audio')[0]
+        for(var i=0; i<lis.length; i++){
+            lis[i].onmouseenter = function(){
+                audio.src = 'http://s8.qhimg.com/share/audio/piano1/'+this.className+'4.mp3'
+                audio.play()
+                var div = this.children[0]
+                div.style.top='0px'
+                div.addEventListener('transitionend', up)
+                function up(){
+                    div.style.top='30px'
+                    div.removeEventListener('transitionend', up)
+
+                }
+            }
+        }
+    }
+</script>
+</html>

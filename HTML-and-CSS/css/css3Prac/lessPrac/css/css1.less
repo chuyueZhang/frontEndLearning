@@ -1,0 +1,32 @@
+
+.wrap{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background-color: #acf;
+    margin: 200px auto;
+    .inner{
+        &:extend(.center all);
+        &:nth-child(1){
+            width: 200px;
+            height: 200px;
+            background-color: #ccc;
+        }
+        &:nth-child(2){
+            width: 100px;
+            height: 100px;
+            background-color: #aaa;
+        }
+    }
+}
+.center{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+.center:hover{
+    background-color: red;
+}

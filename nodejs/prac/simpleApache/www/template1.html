@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板引擎练习</title>
+</head>
+<body>
+    <script src="../../node_modules/art-template/lib/template-web.js"></script>
+    <script type="text/html" id="tpl">
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>模板引擎练习</title>
+            <style type="text/css">
+                body, html{
+                    padding: 0;
+                    margin: 0;
+                }
+                td{
+                    min-width: 200px;
+                }
+            </style>
+        </head>
+        <body>
+            <h1 id="title">{{title}}</h1>
+            <hr>
+            <table>
+                <thead>
+                    <th>
+                        <td>文件名</td>
+                        <td>大小</td>
+                        <td>创建时间</td>
+                    </th>
+                </thead>
+                <tbody>
+        
+                </tbody>
+            </table>
+        </body>
+    </script>
+    <script type="text/javascript">
+        let result = template('tpl', {
+            title: 'aaa'
+        })    
+        console.log(result)
+        document.documentElement.innerHTML = result
+    </script>
+</body>
+</html>

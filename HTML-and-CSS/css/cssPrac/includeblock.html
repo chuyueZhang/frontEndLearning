@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .clearfix:after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .content{
+            min-width: 600px;
+            padding: 0 200px;
+            background-color: #ccc;
+        }
+        .center{
+            width: 100%;
+            
+            height: 800px;
+            background-color: #aaa;
+            float: left;
+        }
+        .left{
+            width: 200px;
+            height: 800px;
+            margin-left: -100%;
+            background-color: #acf;
+            float: left;
+            position: relative;
+            left: -200px;
+        }
+        .right{
+            width: 200px;
+            height: 800px;
+            margin-left: -200px;
+            background-color: #acf;
+            float: left;
+            position: relative;
+            right: -200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content clearfix">
+        <div class="center"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>

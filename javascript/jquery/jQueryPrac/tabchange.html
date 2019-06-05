@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tab切换</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css"></link>
+</head>
+<body>
+    <div class="wrap">
+        <ul id="tab" class="clearfix">
+                <li value=1>a</li>
+                <li value=2>b</li>
+                <li value=3>c</li>
+        </ul>
+        <div id="container" >
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</body>
+
+<script src="js/jquery.js"></script>
+<script>
+    $(function(){
+        var currentIndex = 2;
+        $('#tab>li').click(function(){
+            $('#container>div')[currentIndex].style.display = 'none';
+            var index = $(this).index();
+            $('#container>div')[index].style.display = 'block';
+            currentIndex = index;
+        });
+    });
+</script>
+</html>

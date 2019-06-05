@@ -1,0 +1,56 @@
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+.wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 600px;
+  height: 600px;
+  margin: auto;
+}
+.wrap #tab {
+  list-style: none;
+}
+.wrap #tab li {
+  float: left;
+  width: 150px;
+  height: 50px;
+}
+.wrap #tab li:nth-child(1) {
+  background-color: #acf;
+}
+.wrap #tab li:nth-child(2) {
+  background-color: #ccc;
+}
+.wrap #tab li:nth-child(3) {
+  background-color: #aaa;
+}
+.wrap #container {
+  position: relative;
+}
+.wrap #container div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 400px;
+  height: 400px;
+}
+.wrap #container div:nth-child(1) {
+  background-color: #acf;
+}
+.wrap #container div:nth-child(2) {
+  background-color: #ccc;
+}
+.wrap #container div:nth-child(3) {
+  background-color: #aaa;
+}

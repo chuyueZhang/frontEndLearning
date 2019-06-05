@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    *{margin:0}
+    #test{
+        width: 100px;
+        height:100px;
+        background-color: aqua;
+    }
+    </style>
+    <script>
+        window.onload = function(){
+            var test = document.getElementById("test");
+            var func = function(e){
+                var height = test.currentStyle && test.currentStyle.height || getComputedStyle(test, null)["height"]; 
+                if(event.wheelDelta > 0 || event.detail < 0){
+                    test.style.height = parseInt(height) - 10 + 'px';
+                }else{
+                    test.style.height = parseInt(height) + 10 + 'px';
+                }
+                e.preventDefault && e.preventDefault();
+                return false;
+            };
+            test.onmousewheel = func;
+            addEventListener("DOMMouseScroll", test.onmousewheel);
+        };
+    </script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+</html>

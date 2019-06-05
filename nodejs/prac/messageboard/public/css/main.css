@@ -1,0 +1,10 @@
+.container>.btn-success>a{
+    color: white;
+    text-decoration: none;
+}
+.container>ul{
+    margin: 50px 0;
+}
+.container .list-group-item>span{
+    float: right;
+}

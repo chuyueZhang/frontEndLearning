@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <script src="/public/lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <form action="/poster" method="POST">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">你的姓名</label>
+                    <input name="name" required minlength="2" maxlength="5" type="text" class="form-control" id="exampleInputEmail1" placeholder="name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">留言</label>
+                    <textarea name="message" id="exampleInputEmail1" class="form-control" required rows="3" minlength="5" maxlength="30" placeholder="message"></textarea>
+                </div>
+                <input class="btn btn-primary" type="submit" value="提交留言">
+        </form>
+    </div>
+</body>
+</html>

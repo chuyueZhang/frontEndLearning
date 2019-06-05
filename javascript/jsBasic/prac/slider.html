@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #div1{
+            width: 530px;
+            height: 330px;
+            border: 10px greenyellow solid;
+            position: relative;
+            top: 200px;
+            left: 300px;
+            overflow: hidden;
+        }
+        ul{
+            position: relative;
+            left: -5px;
+        }
+        li{
+            list-style: none;
+            border-left: 5px greenyellow solid;
+            border-right: 5px greenyellow solid;
+            float: left;
+        }
+        img{
+            width: 530px;
+            height: 330px;
+        }
+        #dot{
+            height: 250px;
+            position: relative;
+            top: -30px;
+        }
+        #dot a{
+            display: block;
+            float: left;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            opacity: 0.5;
+            margin: 0 4px;
+
+        }
+        #dot a:hover{
+            background-color: black;
+        }
+    </style>
+    <script src="./tools/tools.js"></script>
+    <script>
+        window.onload = function(){
+            var ul = document.getElementById("ul");
+            var dot = document.getElementById("dot");
+            var a = document.getElementsByTagName("a");
+            var num = document.getElementsByTagName("img").length;
+            var index = 0;
+            var timer = null;
+            ul.style.width = num * 540 + "px";
+            dot.style.left = 540/2 - num*18/2 + "px";
+            a[0].style.backgroundColor = "black";
+            function setA(func){
+                move(ul, (-index * 540) -5, 30, 1, function(){
+                    func && func();
+                    for(var i = 0; i < a.length; i++){
+                        a[i].style.backgroundColor = "";
+                    }
+                    a[index].style.backgroundColor = "black";
+                });
+            }
+            function change(){
+                timer = setInterval(function(){
+                index++;
+                index %= 6;
+                setA(function(){
+                    if(index == 5){
+                    index = 0;
+                    ul.style.left = "-5px";
+                }
+                });
+                }, 3000);
+            }
+            function autoChange(){
+                change();
+            }
+            function clickChange(){
+                setA(function(){
+                    clearInterval(timer);
+                    autoChange();
+                });
+            }
+            
+            autoChange();
+            dot.onclick = function(e){
+                e = e || window.event;
+                var target = e.target;
+                if(target.nodeName == "A"){
+                    index = parseInt(target.id);
+                    clickChange();
+                }
+            };
+
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // window.onload = function(){
+        //     var ul = document.getElementById("ul");
+        //     var num = document.getElementsByTagName("li").length;
+        //     var dot = document.getElementById("dot");
+        //     var a = document.getElementsByTagName("a");
+        //     var time = null;
+        //     var ulWidth = 540 * num;
+        //     var index = 0;
+        //     ul.style.width = ulWidth + "px";
+        //     dot.style.left = 530/2 - 18*num/2 + "px";
+        //     a[index].style.backgroundColor = "black";
+        //     var setA = function(){
+        //             for(var i = 0; i < a.length; i++){
+        //             a[i].style.backgroundColor = "";
+        //             a[index].style.backgroundColor = "black";
+                    
+        //         }
+        //     }
+        //     var ChangeA = function(){
+        //         index++;
+        //         index = index % num;
+        //         move(ul, -index*540-5, 20, 1, function(){
+        //             if(index == 5){
+        //                 index = 0;
+        //                 ul.style.left = "-5px";
+        //             }
+        //             setA();
+        //         });
+        //     };
+        //     var autoChange = function(){
+        //         time = setInterval(ChangeA, 3000);
+        //     };
+        //     autoChange();
+        //     dot.onclick = function(e){
+        //         e = e || window.event;
+        //         if(e.target.nodeName == "A"){
+        //             index = parseInt(e.target.id);
+        //             clearInterval(time);
+        //             move(ul, -index*540-5, 20, 1, function(){
+        //                 setA();
+        //                 autoChange();
+        //             });
+        //         }
+        //     };
+        // };
+    </script>
+</head>
+<body>
+    <div id="div1">
+        <ul id="ul">
+            <li><img src="./img/1.png" alt="无"></li>
+            <li><img src="./img/2.png" alt="无"></li>
+            <li><img src="./img/3.png" alt="无"></li>
+            <li><img src="./img/4.png" alt="无"></li>
+            <li><img src="./img/5.png" alt="无"></li>
+            <li><img src="./img/1.png" alt="无"></li>
+        </ul>
+        <div id="dot">
+            <a id="0" href="javascript:;"></a>
+            <a id="1" href="javascript:;"></a>
+            <a id="2" href="javascript:;"></a>
+            <a id="3" href="javascript:;"></a>
+            <a id="4" href="javascript:;"></a>
+        </div>
+    </div>
+</body>
+</html>

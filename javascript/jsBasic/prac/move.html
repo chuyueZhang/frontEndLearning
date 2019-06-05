@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>move</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{
+            height:4000px;
+        }
+    #test{
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background-color: blue;
+    }
+    </style>
+    <script>
+        window.onload = function(){
+            var test = document.getElementById("test");
+            test.onmousedown = function(event){
+                test.setCapture && test.setCapture();
+                event = event || window.event;
+                var that = this;
+                var px = event.clientX - that.offsetLeft;
+                var py = event.clientY - that.offsetTop;
+                document.onmousemove = function(e){
+                    e = e || window.event;
+                    that.style.left = e.clientX - px + "px"; 
+                    that.style.top = e.clientY - py + "px"; 
+                    console.log(e.clientY + "  " + py);
+                };
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    test.releaseCapture && test.releaseCapture();
+                };
+                return false;
+            };
+        };
+    </script>
+</head>
+<body>
+    aaaa
+    <div id="test"></div>
+</body>
+</html>

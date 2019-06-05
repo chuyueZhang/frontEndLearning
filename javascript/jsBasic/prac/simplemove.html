@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .div1{
+            width:100px;
+            height: 100px;
+            background-color: #acf;
+            position: absolute;
+            left: 0px;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var getStyle = function(obj, styleName){
+                return parseInt(window.getComputedStyle && window.getComputedStyle(obj, null)[styleName] || obj.currentStyle[styleName]);
+            };
+            var move = function(obj, endPoint, speed, dir){
+                switch(dir){
+                    case 1:
+                        dir = "left";
+                        break;
+                    case 2:
+                        dir = "top";
+                        break;
+                    default:
+                        dir = "left";
+                        break;
+                }
+                clearInterval(obj.time);
+                var objdir = getStyle(obj, dir);
+                if(objdir > endPoint){
+                    speed = -speed;
+                }
+                obj.time = setInterval(function(){
+                    objdir = getStyle(obj, dir);
+                    obj.style[dir] = objdir + speed + "px";
+                    if(speed < 0){
+                        if(objdir <= endPoint){
+                            obj.style[dir] = endPoint + "px";
+                            clearInterval(obj.time);
+                        }
+                    }else{
+                        if(objdir >= endPoint){
+                            obj.style[dir] = endPoint + "px";
+                            clearInterval(obj.time);
+                        }
+                    }
+                }, 30);
+            };
+            var div1 = document.getElementsByClassName("div1")[0];
+            var btn1 = document.getElementById("btn1");
+            btn1.onclick = function(){
+                move(div1, 1000, 20, 2);
+            }
+            var btn2 = document.getElementById("btn2");
+            btn2.onclick = function(){
+                move(div1, 0, 20, 2);
+            }
+        };
+    </script>
+</head>
+<body>
+    <button id="btn1">向右</button>
+    <button id="btn2">向左</button>
+    <div class="div1"></div>
+</body>
+</html>

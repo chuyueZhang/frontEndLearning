@@ -1,0 +1,822 @@
+/**********reset******************/
+* {
+  padding: 0;
+  margin: 0;
+}
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0px;
+  padding: 0px;
+  font: 14px "微软雅黑";
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  display: block;
+}
+img {
+  display: block;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.commonTitle {
+  color: #009ee0;
+  font-size: 80px;
+  line-height: 0.8;
+  font-weight: bold;
+  letter-spacing: -5px;
+}
+.commonText {
+  color: white;
+  line-height: 1.5;
+  font-size: 15px;
+}
+/**************************/
+/*****混合**********/
+/*******************/
+/*********animation***********/
+@keyframes rightHide {
+  0% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(1);
+  }
+  49% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(40%, 0) rotateY(-30deg) scale(0.8);
+  }
+  50% {
+    z-index: 1;
+    opacity: 1;
+    transform: translate(40%, 0) rotateY(-30deg) scale(0.8);
+  }
+  99% {
+    z-index: 0;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+  100% {
+    z-index: 0;
+    opacity: 0;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+}
+@keyframes rightShow {
+  0% {
+    z-index: 0;
+    opacity: 0;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+  1% {
+    z-index: 0;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+  50% {
+    z-index: 1;
+    opacity: 1;
+    transform: translate(40%, 0) rotateY(-30deg) scale(0.8);
+  }
+  51% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(40%, 0) rotateY(-30deg) scale(0.8);
+  }
+  100% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(1);
+  }
+}
+@keyframes leftHide {
+  0% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(1);
+  }
+  49% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(-40%, 0) rotateY(30deg) scale(0.8);
+  }
+  50% {
+    z-index: 1;
+    opacity: 1;
+    transform: translate(-40%, 0) rotateY(30deg) scale(0.8);
+  }
+  99% {
+    z-index: 0;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+  100% {
+    z-index: 0;
+    opacity: 0;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+}
+@keyframes leftShow {
+  0% {
+    z-index: 0;
+    opacity: 0;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+  1% {
+    z-index: 0;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(0.8);
+  }
+  50% {
+    z-index: 1;
+    opacity: 1;
+    transform: translate(-40%, 0) rotateY(30deg) scale(0.8);
+  }
+  51% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(-40%, 0) rotateY(30deg) scale(0.8);
+  }
+  100% {
+    z-index: 2;
+    opacity: 1;
+    transform: translate(0, 0) rotateY(0deg) scale(1);
+  }
+}
+@keyframes robotMove {
+  0% {
+    transform: translateX(0px) rotateY(0deg);
+  }
+  50% {
+    transform: translateX(-500px) rotateY(0deg);
+  }
+  51% {
+    transform: translateX(-499px) rotateY(180deg);
+  }
+  100% {
+    transform: translateX(0px) rotateY(180deg);
+  }
+}
+@keyframes enterAniScreen {
+  0% {
+    height: 50%;
+  }
+  50% {
+    height: 50%;
+  }
+  100% {
+    height: 0;
+  }
+}
+@keyframes enterAniLine {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  99% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*****************************/
+#wrap {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+#wrap > header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #fff;
+  z-index: 5;
+}
+#wrap > header #content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 1100px;
+  margin: 0 auto;
+}
+#wrap > header #content #logo {
+  margin-top: 30px;
+  float: left;
+}
+#wrap > header #content #music {
+  position: relative;
+  top: 47px;
+  float: left;
+}
+#wrap > header #content nav {
+  margin-top: 50px;
+  float: right;
+}
+#wrap > header #content nav ul li {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  margin-right: 40px;
+}
+#wrap > header #content nav ul li a:last-child {
+  position: absolute;
+  top: 0;
+  width: 0px;
+  overflow: hidden;
+  color: black;
+  transition: .5s width linear;
+}
+#wrap > header #content nav ul li a:last-child.active {
+  width: 100%;
+}
+#wrap > header #content nav ul li:hover a:last-child {
+  width: 100%;
+}
+#wrap > header #content #point {
+  position: absolute;
+  left: 50%;
+  top: 80px;
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border-top: 11px solid white;
+  border-bottom: 11px solid rgba(255, 255, 255, 0);
+  border-left: 10.5px solid rgba(255, 255, 255, 0);
+  border-right: 10.5px solid rgba(255, 255, 255, 0);
+  transform: translateX(-50%);
+  transition: .5s left linear;
+  z-index: 1;
+}
+#wrap > section {
+  width: 100%;
+  margin-top: 80px;
+  position: relative;
+  transition: 0.8s top ease-in;
+  z-index: 1;
+}
+#wrap > section:before {
+  content: "";
+  display: table;
+}
+#wrap > section .mainframe {
+  width: 100%;
+  height: 100%;
+}
+#wrap > section .mainframe > li {
+  position: relative;
+  background-position: 50% 0;
+  width: 100%;
+  height: 998px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+#wrap > section .mainframe > li#first {
+  background-image: url(../H5img/bg1.jpg);
+}
+#wrap > section .mainframe > li#first .wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 1100px;
+  height: 520px;
+  margin: auto;
+  transform: translateY(-600px);
+  opacity: 0;
+  transition: 1.5s all ease-out;
+  perspective: 650px;
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child) {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: white;
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child):nth-child(1) {
+  background-color: #dc6c5f;
+  opacity: 1;
+  transform: translate(0, 0) rotateY(0deg);
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child):nth-child(2) {
+  background-color: #95dc84;
+  opacity: 0;
+  transform: translate(0, 0) rotateY(0deg);
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child):nth-child(3) {
+  background-color: #64b9d2;
+  opacity: 0;
+  transform: translate(0, 0) rotateY(0deg);
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child):nth-child(4) {
+  background-color: #000000;
+  opacity: 0;
+  transform: translate(0, 0) rotateY(0deg);
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child).rightHide {
+  animation: rightHide 1s linear 1 both;
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child).leftHide {
+  animation: leftHide 1s linear 1 both;
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child).rightShow {
+  animation: rightShow 1s linear 1 both;
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child).leftShow {
+  animation: leftShow 1s linear 1 both;
+}
+#wrap > section .mainframe > li#first .wrap div:not(:last-child) span {
+  line-height: 520px;
+}
+#wrap > section .mainframe > li#first .wrap .pointer {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin-bottom: 2px;
+  transform: translate(-50%, 0);
+  z-index: 3;
+}
+#wrap > section .mainframe > li#first .wrap .pointer li {
+  float: left;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 2px;
+  box-shadow: 0 0 4px rgba(25, 25, 25, 0.8);
+  cursor: pointer;
+}
+#wrap > section .mainframe > li#first .wrap .pointer .active {
+  background-color: white;
+}
+#wrap > section .mainframe > li#second {
+  background-image: url(../H5img/bg2.jpg);
+}
+#wrap > section .mainframe > li#second .wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1100px;
+  height: 520px;
+  margin: auto;
+}
+#wrap > section .mainframe > li#second .wrap header {
+  margin: 50px;
+}
+#wrap > section .mainframe > li#second .wrap article {
+  position: relative;
+  width: 409px;
+  height: 400px;
+  margin-left: 50px;
+}
+#wrap > section .mainframe > li#second .wrap .content {
+  position: absolute;
+  top: 70px;
+  right: 50px;
+  width: 489px;
+}
+#wrap > section .mainframe > li#second .wrap .content .line {
+  position: absolute;
+  background-image: url(../H5img/plus_row.png);
+  width: 9px;
+  height: 410px;
+  transform: translate(-50%, -4px);
+}
+#wrap > section .mainframe > li#second .wrap .content .line:nth-of-type( 1) {
+  left: 0px;
+}
+#wrap > section .mainframe > li#second .wrap .content .line:nth-of-type( 2) {
+  left: 120px;
+}
+#wrap > section .mainframe > li#second .wrap .content .line:nth-of-type( 3) {
+  left: 240px;
+}
+#wrap > section .mainframe > li#second .wrap .content .line:nth-of-type( 4) {
+  left: 360px;
+}
+#wrap > section .mainframe > li#second .wrap .content .line:nth-of-type( 5) {
+  left: 480px;
+}
+#wrap > section .mainframe > li#second .wrap .content .imgItem {
+  float: left;
+  width: 120px;
+  height: 132px;
+  perspective: 500px;
+  transform-style: preserve-3d;
+  transition: 0.5s transform ease-in;
+}
+#wrap > section .mainframe > li#second .wrap .content .imgItem:hover {
+  transform: rotateY(180deg);
+}
+#wrap > section .mainframe > li#second .wrap .content .imgItem img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+#wrap > section .mainframe > li#second .wrap .content .imgItem span {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  line-height: 132px;
+  text-align: center;
+  padding: 15px;
+  background-color: #009ee0;
+  backface-visibility: hidden;
+  transform-origin: center center -1px;
+  transform: rotateY(180deg);
+}
+#wrap > section .mainframe > li#second .wrap > .plane1 {
+  width: 359px;
+  height: 283px;
+  background: url(../H5img/plane1.png) no-repeat;
+  position: absolute;
+  left: 300px;
+  top: -100px;
+  transition: 1s;
+}
+#wrap > section .mainframe > li#second .wrap > .plane2 {
+  width: 309px;
+  height: 249px;
+  background: url(../H5img/plane2.png) no-repeat;
+  position: absolute;
+  left: -100px;
+  top: 200px;
+  transition: 1s;
+}
+#wrap > section .mainframe > li#second .wrap > .plane3 {
+  width: 230px;
+  height: 182px;
+  background: url(../H5img/plane3.png) no-repeat;
+  position: absolute;
+  left: 300px;
+  top: 400px;
+  transition: 1s;
+}
+#wrap > section .mainframe > li#third {
+  background-image: url(../H5img/bg3.jpg);
+}
+#wrap > section .mainframe > li#third > .wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1100px;
+  height: 520px;
+  margin: auto;
+}
+#wrap > section .mainframe > li#third > .wrap header {
+  margin: 50px 0 100px 50px;
+}
+#wrap > section .mainframe > li#third > .wrap #robot {
+  position: absolute;
+  left: 900px;
+  top: 170px;
+  width: 167px;
+  height: 191px;
+  transform: translateX(0px);
+  animation: robotMove 4s linear infinite both;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel {
+  margin-left: 50px;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap {
+  position: relative;
+  float: left;
+  height: 133px;
+  margin: 0 1px;
+  overflow: hidden;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap:not(:last-of-type) {
+  width: 220px;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap:last-of-type {
+  width: 332px;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap > img {
+  transition: 0.5s transform ease-out;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: 0.5s opacity ease-in;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap .mask .img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 34px;
+  background-image: url(../H5img/zoomico.png);
+  background-position: 0 0;
+  transform: translate(-50%, -50%);
+  transition: 0.5s background-position ease-in;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap .mask .img:hover {
+  background-position: 0 100%;
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap:hover > img {
+  transform: scale(1.3) rotateZ(30deg);
+}
+#wrap > section .mainframe > li#third > .wrap .pannel > .wrap:hover > .mask {
+  opacity: 1;
+}
+#wrap > section .mainframe > li#third > .wrap .pencel1 {
+  width: 180px;
+  height: 97px;
+  background: url(../H5img/pencel1.png) no-repeat;
+  position: absolute;
+  transition: 1s;
+  left: 500px;
+  top: 0;
+}
+#wrap > section .mainframe > li#third > .wrap .pencel2 {
+  width: 268px;
+  height: 38px;
+  background: url(../H5img/pencel2.png) no-repeat;
+  position: absolute;
+  transition: 1s;
+  left: 300px;
+  top: 250px;
+}
+#wrap > section .mainframe > li#third > .wrap .pencel3 {
+  width: 441px;
+  height: 231px;
+  background: url(../H5img/pencel3.png) no-repeat;
+  position: absolute;
+  transition: 1s;
+  left: 650px;
+  top: 300px;
+}
+#wrap > section .mainframe > li#forth {
+  background-image: url(../H5img/bg2.jpg);
+}
+#wrap > section .mainframe > li#forth > .wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1100px;
+  height: 520px;
+  margin: auto;
+}
+#wrap > section .mainframe > li#forth > .wrap header {
+  margin: 50px 0 100px 50px;
+}
+#wrap > section .mainframe > li#forth > .wrap article {
+  width: 400px;
+  margin-left: 50px;
+}
+#wrap > section .mainframe > li#forth > .wrap > img {
+  position: absolute;
+  right: 200px;
+  top: -100px;
+  width: 357px;
+  height: 998px;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album {
+  position: absolute;
+  width: 260px;
+  height: 200px;
+  border: 5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+  transform: rotateZ(50deg);
+  transition: 1s transform ease-out;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album > img {
+  transform: scale(1.8);
+  transition: 1s ease-out;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:first-of-type {
+  left: 750px;
+  top: 50px;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:first-of-type > .wrap div {
+  background-image: url(../H5img/about1.jpg);
+  background-repeat: no-repeat;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:nth-of-type(2) {
+  left: 600px;
+  top: 290px;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:nth-of-type(2) > .wrap div {
+  background-image: url(../H5img/about3.jpg);
+  background-repeat: no-repeat;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album > .wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album > .wrap div {
+  float: left;
+  width: 130px;
+  height: 100px;
+  transition: 0.8s ease-out;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album > .wrap div:nth-child(1) {
+  background-position: 0 0;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album > .wrap div:nth-child(2) {
+  background-position: 100% 0;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album > .wrap div:nth-child(3) {
+  background-position: 0 100%;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album > .wrap div:nth-child(4) {
+  background-position: 100% 100%;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:hover > img {
+  transform: scale(1);
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:hover > .wrap div:nth-child(1) {
+  background-position: 0 -100%;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:hover > .wrap div:nth-child(2) {
+  background-position: 200% 0;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:hover > .wrap div:nth-child(3) {
+  background-position: -100% 100%;
+}
+#wrap > section .mainframe > li#forth > .wrap > .album:hover > .wrap div:nth-child(4) {
+  background-position: 100% 200%;
+}
+#wrap > section .mainframe > li#fiveth {
+  background-image: url(../H5img/bg5.jpg);
+}
+#wrap > section .mainframe > li#fiveth > .wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1100px;
+  height: 520px;
+  margin: auto;
+}
+#wrap > section .mainframe > li#fiveth > .wrap header {
+  float: left;
+  margin: 50px;
+  width: 400px;
+  transform: translateX(-200px);
+  transition: 1s transform ease-out;
+}
+#wrap > section .mainframe > li#fiveth > .wrap article {
+  float: right;
+  margin: 50px;
+  width: 400px;
+  transform: translateX(200px);
+  transition: 1s transform ease-out;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -160px;
+  margin: auto;
+  width: 944px;
+  height: 448px;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > canvas {
+  position: absolute;
+  top: 0px;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul:hover > li {
+  opacity: .3;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li {
+  float: left;
+  width: 118px;
+  height: 448px;
+  background-image: url(../H5img/team.png);
+  transition: 0.8s ease-out;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 1) {
+  background-position: 0px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 2) {
+  background-position: -118px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 3) {
+  background-position: -236px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 4) {
+  background-position: -354px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 5) {
+  background-position: -472px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 6) {
+  background-position: -590px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 7) {
+  background-position: -708px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:nth-of-type( 8) {
+  background-position: -826px 0;
+}
+#wrap > section .mainframe > li#fiveth > .wrap #member > ul > li:hover {
+  opacity: 1;
+}
+#wrap > section > .point {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  width: 20px;
+  height: 110px;
+  margin: auto;
+}
+#wrap > section > .point > li {
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 5px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  margin: 1px 0;
+  cursor: pointer;
+}
+#wrap > section > .point > li.active {
+  background-color: #fff;
+}
+#enterAni {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+}
+#enterAni #up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 49%;
+  width: 100%;
+  background-color: #acf;
+  animation: enterAniScreen 2s ease-out 1 both;
+}
+#enterAni > .line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 2%;
+  width: 1px;
+  margin: auto;
+  background-color: #fff;
+  animation: enterAniLine 1s ease-out 1 both;
+}
+#enterAni #down {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 49%;
+  width: 100%;
+  background-color: #acf;
+  animation: enterAniScreen 2s ease-out 1 both;
+}

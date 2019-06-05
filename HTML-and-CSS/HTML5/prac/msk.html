@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>马赛克练习</title>
+    <link rel="stylesheet" href="css/msk.css">
+</head>
+<body>
+    <canvas width="600px" height="200px">
+        <span>更新浏览器</span>
+    </canvas>
+</body>
+<script>
+    window.onload = function(){
+        var canvas = document.getElementsByTagName('canvas')[0]
+        var ct = canvas.getContext('2d')
+        var img = new Image()
+        img.src='img/1.jpg'
+        img.onload = function(){
+            draw()
+            var img_width = canvas.width/2
+            var img_height = canvas.height
+            var oldImageData = ct.getImageData(0, 0, img_width, img_height)
+            var newImageData = ct.createImageData(img_width, img_height)
+            var size = 10
+            //获取一个size的正方形选框
+            for(var j=0; j<img_height/size; j++){
+                for(var i=0; i< img_width/size; i++){
+                    //随机选取选框中的一个像素
+                    var color = getPxInfo(oldImageData, i*size+Math.floor(Math.random()*size), j*size+Math.floor(Math.random()*size))
+                    //将选取的像素应用给整个选框
+                    for(var a=0; a<size; a++){
+                        for(var b=0; b<size; b++){
+                            setPxInfo(newImageData, i*size+b, j*size+a, color)
+                        }
+                    }
+                }
+            }
+            
+            ct.putImageData(newImageData, canvas.width/2, 0)
+            
+        }
+        function draw(){
+            ct.drawImage(img, 0, 0, canvas.width/2, canvas.height)
+        }
+        
+        function getPxInfo(imageData, x, y){
+            var w = imageData.width
+            var position = y*w + x
+            return [imageData.data[position*4], imageData.data[position*4+1], imageData.data[position*4+2], imageData.data[position*4+3]]
+        }
+        function setPxInfo(imageData, x, y, color){
+            var w = imageData.width
+            var position = y*w + x
+            imageData.data[position*4] = color[0]
+            imageData.data[position*4+1] = color[1]
+            imageData.data[position*4+2] = color[2]
+            imageData.data[position*4+3] = color[3]
+        }
+    }
+</script>
+</html>

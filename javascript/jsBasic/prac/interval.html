@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    img{
+        width : 800px;
+        height : 800px;
+    }
+</style>
+<script>
+    window.onload = function(){
+        var btn1 = document.getElementById("btn1");
+        var btn2 = document.getElementById("btn2");
+        var img = document.getElementsByTagName("img")[0];
+        var time = null;
+        var arr = ["./img/1.png", "./img/2.png", "./img/3.png", "./img/4.png", "./img/5.png"];
+        var index = 0;
+        btn1.onclick = function(){
+            window.clearInterval(time);
+            time = window.setInterval(function(){
+                index++;
+                index = index % arr.length;
+                img.src = arr[index];
+            },1000);
+        };
+        btn2.onclick = function(){
+            window.clearInterval(time);
+        };
+        img.onmouseenter = function(){
+            window.clearInterval(time);
+        };
+        img.onmouseout = function(){
+            window.clearInterval(time);
+            time = window.setInterval(function(){
+                index++;
+                index = index % arr.length;
+                img.src = arr[index];
+            },1000);
+        };
+    };
+</script>
+<body>
+    <img src="./img/1.png" alt="无">
+    <br/>
+    <button id="btn1">开始</button>
+    <button id="btn2">停止</button>
+</body>
+</html>

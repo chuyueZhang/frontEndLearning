@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建多边形练习</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html, body{
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrap{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            margin: auto;
+            background-color: #acf;
+            perspective: 500px;
+        }
+        .wrap .polygon{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 300px;
+            width: 200px;
+            margin-left: -100px;
+            margin-top: -150px;
+            background-color: #ccc;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 3s linear;
+        }
+        .wrap .polygon div{
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: pink;
+            height: 300px;
+            width: 200px;
+        } 
+        .wrap:hover .polygon{
+            transform: rotateY(720deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="polygon"></div>
+    </div>
+</body>
+    <script>
+        window.onload = function(){
+            var polygon = document.querySelector(".polygon");
+            function createPolygon(side){
+                outsideDeg = 360/side;
+                insideDeg = 180 - outsideDeg;
+                centerPointZ = polygon.offsetWidth/2*Math.tan(insideDeg/2*Math.PI/180);
+                polygon.style.transformOrigin = "50% 50% -" + centerPointZ + "px";
+                for(var i = 0; i < side; i++){
+                    var newside = document.createElement("div");
+                    newside.style.transformOrigin = "50% 50% -" + centerPointZ + "px";
+                    // debugger
+                    newside.style.transform = "rotateY(" + i*outsideDeg + "deg)";
+                    
+                    polygon.appendChild(newside);
+                }
+            }
+            createPolygon(10);
+        };
+    </script>
+</html>

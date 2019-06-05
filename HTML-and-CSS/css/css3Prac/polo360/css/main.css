@@ -1,0 +1,294 @@
+*{
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+.header, .content{
+    width: 940px;
+    margin: 0 auto;
+}
+.bg{
+    height: 472px;
+    background-image: url(../img/bd-bg.png);
+    background-repeat: repeat-x;
+}
+.clearfix:before{
+    content: "";
+    display: table;
+}
+.clearfix:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+*.clearfix{
+    zoom: 1;
+}
+.header{
+    margin-top: 37px;
+}
+
+#logo{
+    margin: 0 74px 0 15px;
+    float: left;
+}
+.header .nav{
+    list-style: none;
+    padding-top: 22px;
+    margin-right: 0;
+}
+.header .nav li{
+    float: left;
+    padding: 0 10px 0 10px;
+    border-left: 1px dotted #d6d6d6;
+}
+.header .nav li a{
+    color: #666;
+    font: bold 14px/1 Georgia;
+    text-decoration: none;
+}
+.header .nav li a:hover{
+    color: #555;
+    text-decoration: underline;
+}
+.header .nav li p{
+    color:#b7b7b7;
+    font: 11px/1 Tahoma;
+    cursor: pointer;
+}
+.banner{
+    width: 940px;
+    height: 356px;
+    margin: 46px auto 0 auto;
+    background-image: url(../img/banner-bg.png);
+    background-position: bottom center;
+}
+.banner .pointer{
+    list-style: none;
+    position: relative;
+    top: -30px;
+    left: 16px;
+}
+.banner .pointer li{
+    float: left;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    background-image: url(../img/sprite.png);
+    cursor: pointer;
+}
+.banner .pointer .clicked,
+.banner .pointer li:hover{
+    background-image: url(../img/sprite.png);
+    background-position: -27px top;
+}
+.content h1{
+    font: bold 24px/1 Georgia;
+    text-align: center;
+    background-image: url(../img/line.png);
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    padding: 10px 0 16px 0;
+}
+.truecontent{
+    background-image: url(../img/line.png);
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    padding-bottom: 32px;
+    margin: 36px 0 38px 0;
+}
+.truecontent .pl,
+.truecontent .cs,
+.truecontent .uc{
+    float: left;
+    width: 303px;
+    margin-left: 5px;
+}
+.truecontent .cs{
+    margin: 0 10px 0 10px;
+}
+.truecontent h2{
+    color: #11719e;
+    font: 21px/1 Georgia;
+}
+.truecontent p{
+    color: #8c8c8c;
+    font: 12px/1 Myriad;
+}
+.truecontent .img{
+    width: 299px;
+    height: 202px;
+    text-align: center;
+    line-height: 202px;
+    margin-top: 13px;
+    margin-left: -5px;
+    background-image: url(../img/img-bg.png);
+}
+.truecontent img{
+    vertical-align: middle;
+}
+.truecontent span{
+    color: #3e3e3e;
+    font: 13px/1.5 Myriad;
+    display: block;
+    padding: 10px 0 0 0;
+}
+.truecontent button{
+    background-image: url(../img/sprite.png);
+    background-position: left -73px;
+    background-color: #fff;
+    width: 163px;
+    height: 32px;
+    border: none;
+    margin-top: 18px;
+    cursor: pointer;
+}
+.truecontent button p{
+    color: #016999;
+    font: 12px/1 Myriad;
+    text-align: left;
+    text-indent: 14px;
+}
+.relative .sc,
+.relative .co,
+.relative .nu{
+    float: left;
+    width: 300px;
+}
+.relative h2{
+    font: 18px/1 Georgia;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #d3d3d3;
+}
+.relative .sc{
+    margin-left: 6px;
+}
+.sc p.first{
+    color: #444444;
+    font: 12px/1 Myriad;
+    padding: 12px 0 6px 0;
+}
+.sc .connect{
+    list-style: none;
+    font-size: 0;
+}
+.sc .connect li{
+    float: left;
+    border: none;   
+    width: 54px;
+    height: 54px;
+    margin-right: 6px;
+}
+.sc .connect a{
+    color: #fff;
+    text-decoration: none;
+    
+}
+.sc .connect img{
+    border: none;
+}
+.sc .nl{
+    color: #444;
+    font: bold 18px/1 "Gill Sans MT";
+    margin-top: 40px;
+    *margin-top: 42px;
+}
+.sc p.second{
+    color: #444;
+    font: 12px/1 "Myriad Pro";
+    padding: 14px 0 12px 0;
+}
+.sc input{
+    background-image: url(../img/input.png);
+    width: 276px;
+    height: 33px;
+    border: none;
+    padding: 0 10px;
+    line-height: 33px;
+}
+
+.relative .co{
+    margin: 0 16px;
+}
+.relative .co input{
+    background-image: url(../img/input.png);
+    width: 276px;
+    height: 33px;
+    border: none;
+    padding: 0 10px;
+    line-height: 33px;
+    margin-top: 15px;
+}
+.relative .co textarea{
+    width: 276px;
+    height: 122px;
+    background-image: url(../img/textarea.png);
+    border: none;
+    padding: 6px 10px;
+    margin-top: 15px;
+    resize: none;
+    overflow: auto;
+}
+.relative button{
+    width: 163px;
+    height: 32px;
+    background-image: url(../img/sprite.png);
+    background-position: left -27px;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    text-indent: 14px;
+    margin-top: 11px;
+}
+.relative button p{
+    color: #fff;
+    font: 13px/1 Georgia;
+}
+.relative .nu img{
+    float: left;
+}
+.relative .nu div{
+    height: 58px;
+    padding: 13px 0 10px 0;
+    *padding-top: 15px;
+    border-bottom: 1px dashed #d3d3d3;
+}
+.relative .nu div p{
+    color: #444;
+    font: 12px/1 "Myriad Pro";
+    padding-left: 10px;
+    overflow: hidden;
+}
+.footerbg{
+    height: 173px;
+    background-color: #333;
+    border-top: 10px solid #4c4c4c;
+    margin-top: 23px;
+}
+.footer{
+    width: 881px;
+    padding: 16px 51px 0 8px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.footer .left{
+    float: left;
+}
+.footer .copy{
+    float: right;
+}
+.footer p,
+.footer a{
+    color: #999;
+    font: 11px/1 "Myriad Pro";
+}
+.footer p{
+    padding-bottom: 8px;
+}
+.footer a{
+    text-decoration: none;
+}
+.footer a:hover{
+    color: #777;
+    text-decoration: underline;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mac停靠栏练习</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html, body{
+            height: 100%;
+            overflow: hidden;
+            background-color: #acf;
+        }
+        .wrap{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .wrap img{
+            width: 64px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <img src="img/2.png" alt="2">
+        <img src="img/3.png" alt="3">
+        <img src="img/4.png" alt="4">
+        <img src="img/5.png" alt="5">
+        <img src="img/6.png" alt="6">
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var imgs = document.getElementsByTagName('img')
+        var radius = 100
+        var max_width = 128
+        document.onmousemove = function(e){
+            e = e||event
+            for(var i=0; i<imgs.length; i++){
+            var offsetLeft = imgs[i].getBoundingClientRect().left
+            var offsetTop = imgs[i].getBoundingClientRect().top
+            var a = offsetLeft - e.clientX + max_width/4
+            var b = offsetTop - e.clientY + max_width/4
+            var c = Math.sqrt(a*a + b*b)
+            if(c>=radius){
+                c = radius
+            }
+            imgs[i].style.width = (radius-c)/radius*(max_width/2) + 64 + 'px'
+
+
+        }
+        }
+    }
+</script>
+</html>

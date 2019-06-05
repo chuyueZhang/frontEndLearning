@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>getBoundingClientRect测试</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            border:none;
+        }
+        .wrap{
+            position: absolute;
+            left: 300px;
+            top: 400px;
+            width: 280px;
+            height: 280px;
+            padding: 10px;
+            border: 15px solid;
+            margin: 40px;
+            background-color: #acf;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap"></div>
+</body>
+<script>
+    window.onload = function(){
+        /*getBoundingClientRect在IE8以下元素的left和top会多2像素, 由于这些浏览器中html的坐标从(2,2)开始计算*/
+        var rect = document.getElementsByTagName('div')[0].getBoundingClientRect()  //left和top为2
+        console.log(document.documentElement.getBoundingClientRect())
+        console.log(rect)
+    }
+</script>
+</html>

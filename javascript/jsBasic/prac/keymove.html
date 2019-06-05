@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+     #div{
+         width : 100px;
+         height : 100px;
+         background-color: #add;
+         position: absolute;
+     }
+    </style>
+    <script>
+        window.onload = function(){
+            var div = document.getElementById("div");
+            var speed = 10;
+            var dir = 0;
+            setInterval(function(){
+                    switch(dir){
+                    case 37:
+                        div.style.left = div.offsetLeft - speed + "px";
+                        break;
+                    case 38:
+                        div.style.top = div.offsetTop - speed + "px";
+                        break;
+                    case 39:
+                        div.style.left = div.offsetLeft + speed + "px";
+                        break;
+                    case 40:
+                        div.style.top = div.offsetTop + speed + "px";
+                        break;
+                };
+            }, 30);
+            document.onkeydown = function(e){
+                var e = e || window.event;
+                if(e.altKey){
+                    speed = 50;
+                }else{
+                    speed = 10;
+                }
+                
+                switch(e.keyCode){
+                    case 37: 
+                        dir = 37;
+                        break;
+                    case 38: 
+                        dir = 38;
+                        break;
+                    case 39: 
+                        dir = 39;
+                        break;
+                    case 40: 
+                        dir = 40;
+                        break;
+                }
+
+            };
+            document.onkeyup = function(e){
+                e = e || window.event;
+                if(e.keyCode == 18){
+                    speed = 10;
+                }else{
+                    dir = 0;
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+</html>

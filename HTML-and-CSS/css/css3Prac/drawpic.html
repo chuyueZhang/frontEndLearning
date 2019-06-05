@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>练习绘制风车与气泡</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .hello{
+            height: 480px;
+            width: 480px;
+            margin: 0 auto;
+            transition: 6s;
+        }
+        .hello > div{
+            height: 200px;
+            width: 200px;
+            float: left;
+            margin: 20px;
+            background-color: #acf;
+
+        }
+        .hello div:nth-child(1),.hello div:nth-child(4){
+            border-radius: 0 50%;
+        }
+        .hello div:nth-child(2),.hello div:nth-child(3){
+            border-radius: 50% 0;
+        }
+        .hello:hover{
+            transform: rotate(360deg);
+        }
+        .bubble{
+            position: relative;
+            left: 100px;
+            top: 600px;
+            width: 500px;
+            height: 300px;
+            border: 1px solid;
+            border-radius: 50%; 
+            text-align: center;
+            line-height: 300px;
+        }
+        .bubble::after,
+        .bubble::before{
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            border: 1px solid;
+            border-radius: 50%;
+        }
+        .bubble::before{
+            width: 70px;
+            height: 50px;
+            bottom: -50px;
+            right: -50px;
+        }
+        .bubble::after{
+            width: 35px;
+            height: 25px;
+            bottom: -100px;
+            right: -100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hello">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="bubble">6666666666666666666</div>
+</body>
+</html>

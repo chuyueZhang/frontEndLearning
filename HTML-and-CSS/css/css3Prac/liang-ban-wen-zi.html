@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>亮斑文字练习</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+        }
+        body{
+            background-color: #000;
+        }
+        .text{
+            color: rgba(255,255,255,0);
+            font-size: 64px; 
+            margin: 50px auto;
+            text-align: center;
+        }   
+        .text span{
+            -webkit-background-clip: text;
+            background-color: gray;
+            background-image: linear-gradient(45deg, rgba(255,255,255,0) 100px, rgba(255,255,255,0.8) 180px, rgba(255,255,255,0) 260px);
+            background-repeat: no-repeat;
+            background-position-x: -20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="text">
+            <span>亮斑文字练习</span>
+    </div>
+</body>
+<script>
+    var span = document.querySelector("span");
+    var x = -400;
+    setInterval(() => {
+        if(x == 400){
+            x = -400;
+        }
+        x += 10;
+        span.style.backgroundPositionX = x + "px";
+    }, 1000/60);
+</script>
+</html>

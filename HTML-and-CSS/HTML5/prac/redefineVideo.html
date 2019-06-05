@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义H5播放器</title>
+</head>
+<body>
+    <div class="wrap">
+            <video src="https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Soldier76_Hero.mp4"></video>
+            <canvas></canvas>
+            <div class="positionWrap">
+                <div class="slideWrap">
+                    <div class="slide">
+                        <div class="bar">
+                            <div class="progress"></div>
+                            <div class="slideRect"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="start">
+                    <span class="startbtn"></span>
+                    <span class="stopbtn"></span>
+                </div>
+                <div class="volumn">
+                    <span class="volumnbtn"></span>
+                    <div class="bar">
+                        <div class="progress"></div>
+                        <div class="slideRect"></div>
+                    </div>
+                </div>
+            </div>
+            
+    </div>
+    
+
+</body>
+<link rel="stylesheet" href="css/video.css">
+<script src="js/jquery.js"></script>
+<script src="js/plugin.js"></script>
+<script>
+    $(function(){
+        var canvas = $('canvas')[0]
+        var ct = canvas.getContext('2d')
+        var video = $('video')[0]
+        var $wrap = $('.wrap')
+        var $startbtn = $('.start>.startbtn')
+        var $stopbtn = $('.start>.stopbtn')
+        var $slide_slideRect = $('.slide .slideRect')
+        var $slide_bar = $('.slide .bar')
+        var $slide_progress = $('.slide .progress')
+        var $volumnbtn = $('.volumn .volumnbtn')
+        var $volumn_slideRect = $('.volumn .slideRect')
+        var $volumn_bar = $('.volumn .bar')
+        var $volumn_progress = $('.volumn .progress')
+        var is_stop = true
+        var is_mute = false
+        var setted_vol = 1
+        video.onloadeddata = function(){
+            var ruler = video.videoHeight/video.videoWidth
+            canvas.width = document.documentElement.clientWidth
+            canvas.height = canvas.width  * ruler -80
+            if(canvas.height>document.documentElement.clientHeight-30){
+                canvas.height = document.documentElement.clientHeight-30
+            }
+            //给开始暂停按钮绑定事件
+            $startbtn.click(function(){
+                $startbtn.toggleClass('active')
+                if(is_stop){
+                    video.play()
+                }else{
+                    video.pause()
+                }
+                is_stop = !is_stop
+            })
+            //给停止按钮播放事件
+            $stopbtn.click(function(){
+                video.currentTime = 0
+                $slide_slideRect.css('left', '0px')
+                $slide_progress.css('width', '0px')
+                video.pause()
+                $startbtn.removeClass('active')
+                is_stop = true
+            })
+            //给进度条绑定事件
+            var slide_range = $slide_bar[0].getBoundingClientRect().right - $slide_bar[0].getBoundingClientRect().left
+            var obj_slide_range = {
+                end: slide_range
+            }
+            $.drag($slide_slideRect[0], 0, obj_slide_range, function(){
+                obj_slide_range.end = $slide_bar[0].getBoundingClientRect().right - $slide_bar[0].getBoundingClientRect().left
+                video.currentTime = video.duration*($slide_slideRect.position().left/obj_slide_range.end)
+                $slide_progress.css('width', $slide_slideRect.css('left'))
+            }, function(){
+                video.play()
+                is_stop = false
+                $startbtn.addClass('active')
+            })
+            
+            //默认音量最大
+            var volumn_range = $volumn_bar[0].getBoundingClientRect().right - $volumn_bar[0].getBoundingClientRect().left
+            $volumn_slideRect.css('left', volumn_range + 'px')
+            $volumn_progress.css('width', $volumn_slideRect.css('left'))
+            //给声音按钮绑定事件
+            $volumnbtn.click(function(){
+                $volumnbtn.toggleClass('muted')
+                if(is_mute){
+                    video.muted = false
+                    video.volumn = setted_vol
+                }else{
+                    video.muted = true
+                    video.volumn = 0
+                }
+                $volumn_slideRect.css('left', volumn_range*(video.volumn/1) + 'px')
+                $volumn_progress.css('width', $volumn_slideRect.css('left'))
+                is_mute = !is_mute
+            })
+            //给声音条绑定滑动事件
+            $.drag($volumn_slideRect[0], 0, volumn_range, function(){
+                volumn_range = $volumn_bar[0].getBoundingClientRect().right - $volumn_bar[0].getBoundingClientRect().left
+                //修改过声音后双击声音按钮自动返回原位置
+                setted_vol = $volumn_slideRect.position().left/volumn_range
+                //当滑动到最左边自动静音
+                if($volumn_slideRect.position().left === 0){
+                    $volumnbtn.addClass('muted')
+                    video.muted = true
+                    video.volumn = 0
+                    is_mute = true
+                    setted_vol = 1
+                }
+                //当滑动一下自动关闭静音
+                if($volumn_slideRect.position().left != 0){
+                    $volumnbtn.removeClass('muted')
+                    video.muted = false
+                    video.volumn = 0
+                    is_mute = false
+                }
+                $volumn_progress.css('width', $volumn_slideRect.css('left'))
+            })
+            setInterval(function(){
+                draw()
+                slideSlideRectMove()
+            }, 1000/60)
+            window.onresize = function(){
+                canvas.width = document.documentElement.clientWidth
+                canvas.height = canvas.width  * ruler -80
+                if(canvas.height>document.documentElement.clientHeight-30){
+                    canvas.height = document.documentElement.clientHeight-30
+                }
+            }
+            //每秒更新进度条
+            function slideSlideRectMove(){
+                if(is_stop) return
+                var slide_position = obj_slide_range.end*(video.currentTime/video.duration)
+                $slide_slideRect.css('left', slide_position + 'px')
+                $slide_progress.css('width', $slide_slideRect.css('left'))
+            }
+            function draw(){
+            ct.drawImage(video, 0, 0, canvas.width, canvas.height)
+        }
+        }
+        
+        
+    })
+    
+</script>
+</html>

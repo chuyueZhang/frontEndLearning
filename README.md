@@ -5,19 +5,22 @@
 ## javascript
 1. javascript基础
 2. javascript高级
-3. ES6，ES7
+3. ES6
 4. jQuery
-5. JS模块化
+5. AJAX
+6. JS模块化
    1. commonjs
    2. AMD
    3. ES6模块化
 ## html与css
-1. HTML基础
-2. CSS基础
-3. CSS3
-4. HTML5
-5. bootstrap
-## nodejs与mongodb
+1. CSS
+   1. CSS
+   2. CSS3
+2. HTML
+   1. HTML4.1
+   2. HTML5
+3. bootstrap
+## nodejs
 1. nodejs
 2. expressjs
 3. mongodb

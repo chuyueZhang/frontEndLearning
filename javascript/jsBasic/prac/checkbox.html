@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">
+        function checkfunction(btnstr, func){
+            var btn = document.getElementById(btnstr);
+            btn.onclick = func;
+        }
+        function isSelected(box, state){
+            if(box.checked){
+                if(state < 4){
+                    box.checked = false;
+                }
+            }else{
+                if(state == 4){
+                    box.checked = true;
+                }
+            }
+        }
+        window.onload=function(){
+            var items = document.getElementsByName("item");
+            var state = 0;
+            var checkallbox = document.getElementById("checkallbox");
+            items.forEach(function(value){
+                value.onclick = function(){
+                    value.checked ? state++: state--;
+                    console.log(state);
+                    isSelected(checkallbox, state);
+                }
+            });
+            checkallbox.onclick = function(){
+                var that = this;
+                items.forEach(function(value){
+                    value.checked = that.checked;
+                });
+                state = that.checked ? 4 : 0;
+            }
+            checkfunction("checkall", function(){
+                items.forEach(function(value){
+                    value.checked = true;
+                });
+                state = 4;
+                checkallbox.checked = true;
+            });
+            checkfunction("checkno", function(){
+                items.forEach(function(value){
+                    value.checked = false;
+                });
+                state = 0;
+                checkallbox.checked = false;
+            });
+            checkfunction("checkrev", function(){
+                var count = 0;
+                items.forEach(function(value){
+                    value.checked = !value.checked;
+                    if(value.checked) count++;
+                });
+                state = count;
+                isSelected(checkallbox, state);
+            });
+            checkfunction("submit", function(){
+                items.forEach(function(value){
+                    if(value.checked){
+                        alert(value.nextSibling.nodeValue);
+                    }
+                });
+            });
+            var input = document.createElement("input");
+            input.type="checkbox";
+            checkallbox.parentNode.insertBefore(input, checkallbox);
+        }
+    </script>
+</head>
+<body>
+
+        你爱好的运动是？
+        <input type="checkbox" id="checkallbox">全选/全不选<br/>
+        <input type="checkbox" name="item">篮球
+        <input type="checkbox" name="item">足球
+        <input type="checkbox" name="item">乒乓球
+        <input type="checkbox" name="item">羽毛球<br/>
+        <button id="checkall">全选</button>
+        <button id="checkno">不选</button>
+        <button id="checkrev">反选</button>
+        <button id="submit">提交</button>
+
+
+</body>
+</html>

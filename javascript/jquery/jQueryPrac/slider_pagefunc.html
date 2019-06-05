@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <link rel="stylesheet" href="css/slider.css">
+</head>
+<body>
+    <div class="container">
+        <div class="img" style="left: -600px">
+            <img src="img/5.jpg" alt="5">
+            <img src="img/1.jpg" alt="1">
+            <img src="img/2.jpg" alt="2">
+            <img src="img/3.jpg" alt="3">
+            <img src="img/4.jpg" alt="4">
+            <img src="img/5.jpg" alt="5">
+            <img src="img/1.jpg" alt="1">
+        </div>
+        <div class="bottompoint">
+            <div class="on"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <a href="javascript:;" class="prevpoint">&lt;</a>
+        <a href="javascript:;" class="nextpoint">&gt;</a>
+    </div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    $(function(){
+        var $container = $('.container')
+        var $img = $('.img')
+        var $divs = $('.bottompoint>div')
+        var $prevpoint = $('.prevpoint')
+        var $nextpoint = $('.nextpoint')
+        var IMG_WIDTH = 600
+        var PIC_NUM = 5
+        var AUTO_SLIDE_TIME = 1500
+        var auto = null
+        var currentPoint = 0
+        var enable = true
+        // var index = 
+        $nextpoint.click(function(){
+            nextPage(true)
+        })
+        $prevpoint.click(function(){
+            nextPage(false)
+        })
+        $container.hover(function(){
+            clearInterval(auto)
+        }, function(){
+            autoSlide()
+        })
+        $divs.click(function(){
+            var instance = $(this).index() - currentPoint
+            if(instance === 0){
+                return 
+            }else{
+                nextPage(instance)
+            }
+        })
+        autoSlide()
+        function autoSlide(){
+            auto = setInterval(function(){
+                nextPage(true)
+            },
+            AUTO_SLIDE_TIME)
+        }
+        
+        function nextPage(next){
+            if(!enable){
+                return
+            }
+            if(typeof next === 'boolean'){
+                var OFFSET = next ? -IMG_WIDTH : IMG_WIDTH
+            }else{
+                var OFFSET = -IMG_WIDTH*next
+            }
+
+            var INTERVAL_TIME = 100
+            var ITEM_TIME = 5
+            var ITEM_OFFSET = OFFSET/(INTERVAL_TIME/ITEM_TIME)
+            var CURRENT_POSITION = $img.position().left
+            var TARGET_POSTION = CURRENT_POSITION + OFFSET
+            var slide_interval = setInterval(function(){
+                enable = false
+                CURRENT_POSITION += ITEM_OFFSET
+                if(next>0){   //向右移动
+                    if(CURRENT_POSITION <= TARGET_POSTION){ //一次移动完成
+                        clearInterval(slide_interval)
+                        enable = true
+                        CURRENT_POSITION = TARGET_POSTION
+                        if(CURRENT_POSITION <= -(PIC_NUM + 1)*IMG_WIDTH){   //从最后一张移到第二张
+                            CURRENT_POSITION = -IMG_WIDTH
+                        }
+                    }
+                }else{  //向左移动
+                    if(CURRENT_POSITION >= TARGET_POSTION){ //一次移动完成
+                        clearInterval(slide_interval)
+                        enable = true
+                        CURRENT_POSITION = TARGET_POSTION
+                        if(CURRENT_POSITION >= 0){          //从第一张移到倒数第二张
+                            CURRENT_POSITION = -PIC_NUM*IMG_WIDTH
+                        }
+                    }
+                }
+                $img.css('left', CURRENT_POSITION)
+            },
+            ITEM_TIME
+            )
+            updatePoint(next)
+        }
+        function updatePoint(next){
+            $divs.eq(currentPoint).removeClass('on')
+            if(typeof next === 'boolean'){
+                if(next){
+                    currentPoint++
+                }else{
+                    currentPoint--
+                }
+            }else{
+                currentPoint+=next
+            }
+            
+            if(currentPoint === 5){
+                currentPoint = 0
+            }
+            if(currentPoint === -1){
+                currentPoint = 4
+            }
+            $divs.eq(currentPoint).addClass('on')
+        }
+    })
+        
+</script>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <link rel="stylesheet" href="css/slider.css">
+</head>
+<body>
+    <div class="container">
+        <div class="img" style="left: -600px">
+            <img src="img/5.jpg" alt="5">
+            <img src="img/1.jpg" alt="1">
+            <img src="img/2.jpg" alt="2">
+            <img src="img/3.jpg" alt="3">
+            <img src="img/4.jpg" alt="4">
+            <img src="img/5.jpg" alt="5">
+            <img src="img/1.jpg" alt="1">
+        </div>
+        <div class="bottompoint">
+            <div class="on"></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <a href="javascript:;" class="prevpoint">&lt;</a>
+        <a href="javascript:;" class="nextpoint">&gt;</a>
+    </div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    $(function(){
+        var $container = $('.container')
+        var $img = $('.img')
+        var $divs = $('.bottompoint>div')
+        var $prevpoint = $('.prevpoint')
+        var $nextpoint = $('.nextpoint')
+        var baseLine = 600
+        var autoTime = 2000
+        var totalTime = 500
+        var intervalTime = 10
+        var currentPoint = 0
+        var stepDistance = baseLine/(totalTime/intervalTime)
+        var autoInterval = null
+        $prevpoint.click(function(){
+            move($img.position().left, $img.position().left + baseLine, stepDistance, intervalTime, 1)
+        })
+        $nextpoint.click(function(){
+            move($img.position().left, $img.position().left - baseLine, -stepDistance, intervalTime, 1)
+        })
+        $container.hover(function(){
+            clearInterval(autoInterval)
+        }, function(){
+            auto()
+        })
+        $divs.click(function(){
+            var targetPoint = $(this).index()-currentPoint
+            var abs = Math.abs(targetPoint)
+            if(targetPoint == 0){
+                return
+            }
+            if(targetPoint > 0){
+                move($img.position().left, $img.position().left - baseLine, -stepDistance, intervalTime, abs)
+            }else{
+                move($img.position().left, $img.position().left + baseLine, stepDistance, intervalTime, abs)
+            }
+            
+        })
+        auto()
+
+        function auto(){
+            autoInterval = setInterval(function(){
+                move($img.position().left, $img.position().left - baseLine, -stepDistance, intervalTime, 1)
+            }, autoTime)
+        }
+        function move(start, end, stepDistance, intervalTime, times){
+            var picnum = 5
+            var interval = (end - start)*times + start
+            $divs.eq(currentPoint).removeClass('on')
+            if(stepDistance>0){
+                currentPoint -= times
+            }else{
+                currentPoint += times 
+            }
+            if(currentPoint === 5){
+                currentPoint = 0
+            }else if(currentPoint === -1){
+                currentPoint = 4
+            }
+            $divs.eq(currentPoint).addClass('on')
+            var slideInterval = setInterval(function(){
+                var currentPosition = $img.position().left + stepDistance
+                if(interval >= start){     //向左平移
+                    if($img.position().left >= interval){  //图片轮播完时
+                        clearInterval(slideInterval)
+                        currentPosition = interval
+                        if(end === 0){    //移动到左边界时
+                            currentPosition = (start - end)*picnum
+                        }
+                    }
+                }else{  //向右平移
+                    if($img.position().left <= interval){  //图片轮播完时
+                        clearInterval(slideInterval)
+                        currentPosition = interval
+                        if(end === (end - start)*(picnum+1)){ ////移动到右边界时
+                            currentPosition = end-start
+                        }
+                    }
+                }
+                $img.css('left', currentPosition)
+            }, intervalTime)
+        }
+    })
+        
+</script>
+</html>

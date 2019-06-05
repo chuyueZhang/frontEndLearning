@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/returntop.css">
+</head>
+<body>
+    <div class="wrap">
+            <div class="content">
+                    <div class="returntop">回到顶部</div>
+            </div>
+            
+    </div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    $(function(){
+        $('.returntop').click(function(){
+            clearInterval(interval)
+            var movetime = 500
+            var $wrap = $('.wrap')
+            var instance = $wrap.scrollTop()
+            var times = 60
+            var intervalTime = 500/times
+            var intervalInstance =  instance/times
+            var interval = setInterval(function(){
+                instance -= intervalInstance
+                if(instance <= 0){
+                    instance = 0
+                    clearInterval(interval)
+                }
+                $wrap.scrollTop(instance)
+            }, intervalTime)
+        })
+    })
+</script>
+</html>

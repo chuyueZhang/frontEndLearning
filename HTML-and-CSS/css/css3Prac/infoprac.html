@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font: 12px/1 "宋体";
+        }
+        .outer{
+            width: 300px;
+            border: 1px solid rgb(207, 207, 207);
+            margin: 50px auto;
+        }
+        .header{
+            padding: 6px 10px;
+            background-color: rgb(236, 241, 255);
+        }
+        .header .title{
+            font-size: 14px;
+        }
+        .header a{
+            font-size: 12px;
+            color: red;
+        }
+        .header .project{
+            float: right;
+        }
+        .content{
+            padding: 0 20px;
+            background-color: rgb(245, 250, 252);
+        }
+        .content ul{
+            font-size: 12px;
+        }
+        .content .title{
+            padding: 8px 0;
+        }
+        ul div{
+            display: inline-block;
+            
+        }
+        ul{
+            border-bottom: 1px dotted rgb(236, 241, 255);
+        }
+        ul li{
+            list-style: none;
+            margin: 6px;
+        }
+        ul li>span:last-child{
+            float: right;
+        }
+        .title{
+            font-weight: bold;
+        }
+        .important span, .important p{
+            font-weight: bold;
+            color: red;
+        }
+        .clearfix:after{
+            content: "";
+            display: block;
+            clear: left;
+        }
+        .clearfix{
+            zoom: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div class="header">
+            <span class="title">近期开班</span>
+            <span class="project"><a href="#">16年面授开班计划</a></span>
+        </div>
+        <div class="content">
+            <div>
+                <div class="title">JavaEE+云计算-全程就业班</div>
+                <ul>
+                    <li class="important ">
+                        <div>开班时间：<span>2016-04-27</span></div>
+                        <span>预约报名</span>
+                    </li>
+                    <li class="important">
+                        <div>开班时间：<span>2016-04-07</span></div>
+                        <span>无座，名额爆满</span>
+                    </li>
+                    <li>
+                        <div>开班时间：<span>2016-03-15</span></div>
+                        <span>开班盛况</span>
+                    </li>
+                    <li>
+                        <div>开班时间：<span>2016-02-25</span></div>
+                        <span>开班盛况</span>
+                    </li>
+                    <li>
+                        <div>开班时间：<span>2015-12-26</span></div>
+                        <span>开班盛况</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="title">Android+人工智能-全程就业班</div>
+                <ul>
+                    <li class="important">
+                        <div>开班时间：<span>2016-04-10</span></div>
+                        <span>预约报名</span>
+                    </li>
+                    <li>
+                        <div>开班时间：<span>2016-03-17</span></div>
+                        <span>开班盛况</span>
+                    </li>
+                    <li>
+                        <div>开班时间：<span>2016-02-20</span></div>
+                        <span>开班盛况</span>
+                    </li>
+                    <li>
+                        <div>开班时间：<span>2015-12-23</span></div>
+                        <span>开班盛况</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="title">前端+HTML5-全程就业班</div>
+                <ul>
+                    <li class="important">
+                        <div>开班时间：<span>2016-05-10</span></div>
+                        <span>预约报名</span>
+                    </li>
+                    <li>
+                        <div>开班时间：<span>2016-05-10</span></div>
+                        <span>开班盛况</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

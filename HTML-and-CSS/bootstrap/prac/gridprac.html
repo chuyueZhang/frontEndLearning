@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bootstrap的栅格练习</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="./img/expo.png" alt="...">
+                    <div class="caption">
+                      <h3>优站精选</h3>
+                      <p><a href="javascript:;">Bootstrap 网站实例</a></p>
+                      <p>Bootstrap 优站精选频道收集了众多基于 Bootstrap 构建、设计精美的、有创意的网站。</p>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="./img/webpack.png" alt="...">
+                    <div class="caption">
+                      <h3>Webpack</h3>
+                      <p><a href="javascript:;">是前端资源模块化管理和打包工具</a></p>
+                      <p>Webpack 是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。</p>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="./img/react.png" alt="...">
+                    <div class="caption">
+                      <h3>React</h3>
+                      <p><a href="javascript:;">用于构建用户界面的 JavaScript 框架</a></p>
+                      <p>React 起源于 Facebook 的内部项目，是一个用于构建用户界面的 JavaScript 库。</p>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="./img/typescript.png" alt="...">
+                    <div class="caption">
+                      <h3>TypeScript</h3>
+                      <p><a href="javascript:;">中文手册</a></p>
+                      <p>TypeScript 是由微软开源的编程语言。它是 JavaScript 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程。</p>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="./bootstrap-3.3.7/docs/assets/js/vendor/jquery.min.js"></script>
+<link rel="stylesheet" href="./bootstrap-3.3.7/dist/css/bootstrap.min.css">
+<style>
+        a{
+            color: gray;
+            text-align: center;
+        }
+        .denggao{
+            overflow: hidden;
+        }
+        .denggao div:first-child{
+            padding-bottom: 9999px;
+            margin-bottom: -9999px;
+        }
+        .thumbnail{
+            height: 360px;
+        }
+    </style>
+</html>

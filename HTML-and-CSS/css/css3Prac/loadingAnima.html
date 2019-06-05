@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>加载动画</title>
+    <style type="text/css">
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html, body{
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrap{
+            height: 100%;
+            background-color: #acf;
+        }
+        .wrap .inner{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            background-color: #ccc;
+            white-space: nowrap;
+        }
+        .wrap .inner span{
+            font-size: 36px;
+            position: relative;
+            animation: move .2s linear infinite alternate;
+        }
+        @keyframes move{
+            from{
+                top: 0px;
+            }
+            to{
+                top: -8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="inner">
+            <span>这</span>
+            <span>是</span>
+            <span>一</span>
+            <span>个</span>
+            <span>加</span>
+            <span>载</span>
+            <span>动</span>
+            <span>画</span>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    window.onload = function(){
+        var span = document.querySelectorAll(".wrap .inner span");
+        var fontColor = ["red", "orange", "yello", "yellogreen", "green", "blue", "purple", "pink"];
+        for(var i = 0; i < span.length; i++){
+            span[i].style.animationDelay = i*0.06 +"s";
+            span[i].style.color = fontColor[i];
+        }
+    };
+</script>
+</html>

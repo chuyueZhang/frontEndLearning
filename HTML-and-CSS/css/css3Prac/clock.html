@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>时钟</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .wrap{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            background-color: #acf;
+            border-radius: 50%;
+        }
+        .pannel{
+            list-style: none;
+        }
+        .pannel li{
+            position: absolute;
+            left: 100px;
+            top: 0;
+            width: 2px;
+            height: 10px;
+            background-color: #000;
+            transform-origin: 0px 100px;
+        }
+        .pannel li:nth-child(5n+1){
+            height: 16px;
+        }
+        .hour{
+            position: absolute;
+            left: 97px;
+            top: 70px;
+            width: 6px;
+            height: 30px;
+            background-color: black;
+            transform-origin: 3px 30px;
+        }
+        .min{
+            position: absolute;
+            left: 98px;
+            top: 50px;
+            width: 4px;
+            height: 50px;
+            background-color: blue;
+            transform-origin: 2px 50px;
+        }
+        .sec{
+            position: absolute;
+            left: 99px;
+            top: 30px;
+            width: 2px;
+            height: 70px;
+            background-color: red;
+            transform-origin: 1px 70px;
+        }
+        .clockpannel{
+            position: absolute;
+            left: 93px;
+            top: 93px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul class="pannel"></ul>
+        <div class="hour"></div>
+        <div class="min"></div>
+        <div class="sec"></div>
+        <div class="clockpannel"></div>
+    </div>
+</body>
+<script>
+    var pannel = document.querySelector(".pannel");
+    var hour = document.querySelector(".hour");
+    var min = document.querySelector(".min");
+    var sec = document.querySelector(".sec");
+    for(var i = 0; i < 60; i++){
+        var li = document.createElement("li");
+        li.style.transform = "rotate(" + i*6 + "deg)"
+        pannel.appendChild(li);
+    }
+    function func(){
+        var now = new Date();
+        sec.style.transform = "rotate(" + degOfSec(now) + "deg)";
+        min.style.transform = "rotate(" + degOfMin(now) + "deg)";
+        hour.style.transform = "rotate(" + degOfHour(now) + "deg)";
+    }
+    function degOfSec(now){
+        return now.getSeconds() * 360/60;
+    }
+    function degOfMin(now){
+        return degOfSec(now)/60 + now.getMinutes() * 360/60;
+    }
+    function degOfHour(now){
+        return degOfMin(now) /12/60 + (now.getHours()%12) * 360/12;
+    }
+    window.onload = function(){
+        func();
+        setInterval(func, 1000);
+    };
+
+</script>
+</html>
