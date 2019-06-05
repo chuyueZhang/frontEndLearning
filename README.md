@@ -1,2 +1,23 @@
-# frontEndLearning
-some notes and practices about front-end learning
+# 前端学习笔记与练习
+* 包括了学习过程的一些笔记与一些练习
+* 有一些较大的案例
+* 供自己preview时进行参考
+## javascript
+1. javascript基础
+2. javascript高级
+3. ES6，ES7
+4. jQuery
+5. JS模块化
+  1. commonjs
+  2. AMD
+  3. ES6模块化
+## html与css
+1. HTML基础
+2. CSS基础
+3. CSS3
+4. HTML5
+5. bootstrap
+## nodejs与mongodb
+1. nodejs
+2. expressjs
+3. mongodb
