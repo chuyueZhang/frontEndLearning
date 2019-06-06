@@ -854,6 +854,16 @@ arguments
         }
         a(1,2);
         结果为2,1,2,a函数本身
+global对象
+    ECMAScript中非常特别的对象，理论上存在但是又无法获取. 
+    不属于其他任何对象的属性或者对象都是这个对象的属性和方法
+    也就是说所有在全局作用域中定义的属性与对象可以说都是这个对象的属性和方法
+    ECMAScript没有指出如何访问global对象，但是浏览器会将这个对象当作window的一部分加以实现
+    常用方法：
+        1.encodeURL() 用来将整个url编码成浏览器能够识别的字符串，即将一些特殊字符进行编码，如：空格->%20，url中合法特殊字符不会被编码
+        2.encodeURLComponent() 用来将某一段url编码成浏览器能够识别的字符串，url中合法特殊字符也会被编码
+        3.decodeURL()   encodeURL的反向操作，规则与之相同
+        4.decodeURLComponent()  encodeURLComponent的反向操作，规则与之相同
 Date对象
     用来操作与时间有关的对象
     var date = new Date();      //实例化Date对象的值就是执行这行代码时的时间
@@ -977,6 +987,7 @@ String对象
                     console.log(result);
                     结果为ab,cd,ef
                 当参数为空串时，将每个字符都拆分成一个元素存入新数组
+                第二个参数：决定返回的数组长度
     正则运算相关的方法：
 正则表达式对象
     用来匹配字符串是否满足要求       

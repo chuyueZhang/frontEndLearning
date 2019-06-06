@@ -30,11 +30,18 @@
 ### Object扩展
 * Object.create(prototype,[descriptors])
     1. 作用：以第一个参数作为原型创建一个新的对象
-    2. 为新的对象指定新的属性并修改它的描述
-       1. value: 指定值
-       2. writable: 标识此属性是否可修改
-       3. configurable: 标识此属性是否可删除
-       4. enumerable: 标识当前属性是否可被for in枚举
+    2. 为新的对象指定新的数据属性或访问器并修改它的描述，当设置了setter或getter时就只能设置访问器属性，在基本的对象数据结构中会有默认值
+        * 数据属性
+          1. value: 指定值, 默认值为undefined
+          2. writable: 标识此属性是否可修改, 默认值为true
+          3. configurable: 标识此属性是否可配置或删除，当设置此值为false时，除了writable的数据属性都不可再被修改, 默认值为true
+          4. enumerable: 标识当前属性是否可被for in, Object.key(),JSON.stringify(), Object.assign()枚举, 默认值为true
+        * 访问器属性
+          1. get: 获取指定扩展属性时自动调用此函数，惰性加载，只有在触发时才执行此函数, 默认值为undefined
+          2. set: 修改此属性时自动调用此函数并且将修改的值作为实参传递给此函数, 默认值为undefined
+          3. enumerable: 标识当前属性是否可被for in, Object.key(),JSON.stringify(), Object.assign()枚举, 默认值为true
+          4. configurable：标识此属性是否可配置或删除, 默认值为true
+    3. 当调用此方法而不设置数据属性或访问器属性时，这些访问器属性会默认设置为false
 ```javascript
 var obj1 = {}
 var obj2 = Obect.create(obj1, {
@@ -46,15 +53,43 @@ var obj2 = Obect.create(obj1, {
     }
 })
 ```
-* Object.defineProperties(prototype,[descriptors])
+* Object.defineProperties(prototype, key, [descriptors])
     1. 作用：给第一个对象扩展新属性
-    2. 为新的对象添加新的属性并修改它的描述
-       1. get: 获取指定扩展属性时自动调用此函数，惰性加载，只有在触发时才执行此函数
-       2. set: 修改此属性时自动调用此函数并且将修改的值作为实参传递给此函数
+    2. 为原有对象添加新的数据属性或访问器属性并修改它的描述，当设置了setter或getter时就只能设置访问器属性
+        * 数据属性
+          1. value: 指定值, 默认值为undefined
+          2. writable: 标识此属性是否可修改, 默认值为true
+          3. configurable: 标识此属性是否可配置或删除，当设置此值为false时，除了writable的数据属性都不可再被修改, 默认值为true
+          4. enumerable: 标识当前属性是否可被for in, Object.key(),JSON.stringify(), Object.assign()枚举, 默认值为true
+        * 访问器属性
+          1. get: 获取指定扩展属性时自动调用此函数，惰性加载，只有在触发时才执行此函数, 默认值为undefined
+          2. set: 修改此属性时自动调用此函数并且将修改的值作为实参传递给此函数, 默认值为undefined
+          3. enumerable: 标识当前属性是否可被for in, Object.key(),JSON.stringify(), Object.assign()枚举, 默认值为true
+          4. configurable：标识此属性是否可配置或删除, 默认值为true
+    3. 当调用此方法而不设置数据属性或访问器属性时，这些访问器属性会默认设置为false
+```javascript
+var obj1 = {firstname: 'aa', lastname: 'bb'}
+var obj2 = Object.defineProperty(obj1, 'fullname', {
+    configurable: false,
+    get: function(){
+        return this.firstname + ' ' + this.lastname
+    },
+    set: function(data){
+        this.firstname = data.split(' ')[0]
+        this.lastname = data.split(' ')[1]
+    }
+})
+console.log(obj2.fullname)  //aa bb
+obj2.fullname = "cc dd"
+console.log(obj2.fullname)//cc dd
+```
+* Object.defineProperties(prototype,[descriptors])
+    1. 区别：此方法能一次给多个属性设置描述
 ```javascript
 var obj1 = {firstname: 'aa', lastname: 'bb'}
 var obj2 = Object.defineProperties(obj1, {
     fullname: {
+        configurable: true,
         get: function(){
             return this.firstname + ' ' + this.lastname
         },
@@ -84,6 +119,10 @@ console.log(obj1.fullname)  //aa bb
 obj1.fullname = "cc dd"
 console.log(obj1.fullname)//cc dd
 ```
+  * 在IE9之前的版本中创建getter或setter使用__defineGetter__和__definesetter__,此时访问器属性中的configurable与enumerable不可设置
+* Object.getOwnPropertyDescriptor(obj, key)
+  * 作用: 读取属性的描述符对象
+
 ### 数组的扩展
 * Array.prototype.indexOf(value)
   * 返回value在Array中第一次出现的下标
