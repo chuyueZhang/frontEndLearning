@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script src="../lib/axios.js"></script>
+    <script type="text/babel">
+        class MyComponent extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    name: '',
+                    html_url: ''
+                }
+            }
+            componentDidMount(){
+                // axios.get('https://api.github.com/search/repositories?q=re&sort=stars')
+                // .then(res=>{
+                //     const {name, html_url} = res.data.items[0]
+                //     console.log(name, html_url)
+                //     this.setState({
+                //         name,
+                //         html_url
+                //     })
+                // }).catch(err=>{
+                //     alert(err.message)
+                // })
+                fetch('https://api.github.com/search/repositories?q=re&sort=stars')
+                .then(res=>{
+                    return res.json()
+                }).then(data=>{
+                    const {name, html_url} = data.items[0]
+                    console.log(name, html_url)
+                    this.setState({
+                        name,
+                        html_url
+                    })
+                }).catch(err=>{
+                    alert(err.message)
+                })
+            }
+            render(){
+                if(!this.state.html_url){
+                    return <h2>loading...</h2>
+                }else{
+                    return <h2>the most popular resposity is <a href={this.state.html_url}>{this.state.name}</a></h2>
+                }
+            }
+        }
+        ReactDOM.render(<MyComponent />, document.getElementById('test1'))
+    </script>
+</body>
+</html>

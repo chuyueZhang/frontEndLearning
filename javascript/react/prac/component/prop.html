@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script type="text/babel">
+        let p = {
+            name: 'aaa',
+            age: 17,
+            sex: '女'
+        }
+        Person.defaultProps = {
+            age: 18,
+            sex: '男'
+        }
+        Person.propTypes = {
+            name: PropTypes.string.isRequired,
+            age: PropTypes.number,
+            sex: PropTypes.string
+        }
+        function Person(props){
+            return <ul><li>姓名：{props.name}</li><li>年龄：{props.age}</li><li>性别：{props.sex}</li></ul>
+        }
+        ReactDOM.render(<Person {...p} />, document.getElementById('test1'))
+        ReactDOM.render(<Person name={'bbb'} />, document.getElementById('test1'))
+    </script>
+</body>
+</html>

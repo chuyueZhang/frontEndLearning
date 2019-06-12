@@ -5,9 +5,9 @@
 ```javascript
 function foo1(){}
 function foo2(){}
-```
 foo1()
 foo2()
+```
 * 污染全局
 ### namespace方式
 * 将需要声明的变量封装到一个函数中
@@ -66,35 +66,38 @@ let Module = (function module($){
 * 浏览器端需要提前编译打包
 #### 基于服务器端
 * 文件目录：
-
+```
 project
-  |modules
-  |node_modules
-  |app.js
-  |package.json
+  |---modules
+  |---node_modules
+  |---app.js
+  |---0package.json
+```
 * 基本语法
   1. module.exports
   2. exports
   3. require
 #### 基于浏览器端
 * 文件目录：
-
+```
 project
-  |js
-    |dist         打包后的文件目录
-    |src          源码所在目录
-      |modules
-      |app.js
-  |node_modules
-  |index.html
-  |package.json
+  |---js
+      |---dist         打包后的文件目录
+      |---src          源码所在目录
+          |---modules
+          |---app.js
+  |---node_modules
+  |---index.html
+  |---package.json
+```
 * 使用browerify打包
-  * npm install -g browerify
-  * npm install --save-dev browerify
+  * npm install -g browserify
+  * npm install --save-dev browserify
   * browerify src.js -o destination.js
 ### AMD
 * 异步模块定义
 * 专门用于浏览器端，模块的加载是异步的
+* **没有文件作用域，在define与require函数外部共用全局作用域**
 #### 基本语法
 * 定义没有依赖的模块
 ```javascript
@@ -102,13 +105,13 @@ define(function(){})
 ```
 * 定义有依赖的模块
 ```javascript
-define([module1, module2]function(module1, module2){    //显式声明，依赖注入
+define([module1, module2],function(module1, module2){    //显式声明，依赖注入
     return {}       //将想要暴露的模块对象直接返回
 })  
 ```
 * 引入使用模块
 ```javascript
-require([module1, module2]function(module1, module2){})
+require([module1, module2],function(module1, module2){})
 ```
 #### 使用
 1. 引入[requirejs](http://requirejs.org)
@@ -116,16 +119,17 @@ require([module1, module2]function(module1, module2){})
 <script data-main="./js/main.js" src="./js/libs/require.js"></script>
 ```
 2. 项目目录：
-
-js
-  |libs
-    |require.js
-    |angular.js
-  |modules
-    |module1.js
-    |module2.js
-  |main.js
-index.html
+```
+.js
+  |---libs
+      |---require.js
+      |---angular.js
+  |---modules
+      |---module1.js
+      |---module2.js
+  |---main.js
+|---index.html
+```
 3. 使用requirejs
 ```javascript
 (function(){
@@ -142,40 +146,42 @@ index.html
             }
         }
     })
-    requirejs.(['module1', 'module2', 'angular'], (m1, m2, angular)=>{})
+    requirejs(['module1', 'module2', 'angular'], (m1, m2, angular)=>{})
 })()
 ```
 ### ES6模块化规范
 * 依赖模块需要编译打包处理
 #### 文档结构
+```
 project
-  |js
-    |src
-    |build
-    |dist
-  |index.html
-  |.babelrc
+  |---js
+      |---src
+      |---build
+      |---dist
+  |---index.html
+  |---.babelrc
+```
 #### 编译过程
 1. 安装babel-cli babel-reset-es2015 browerify
 ```
 npm install -g babel-cli browerify
-npm install --save-dev babel-reset-es2015
+npm install --save-dev babel-preset-es2015
 ```
 2. 在项目根目录自定义.babelrc文件
 ```json
 {
-    "reset": ["es2015"]
+    "presets": ["es2015"]
 }
 ```
 3. 编写es6模块化语法
 ##### 常规暴露
 * 在src文件夹新建module1.js
+* `export`命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系，因此单独暴露时不能只传递变量名
 ```javascript
-function foo(){
+export function foo(){      //单独暴露
     console.log('我是module1')
 }
 /*
-*export foo  //单独暴露
 *export {foo}    //统一暴露
 *
 */
@@ -184,7 +190,7 @@ function foo(){
 ```javascript
 /*
 *import foo from './module1.js'  //单独暴露时
-*export {foo} from './module1.js'   //统一暴露时
+*import {foo} from './module1.js'   //统一暴露时
 *
 */
 foo()   //'我是module1'

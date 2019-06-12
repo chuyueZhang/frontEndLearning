@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script>
+        var content = 'This is react'
+        var id = 'React'
+        var vDom = React.createElement('h1', {id:id.toUpperCase()}, content.toUpperCase())
+        ReactDOM.render(vDom, document.getElementById('test1')) //第一个参数是js或者jsx创建的虚拟DOM，第二个参数是需要渲染的父DOM对象
+    </script>
+    <script type="text/babel">
+        var vDom = <h1 id={id.toLowerCase()}>{content.toLowerCase()}</h1>
+        ReactDOM.render(vDom, document.getElementById('test2'))
+    </script>
+</body>
+</html>

@@ -245,7 +245,7 @@ server.listen(3000, ()=>{       //监听3000端口号
   * url.parse(url, boolean) 第二个参数决定是否将查询字符串解析成对象
 * 一次请求对应一次响应，响应结束请求也就结束了
 ### 资源重定向
-* 当响应码为301(永久重定向)302(临时重定向)时，浏览器会自动检查响应头中的location的值并自动向此url发送新的请求
+* 当响应码为301(永久重定向)302(临时重定向)时，浏览器会自动检查响应头中的location的值并自动向此url发送新的请求，但是对于异步请求(ajax)重定向无效
 * 永久重定向
   * 每次重定向时浏览器不会对重定向的url发送新的请求，而是从磁盘缓存中加载
 * 临时重定向
@@ -637,3 +637,98 @@ pAjax('/a')
 ```
 ## 多人社区案例
 * blog文件夹
+### path核心模块
+* path.baseName 获取带后缀名的文件名
+* path.dirName  获取目录路径
+* path.extName  获取文件后缀名
+* path.parse    以上方法的结合
+* path.isAbsolute 判断是不是绝对路径
+* path.join   //将多个路径转换成一个完整路径，会自动修复直接将路径相加时造成的错误
+### __dirname与__filename
+* __dirname 表示当前文件模块所处的绝对路径
+* __filename 表示当前文件模块的绝对路径
+* 在node中进行文件操作时，如果路径格式是相对路径，则node会自动按照执行node命令的命令行路径进行换算
+* 为了避免没有按照预期路径读写文件，都可以使用`path.join(__dirname, './')`的形式来表示需要读写的文件路径
+* 模块文件路径标识就是按照文件的相对路径进行加载，因此无需按照上面的规则加载
+### 模板页
+* [模板继承](https://aui.github.io/art-template/zh-cn/docs/syntax.html#%E6%A8%A1%E6%9D%BF%E7%BB%A7%E6%89%BF)
+* [子模板](https://aui.github.io/art-template/zh-cn/docs/syntax.html#%E5%AD%90%E6%A8%A1%E6%9D%BF)
+### 目录结构
+```
+.
+|---app.js
+|---controller
+|---models
+|---node_modules      第三方模块
+|---package.json      包描述文件
+|---package-lock.json 第三方包版本锁定文件
+|---public            静态资源文件
+|---README.md         项目描述文件
+|---routes            
+|---views             存储视图目录
+```
+### session
+* 将用户敏感数据保存在服务端中并给用户生成一个经过加密处理过的cookie字符串
+* 每次访问时比对用户的cookie字符串来验证用户身份从而执行一系列操作
+#### 在nodejs中配置express-session
+1. 安装
+```
+npm install express-session
+```
+2. 引入
+```javascript
+let session = require('express-session')
+```
+3. 配置
+```javascript
+app.use(session({
+  secret: 'aaaa',     //决定用户数据与什么字符串共同生成加密cookie，提高安全等级
+  resave: false,      //决定是否重新更新当前session的生命周期当session过期时无论session数据有没有被修改过
+  saveUninitialized: false    //决定是否要初始化session. 设置为false时，如果服务端没有保存过session数据则不会向客户端发送session的cookie
+}))
+```
+4. 使用
+```javascript
+req.session.user = user //保存session数据
+req.session.user  //获取session数据
+```
+## 中间件的概念
+* 从请求到响应的过程中的一系列封装方法
+* 每个封装方法就是中间件
+* 由于这些封装方法在响应之前，因此顺序会有严格要求
+* 甚至有些中间件会依赖其他中间件
+* 同一次请求中的不同中间件中的req参数是同一个变量
+### express中的中间件
+* 当进入一个中间件时如果不调用next方法则会停留在这个中间件中
+* 执行next方法会调用下一个匹配的中间件
+* 在express中，对中间件有几种分类
+#### 应用程序级别中间件
+1. 不关心请求方法与请求路径的中间件，即任何请求都会进入这个中间件
+```javascript
+app.use((req, res, next)=>{
+  next()    //此方法会调用下一个匹配到的中间件，如果没有则默认在页面显示not get (路径)
+})
+```
+#### 路由级别中间件
+1. 关心请求路径的中间件
+```javascript
+app.use('/', (req, res, next)=>{})
+```
+2. 严格匹配请求方法与请求路径的中间件
+```javascript
+app.get('/', (req, res, next)=>{})
+app.post('/', (req, res, next)=>{})
+```
+#### 错误处理中间件
+```javascript
+app.use('/', (req, res, next)=>{
+  let err = true
+  if(err){
+    next(new Error()) //当给next传入参数时，直接跳转到错误处理中间件
+  }
+})
+app.use('/', (err, req, res, next)=>{ //必须为四个参数否则不是错误处理中间件
+  console.log(err)  //err的值是上个next中传入的参数值
+  res.send(404)
+})
+```

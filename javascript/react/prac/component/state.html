@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+        class MyComponent extends React.Component{
+            constructor(props) {
+                super(props)
+                this.state = {
+                    islike: true
+                }
+                this.handleClick = this.handleClick.bind(this)
+            }
+            handleClick() {
+                var islike = !this.state.islike
+                this.setState({islike: islike})
+            }
+            render() {
+                return <h1 onClick={this.handleClick}>{this.state.islike?'你喜欢我':'我喜欢你'}</h1>
+            }
+        }
+        ReactDOM.render(<MyComponent />, document.getElementById('test1'))
+    </script>
+</body>
+</html>

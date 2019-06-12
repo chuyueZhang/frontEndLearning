@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header><h1>javascript框架</h1></header>
+    <div id="frame"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+        var arr = ['jquery', 'angular', 'vue', 'react', 'zepto']
+        var vDom = <ul>{arr.map((item, index)=><li key={index}>{item}</li>)}</ul>
+        ReactDOM.render(vDom, document.getElementById('frame'))
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script type="text/babel">
+        function MyComponent(){
+            return <h2>工厂函数组件(简单组件)</h2>
+        }
+        class MyComponent1 extends React.Component{
+            render(){
+                return <h2>类组件(复杂组件)</h2>
+            }
+        }
+        ReactDOM.render(<MyComponent />, document.getElementById('test1'))
+        ReactDOM.render(<MyComponent1 />, document.getElementById('test2'))
+    </script>
+</body>
+</html>

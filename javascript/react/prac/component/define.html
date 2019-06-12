@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script type="text/babel">
+        class App extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    todos: ['吃饭', '睡觉', '打代码'],
+                }
+                this.add = this.add.bind(this)
+            }
+            add(value){
+                let {todos} = this.state
+                todos.push(value)
+                this.setState({todos})
+            }
+            render(){
+                return (
+                    <div>
+                        <h1>component TODO list</h1>
+                        <Add todos={this.state.todos} add={this.add}/>
+                        <List todos={this.state.todos}/>
+                    </div>
+                )
+            }
+        }
+        class Add extends React.Component{
+            constructor(props){
+                super(props)
+                this.todos = props.todos
+                this.add = props.add
+                this.handleClick = this.handleClick.bind(this)
+            }
+            handleClick(){
+                var inputValue = this.input.value.trim()
+                if(!inputValue){
+                    alert('不能为空值')
+                    return
+                }else{
+                    this.add(inputValue)
+                    this.input.value = ''
+                }
+            }
+            render(){
+                return (
+                    <div>
+                        <input type="text" ref={input=>this.input = input}/>&nbsp;&nbsp;
+                        <button onClick={this.handleClick}>add #{this.todos.length+1}</button>
+                    </div>
+                )
+            }
+        }
+        Add.propTypes = {
+                    todos: PropTypes.array.isRequired,
+                    add: PropTypes.func.isRequired
+                }
+        class List extends React.Component{
+            constructor(props){
+                super(props)
+                this.todos = props.todos
+            }
+            
+            render(){
+                return (
+                    <ul>
+                        {this.todos.map((item, index)=><li key={index}>{item}</li>)}
+                    </ul>
+                )
+            }
+        }
+        List.propTypes = {
+                    todos: PropTypes.array.isRequired
+                }
+        ReactDOM.render(<App />, document.getElementById('test1'))
+    </script>
+</body>
+</html>

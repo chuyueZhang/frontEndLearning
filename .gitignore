@@ -1,0 +1,3 @@
+#ignore modules needed to be downloaded
+node_modules
+/nodejs/mongodb

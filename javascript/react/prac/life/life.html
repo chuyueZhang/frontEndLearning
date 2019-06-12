@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script type="text/babel">
+        class Life extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    opacity: 1
+                }
+                this.interval = setInterval(() => {
+                    console.log('执行...')
+                    if(this.state.opacity<=0) return this.setState({opacity: 1})
+                    this.setState({opacity: this.state.opacity-0.1})
+                }, 200);
+            }
+            handleClick(){
+                ReactDOM.unmountComponentAtNode(document.getElementById('test1'))
+            }
+            componentWillUnmount(){
+                clearInterval(this.interval)
+            }
+            render(){
+                let opacity = this.state.opacity
+                return (
+                    <div>
+                    <h2 style={{opacity}}>{this.props.title}</h2>
+                    <button onClick={this.handleClick}>bye!</button>
+                    </div>
+                )
+            }
+        }
+        Life.propTypes = {
+            title: PropTypes.string.isRequired
+        }
+        ReactDOM.render(<Life title="hello!!"/>, document.getElementById('test1'))
+    </script>
+</body>
+</html>

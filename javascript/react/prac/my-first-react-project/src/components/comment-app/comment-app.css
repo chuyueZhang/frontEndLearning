@@ -1,0 +1,9 @@
+header{
+    height: 300px;
+    background-color: #ddd;
+    line-height: 300px;
+    text-align: center;
+}
+header>h1{
+    display: inline-block;
+}

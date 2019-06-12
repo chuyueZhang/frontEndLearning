@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test1"></div>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/prop-types.js"></script>
+    <script type="text/babel">
+        class MyComponent extends React.Component{
+            constructor(props){
+                super(props)
+                this.handleClick = this.handleClick.bind(this)
+            }
+            handleClick(){
+                alert(this.input.value)
+            }
+            blur(e){
+                alert(e.target.value)
+            }
+            render(){
+                return (<div>
+                    <input type='text' ref={input=>this.input=input}/>
+                    &nbsp;&nbsp;<button onClick={this.handleClick}>点击触发事件</button>&nbsp;&nbsp;
+                    <input type='text' onBlur={this.blur} spaceholder='失去焦点提示内容'/>
+                    </div>)
+                
+            }
+        }
+        ReactDOM.render(<MyComponent />, document.getElementById('test1'))
+    </script>
+</body>
+</html>
