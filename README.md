@@ -12,6 +12,8 @@
    1. commonjs
    2. AMD
    3. ES6模块化
+7. react
+8. vue
 ## html与css
 1. CSS
    1. CSS
@@ -24,3 +26,7 @@
 1. nodejs
 2. expressjs
 3. mongodb
+## 自动化构建工具
+1. grunt
+2. gulp
+3. webpack
