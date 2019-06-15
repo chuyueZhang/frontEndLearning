@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .class1{
+        color: red;
+    }
+    .class2{
+        color: blue;
+    }
+</style>
+<body>
+    <div id="app">
+        <p :class="class1">绑定{class1}</p>
+        <p :class="class2">绑定{class2}</p>
+        <p :class="class3">绑定{class3}</p>
+        <p :style="{color: clorvalue, backgroundColor: bgc}">:style="{color: clorvalue, backgroundColor: bgc}"</p>
+        <button @click="updateClass">更新绑定class</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                class1: 'class1',
+                class2: {class1: true, class2: false},
+                class3: ['class1', 'class2'],
+                clorvalue: 'blue',
+                bgc: 'green'
+            },
+            methods: {
+                updateClass(){
+                    this.class1 = 'class2'
+                    this.class2.class2 = true
+                    this.bgc = 'yellow'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

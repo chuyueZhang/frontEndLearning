@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        姓<input type="text" v-model="firstname"><br>
+        名<input type="text" v-model="lastname"><br>
+        全名1<input type="text" v-model="fullname1"><br>
+        全名2<input type="text" v-model="fullname2"><br>
+        全名3<input type="text" v-model="fullname3"><br>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstname: 'a',
+                lastname: 'b',
+                fullname2: 'a b'
+            },
+            computed: {
+                fullname1(){
+                    return this.firstname + ' ' + this.lastname
+                },
+                fullname3:{
+                    get(){
+                        return this.firstname + ' ' + this.lastname
+                    },
+                    set(){
+                        const arr = value.split(' ')
+                        this.firstname = arr[0]
+                        this.lastname = arr[1]
+                    }
+                }
+            },
+            watch:{
+                firstname(value){
+                    this.fullname2 = value + ' ' + this.lastname
+                }
+            }
+        })
+        vm.$watch('lastname', (value)=>{
+            console.log('run')
+            vm.fullname2 = vm.firstname + ' ' + value
+        })
+    </script>
+</body>
+</html>

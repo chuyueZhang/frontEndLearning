@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import propTypes from 'prop-types'
 
 import './comment-add.css'
+import {addComment} from '../../../redux/actions'
 class CommentAdd extends Component{
     constructor(props){
         super(props)
@@ -45,4 +47,4 @@ class CommentAdd extends Component{
     }
 }
 
-export default CommentAdd
+export default connect(null, {addComment})(CommentAdd)

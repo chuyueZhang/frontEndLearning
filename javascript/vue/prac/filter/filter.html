@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>没有过滤器：{{time}}</p>
+        <p>过滤器1：{{time | formatTime}}</p>
+        <p>过滤器2：{{time | formatTime('getHours')}}</p>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.filter('formatTime',(value, params)=>{
+            return value[params||'getDate']()
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                time: new Date()
+            }
+            })
+    </script>
+</body>
+</html>

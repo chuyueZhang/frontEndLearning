@@ -559,7 +559,7 @@
 1. 可用PubSubjs第三方库来实现
 2. 本质是事件监听与事件触发
 ### 通过redux来传递
-...等待补充
+...后面补充
 ## react-router
 * react的一个插件库
 * 常用来制作SPA
@@ -578,3 +578,121 @@
 ## react-UI
 1. Material-UI
 2. ant-Design-UI
+## redux
+* redux是一个专门用于状态管理的库，不是react库
+* 可以用在vue，angular，react，但主要用于react
+* 作用：管理react应用中多个组件共享的状态
+### 运行机制
+* react组件从Store中读取state
+* react组件通过Action creators创建action然后dispatch产生的action
+* Store将发布的previous state与action传递给Reducers
+* Reducers产生newstate然后传递给store
+### 使用redux的情况
+* 尽量少用，但是基本都会使用，由于大项目使用会轻松
+* 某个组件的状态需要共享
+* 某个状态要在任何地方都能拿到
+* 一个组件需要改变全局的状态
+* 一个组件需要改变另一个组件的状态
+### redux的三个核心对象
+#### action
+* 标识要执行行为的对象
+* 包含两个方面的属性
+  * type    标识属性，必选
+  * data    传递的数据，可选
+* 例子：
+```javascript
+const action = {
+    type: 'INCREMENT',
+    data: 2
+}
+```
+* Action creator(创建action的工厂函数)
+```javascript
+const icrement = (number)=>({type: 'INCREMENT'， data: number})
+```
+#### reducer
+* 根据老的state和action, 产生新的state的函数
+```javascript
+export default function counter(state=0, action){
+    switch(action.type){
+        case 'INCREMENT': return state+action.data
+        case 'DECREMENT': return state-action.data
+        default: return  state
+    }
+}
+```
+* 要返回一个新的状态
+* 不能修改原有的状态
+#### store
+* 将state，action和reducer联系到一起的对象
+* 得到store对象
+```javascript
+import {createStore} from 'redux'
+import reducer from './reducer'
+const store = createStore(reducer)
+```
+* 三个核心方法
+  * dispatch(action)
+  * createStore(reducer)
+  * subscribe(render)
+### react插件react-redux
+* 用来减轻redux在react中的耦合度
+#### 核心api
+* Provider
+  * 让所有组件都可以得到state的数据
+```jsx
+ReactDOM.render(<Provider store={store}><app /></Provider>, document.getElementById('app'))
+```
+* connect
+  * 连接redux与UI组件之间的数据关系
+  * 用于包装UI组件生成容器组件
+```jsx
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)
+```
+### redux异步编程
+* 使用redux中间件实现异步编程
+* 安装
+```
+install i redux-thunk
+```
+* 配置中间件
+```javascript
+import {createStore, applyMiddleware} from 'redux'
+createStore(
+    reducer, //内部会第一次调用reducer来初始化state
+applyMiddleware(thunk)
+)
+```
+* 使用
+```javascript
+export function incrementAsnyc(number){
+    return (dispatch)=>{
+        setTimeout(()=>{
+            dispatch({type: 'INCRMENT', data: number})
+        }, 1000)
+    }
+} 
+```
+### redux调试工具
+* 安装
+  1. 安装chrome插件
+  2. 安装依赖
+```
+install i redux-devtools-extension
+```
+* 配置
+```jsx
+import {composeWithDevtools} from 'redux-devtools-extension'
+createStore(
+    reducer, //内部会第一次调用reducer来初始化state
+composeWithDevtools(applyMiddleware(thunk))
+)
+```
+### 使用redux管理多个reducer
+* 使用redux的combineReducers将需要管理的属性封装成一个对象
+```jsx
+export default combineReducers({
+    counter,
+    comments
+})
+```

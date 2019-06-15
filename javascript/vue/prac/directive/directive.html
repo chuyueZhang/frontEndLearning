@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-my-directive1="value1">app v-my-directive1</p>
+        <p v-my-directive2="value2">app v-my-directive2</p>
+    </div>
+    <div id="app1">
+        <p v-my-directive1>app1 v-my-directive1</p>
+        <p v-my-directive2>app1 v-my-directive2</p>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.directive('my-directive1', (el, bind, vnode, oldnode)=>{
+            console.log(el, bind, vnode, oldnode, '--------')
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                value1: 'aaa',
+                value2: 'bbb'
+            },
+            directives: {
+                'my-directive2'(el, bind){
+                    console.log(el, bind) 
+                }
+            }
+        })
+    </script>
+</body>
+</html>

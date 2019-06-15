@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .class1{
+        color: red;
+    }
+    .class2{
+        color: blue;
+    }
+</style>
+<body>
+    <div id="app">
+        <p v-if="ok">成功</p>
+        <p v-else>失败</p>
+        <p v-show="ok">成功</p>
+        <p v-show="!ok">失败</p>
+        <button @click="ok=!ok">update</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                ok: true
+            }
+        })
+    </script>
+</body>
+</html>

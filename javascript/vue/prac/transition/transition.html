@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .xxx-enter-active, .xxx-leave-active{
+        transition: opacity 1s;
+    }
+    .xxx-enter, .xxx-leave-to{
+        opacity: 0;
+    }
+    .move-enter-active, .move-leave-active{
+        animation: trigle 1s both;
+    }
+    @keyframes trigle{
+        from{
+            opacity: 1;
+            transform: translateX(0px)
+        }
+        to{
+            opacity: 0;
+            transform: translateX(20px)
+        }
+    }
+</style>
+<body>
+    <div id="app">
+        <button @click="ok=!ok">切换</button>
+        <transition name="xxx">
+            <p v-if="ok">成功！</p>
+        </transition>
+    </div>
+    <div id="app1">
+            <button @click="ok=!ok">切换</button>
+            <transition name="move">
+                <p v-if="ok">成功！</p>
+            </transition>
+        </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                ok: true
+            }
+            })
+            new Vue({
+            el: '#app1',
+            data: {
+                ok: true
+            }
+            })
+    </script>
+</body>
+</html>

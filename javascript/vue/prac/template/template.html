@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>1. 双大括号</p>
+        <p>hello {{username}}</p>
+        <p>hello {{username.toUpperCase()}}</p>
+        <p>hello {{label}}</p>
+        <p>hello <span v-text="label"></span></p>
+        <p>hello <span v-html="label"></span></p>
+        <p>2. 强制绑定</p>
+        <img v-bind:src="imgurl"><img :src="imgurl">
+        <p>3. 事件监听</p>
+        <button v-on:click="test">test</button><button @click="test()">test</button><br>
+        <button v-on:click="test('username')">test</button><button @click="test(username)">test</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                username: 'aaa',
+                label: '<a href="https://cn.vuejs.org/v2/guide/syntax.html">aaa</a>',
+                imgurl: 'https://cn.vuejs.org/images/logo.png'
+            },
+            methods: {
+                test(content){
+                    content&&alert(content)
+                    alert('hello!')
+                }
+            }
+        })
+    </script>
+</body>
+</html>
