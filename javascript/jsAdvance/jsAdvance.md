@@ -11,15 +11,13 @@
 * array: 特殊对象, 可通过下标执行, 内部有序
 ## 判断数据类型
 * typeof  
-    返回数据类型的字符串表达
-
-    可以判断数值, 字符串, undefined, boolean, function
-
-    不能判断null与object与array, 返回都是Object
+    * 返回数据类型的字符串表达
+    * 可以判断数值, 字符串, undefined, boolean, function
+    * 不能判断null与object与array, 返回都是Object
 * instanceof
-    返回boolean值, 只能判断对象的具体类型, 即是普通对象, 函数还是基本类型
+    * 返回boolean值, 只能判断对象的具体类型, 即是普通对象, 函数还是基本类型
 * ===(全等)
-    可以判断undefined与null, 由于它们的值只有1个
+    * 可以判断undefined与null, 由于它们的值只有1个
 ## 相关问题
 1. undefined与null的区别
    * undefined: 创建了变量未赋值
@@ -29,11 +27,9 @@
    * 最后赋值为null, 让这个变量原来指向的对象被垃圾回收机制回收
 3. 严格区分变量类型与数据类型
    * 数据类型
-
-        基本类型, 对象类型
+        * 基本类型, 对象类型
    * 变量类型(内存值类型)
-
-        基本类型, 引用类型
+        * 基本类型, 引用类型
 # 数据_内存_变量
 1. 什么是数据
    * 存储在内存中并代表特定信息, 本质是0101...
@@ -168,7 +164,7 @@ var func = new Func();
 func.__proto__ === Func.prototype   //true
 ```
 ## 原型链
-别名：隐式原型链
+  dsdfttttttttttttttttt55555tf别名：隐式原型链
 
 作用：查找对象属性(方法)
 1. 查找函数自身内部的方法
