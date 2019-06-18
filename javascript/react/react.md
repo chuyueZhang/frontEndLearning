@@ -550,6 +550,10 @@
 </html>
 ```
 ## 组件间通信
+* 实现两个案例：
+  1. comment
+  2. counter-react
+  3. search
 ### 通过props传递
 1. 共同的数据放在最近的父组件中，特有数据放在子组件中
 2. 通过props可以传递一般数据与函数数据，只能一层层的传递
@@ -563,6 +567,8 @@
 ## react-router
 * react的一个插件库
 * 常用来制作SPA
+* 实现一个案例：
+  1. router
 ### 路由的理解
 * 一个路由就是一种映射关系(key-value)
 * key为路由路径，value为Function(后台路由)/Component(前台路由)
@@ -582,6 +588,7 @@
 * redux是一个专门用于状态管理的库，不是react库
 * 可以用在vue，angular，react，但主要用于react
 * 作用：管理react应用中多个组件共享的状态
+* 将组件案例comment使用redux重写
 ### 运行机制
 * react组件从Store中读取state
 * react组件通过Action creators创建action然后dispatch产生的action

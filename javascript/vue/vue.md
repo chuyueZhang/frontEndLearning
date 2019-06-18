@@ -386,7 +386,7 @@
 ## 过滤器
 * 使用Vue.fiter(name, fallback)来自定义过滤器
 * 使用例子
-```javascript
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -548,4 +548,172 @@
     </script>
 </body>
 </html>
+```
+## vue的组件化编码
+* 实现三个案例：
+  1. comment
+  2. todolist(需要注释bootstrap样式否则会产生冲突)
+  3. search
+### 使用vue-cli脚手架来进行组件化编码
+* 安装
+```
+npx @vue/cli create vue_demo
+```
+* 运行
+```
+npm run serve
+```
+### 数据持久化保存
+#### localStorage
+1. window.localStorage.getItem(name)
+   * 通过标识名从localStorage中获取一段字符串
+   * 可以保存为json，通过JSON的方法进行转换
+### 组件间通信
+#### props属性
+* 子组件中声明props属性可以获取到父组件传递过来的数据
+* 一次只能从父组件传递给子组件，继续向下传递需要子组件的子组件声明props属性来获取
+* 示例：
+```javascript
+    export default {
+        props: {
+            addComment: {
+                type: Function,
+                required: true
+            }
+        }
+```
+#### 自定义事件
+* 在vue中有$on与$emit实例方法来监听和触发自定义事件
+* 给同一个组件声明监听的自定义事件只有当前组件可以触发
+* 声明方式可以是用this.$on
+* 父组件给子组件标签设置@xxx
+* 给子组件声明ref属性，在父组件中通过this.$refs来获取
+#### 订阅与发布
+* 通过使用pubsub-js第三方库来简化订阅与发布流程
+* 通过在祖先组件中调用pubsub.subscribe(name, callback)来订阅事件
+* 通过在后代组件中调用pubsub.publish(name, data)来发布事件
+* 通过这种方式能够跨组件传递数据
+#### slot插槽
+* 通过slot可以将原本写在子组件中的内容写在父组件中
+* 通过这种方式就减少了组件间通信的必要，在一定程度上充当了组件间通信的功能
+### vue-ajax
+#### vue-resource
+* 广泛用于v1.x的版本
+* 是promise形式的ajax封装插件
+* 使用时通过vue来加载插件
+* 加载后会在实例方法中新增$http对象
+* 通过调用其中的get或者post方法来发ajax请求
+```javascript
+import Vue from 'vue'
+import vueResource from 'vue-resource'
+Vue.use(vueResource)
+const vm = new Vue()
+vm.$http.get(url)
+.then(res=>{
+    //请求成功的回调
+}, res=>{
+    //请求失败的回调
+})
+```
+## UI组件库
+* mint-UI(由饿了么开发的移动端vueUI库)
+* Elment(饿了么开发的PC端vueUI库)
+## vue路由
+* 一个路由就是一种映射关系(key-value)
+* key为路由路径，value为Function(后台路由)/Component(前台路由)
+### 使用路由
+1. 注册路由
+```javascript
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import a from './a.vue'
+import b from './b.vue'
+import aa from './aa.vue'
+Vue.use(VueRouter)
+export default new VueRouter({
+    routes: [
+        {
+            path: '/a',
+            component: a,
+            children: [             //嵌套路由
+                {
+                    path: 'a',
+                    component: aa
+                },
+                {
+                    path: '',
+                    redirect: '/a/a'
+                }
+            ]
+        },
+        {
+            path: '/b',
+            component: b,
+        },
+        {
+            path: '/',
+            redirect: '/a'          //重定向
+        }
+    ]
+})
+```
+2. 配置路由器
+```javascript
+import Vue from 'vue'
+import router from './router'
+new Vue({
+    router
+})
+```
+3. 使用`<router-link>`来配置路由链接
+```javascript
+<router-link to="/a">a</router-link>
+```
+4. 使用`<router-view>`来配置路由显示区域
+```javascript
+<router-view></router-view>
+```
+### 缓存路由组件
+* 在每次切换路由时，原路由组件会被销毁
+* 如果不想要路由组件被销毁可以在`<router-view>`外添加`<keep-alive>`来达到缓存的目的
+```javascript
+<keep-alive>
+<router-view></router-view>
+</keep-alive>
+```
+### 向路由组件传递数据
+* 有时子路由需要获取上级组件中的数据
+* 此时需要向路由组件传递数据
+#### 通过路由的占位符实现
+* 设置占位符
+```javascript
+<router-link to="/a:id">a</router-link>
+```
+* 从子路由中获取占位符中的参数
+```javascript
+const vm = new Vue({
+    mounted(){
+        console.log(this.$route.params.id)
+    }
+})
+```
+#### 通过`<router-view>`传递数据
+* 传递数据
+```javascript
+<router-view msg="msg"></router-view>
+```
+* 从子路由中获取数据
+```javascript
+const vm = new Vue({
+    props: ['msg']
+})
+```
+### 编程式路由导航
+* 通过js实现对路由的跳转回退等功能
+* 对Vue实例使用`this.$router`中的一些方法来实现
+```javascript
+this.$router.push('/a')
+this.$router.replace('/b')
+this.$router.back()
+this.$router.go(-1)
 ```
