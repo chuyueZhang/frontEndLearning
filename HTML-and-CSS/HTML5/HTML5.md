@@ -25,6 +25,16 @@
 * 在dataset对象中, 自定义HTML属性以驼峰命名法表示(`myTest`)
 ## 文本可编辑
 * 新增HTML属性contentEditable, 值必须为true否则无法开启
+## HTML解析器相关
+* 这些方法的兼容性都非常高
+* 每次调用都会需要创建与销毁html解析器，虽然性能比用js直接创建节点要快，但是尽可能减少直接操作这些属性的可能性
+* innerHTML
+  * 返回内部html代码
+* outerHTML
+  * 返回包括当前节点的html字符串
+  * 给这个属性赋值等同于使用replace
+* insertAdjacentHTML()
+  * 接收两个参数，第一个参数值是字符串，beforebegin，afterbegegin，beforeend，afterend，第二个参数是需要被插入的html字符串
 # HTML5
 * HTML5是定义HTML标准的最新版本, 表示两种概念
   * 它是一个新版本的HTML语言, 具有新的元素, 属性和行为

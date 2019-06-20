@@ -164,7 +164,7 @@ var func = new Func();
 func.__proto__ === Func.prototype   //true
 ```
 ## 原型链
-  dsdfttttttttttttttttt55555tf别名：隐式原型链
+  别名：隐式原型链
 
 作用：查找对象属性(方法)
 1. 查找函数自身内部的方法
