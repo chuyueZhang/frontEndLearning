@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="test">
+        <li>test</li>
+        <li>test</li>
+        <li>test</li>
+    </ul>
+    <script>
+        const ul = document.getElementById('test')
+        const fragment = document.createDocumentFragment()
+        let node
+        while(node = ul.firstChild){    //一个子节点只可能拥有一个父节点
+            fragment.appendChild(node)  //当这个子节点插入到别的节点中时，原父节点就不再拥有此子节点
+        }
+        [].slice.call(fragment.childNodes).forEach(node=>{  //将伪数组转换成真数组后遍历
+            if(node.nodeType === 1){    //当节点为元素节点时才执行
+                node.textContent = 'test1'
+            }
+        })
+        ul.appendChild(fragment)
+    </script>
+</body>
+</html>
