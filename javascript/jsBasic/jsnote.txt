@@ -1111,20 +1111,28 @@ DOM简介
         3.all
             属性值为当前页面中的所有元素节点的数组
             这个属性值本身为undefined，它的typeof值也为undefined
+        4.URL
+            获取当前页面的url
+        5.domain
+            获取当前页面的域名部分
+        6.referrer
+            获取是哪个页面链接跳转到当前页面，没有则返回空字符串
     常用方法：
         语法：
             document.方法();
         1.getElementById()
             通过ID值获取对应的节点
+            IE8中不区分大小写
+            IE7中会匹配表单元素的name值
         2.getElementsByTagName()
             通过标签名获取一组节点
-            返回值是一个HTMLCollection，与数组相似，不能使用forEach方法，即使只获取到一个节点时，也封装成HTMLCollection返回
+            返回值是一个HTMLCollection，即使只获取到一个节点时，也封装成HTMLCollection返回
         3.getElementsByName()
             通过name的值获取一组节点
             返回值是一个nodelist，与数组相似，可以使用forEach方法，即使只获取到一个节点时，也封装成nodelist返回
         4.getElementsByClassName()
             通过class属性获取一组节点
-            返回值是一个HTMLCollection，与数组相似，不能使用forEach方法，即使只获取到一个节点时，也封装成HTMLCollection返回
+            返回值是一个HTMLCollection，即使只获取到一个节点时，也封装成HTMLCollection返回
             仅支持IE8以上
         5.querySlector()
             通过CSS选择器返回一个节点，当能匹配多个节点时，返回满足匹配的第一个节点
@@ -1133,6 +1141,7 @@ DOM简介
             通过CSS选择器返回一组节点
             返回值是一个nodelist，与数组相似，可以使用forEach方法，即使只获取到一个节点时，也封装成nodelist返回
             仅支持IE7以上
+        HTMLCollection：支持通过索引或者字符串来查找需要的节点，在后台则分别使用它的item()与namedItem()方法来获取
 事件
     当用户与浏览器进行任何交互时都会产生相应的事件
     JS可以通过给事件绑定相应函数来使事件触发时执行相应的函数,相应函数会在执行事件时才会被执行，因此相应函数内部使用的变量可能会与预期不一致
@@ -1182,6 +1191,8 @@ DOM简介
             通过CSS选择器返回当前元素节点内部的一组节点
             返回值是一个nodelist，与数组相似，可以使用forEach方法，即使只获取到一个节点时，也封装成nodelist返回
             仅支持IE7以上
+        7.hasChildNodes()
+            返回当前节点内部是否拥有1个或多个子节点
     常用属性：
         innerHTML
             获取当前元素节点中的HTML代码
@@ -1237,6 +1248,12 @@ DOM的增删改
             将原节点替换成新节点
             语法：
                 父节点.replaceChild(新节点, 原节点);
+        7.cloneNode()
+            返回值是一个节点的拷贝，接受一个布尔值作为参数，true则为深度拷贝，false为浅拷贝
+            语法1：
+                节点:cloneNode(boolean)
+        8.normalize()
+            返回一个经过一定处理后的节点, 这个过程会合并文本节点并删除空白的文本节点
     由于许多方法都要通过父节点调用对应的方法来操作节点，因此可使用：
         子节点.parentNode.removeChild(子节点);
     类似的方法来对节点进行直接操作而不需要获取它的父节点
@@ -1524,6 +1541,7 @@ DOM的增删改
 BOM
     1.Window
         代表浏览器窗口并且保存浏览器的全局对象
+        window.open 当弹窗被浏览器内置工具屏蔽时会返回null，被工具屏蔽会报错
     2.Navigator
         代表浏览器信息
         由于历史原因大部分属性没有意义，只剩下userAgent可以判断浏览器类型
