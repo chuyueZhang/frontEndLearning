@@ -1292,6 +1292,43 @@ DOM的增删改
             div = "<input type='checkbox'/>" + div.innterHTML;
             </script>
     两部分代码功能基本相同，唯一区别是如果input标签绑定了响应函数，在代码2中会失效
+DOM的遍历
+    document.createNodeIterator(root, whatToShow, filter, entityReferenceExpansion)
+        参数一: 指定开始遍历的根节点，只能遍历body标签中的节点，其他标签会被跳过
+        参数二: 标识要访问标签元素的哪些节点，它是一个数字代码，语义化信息保存在NodeFilter类型中
+                NodeFilter.SHOW_ALL         显示所有节点
+                NodeFilter.SHOW_ELEMENT     显示元素节点
+                NodeFilter.SHOW_ATTRIBUTE   显示属性节点
+                NodeFilter.SHOW_TEXT        显示文本节点
+                NodeFilter.SHOW_DOCUMENT    显示文档节点
+                NodeFilter.SHOW_COMMENT     显示注释节点
+        参数三: 是一个NodeFilter对象，或者一个返回接受或者拒绝特定标签的函数
+                NodeFilter对象是一个只有acceptNode方法的对象，该方法是一个迭代回调函数，有一个node参数，迭代器中有几个节点则会被执行几次
+                返回值应是NodeFilter.FILTER_ACCEPT或者NodeFilter.FILTER_SKIP
+                通过返回值来判断是否能够访问当前回调函数中的标签元素
+                var filter = {
+                    acceptNode: function(node){
+                        return node.tagName.toLowerCase() == "p" ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
+                    }
+                也可以是一个与acceptNode方法相似的函数
+        参数四: 标识是否要扩展实体引用，在html中没有意义
+        nodeIterator有两个方法nextNode()与previousNode()来访问迭代器中的节点
+        刚创建好的迭代器一开始是指向一个标识根节点的指针，第一次调用nextNode会指向第一个子节点
+        当越界时返回值为null
+        支持IE9+和其他浏览器
+    document.createTreeWalker(root, whatToShow, filter, entityReferenceExpansion)
+        可以实现在经过过滤的root节点中任意跳跃，非常灵活
+        参数与上一个函数一致，唯一有区别的在于第三个参数的Nodefilter函数增加一个有效的返回值NodeFilter.FILTER_REJECT
+        此时迭代器会跳过这个节点及其后代元素而不是像NodeFilter.FILTER_SKIP那样单纯跳过当前节点，仍然进行深度遍历
+        在createNodeIterator的第三个参数中返回NodeFilter.FILTER_REJECT作用与NodeFilter.FILTER_SKIP相同
+        相较于NodeIterator对象，TreeWalker对象多出一些重要方法:
+            parentNode()
+            firstChild()
+            lastChild()
+            nextSibling()
+            previousSibling()
+        通过这些方法可以实现在TreeWalker对象中任意跳转到目标元素
+        W3C标准DOM2，但是IE不支持
 操作样式
     在css的属性中如果有用-来间接的情况，在style需要使用驼峰命名法来修改属性名从而设置或者读取对应的样式
     1.style
@@ -1539,6 +1576,9 @@ DOM的增删改
     4.mouseleave    鼠标移出
     5.mouseover      鼠标移入
     6.mouseout      鼠标移出
+    7.contextmenu       上下文菜单事件，可以通过阻止默认行为来自定义上下文菜单
+    8.beforeunload     通常在切换页面时触发
+    9.DOMContextLoad    在DOM树渲染完成后触发，不管CSS，JS文件是否渲染完毕
     以上四个事件触发机制: 当鼠标移动至绑定监听器的元素或者子元素时就会被触发
     区别: 前两者不会冒泡后两者会
 BOM
