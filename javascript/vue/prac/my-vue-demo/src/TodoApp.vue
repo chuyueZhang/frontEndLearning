@@ -1,24 +1,35 @@
 <template>
     <div class="todo-container">
         <div class="todo-wrap">
-            <Head @addlist="addList"/>
+            <Head/>
+            <!-- 原生方式
             <List :todoLists="todoLists"/>
-            <Foot :todoLists="todoLists" @clear="clear"/>
+            <Foot :todoLists="todoLists" @clear="clear"/> -->
+            <!-- vuex -->
+            <List/>
+            <Foot/>
         </div>
     </div>
 </template>
 
 <script>
-import Pubsub from 'pubsub-js'
+// 通过订阅发布控制状态
+// import Pubsub from 'pubsub-js'
 import Head from './components/todoComponents/Head.vue'
 import List from './components/todoComponents/List.vue'
 import Foot from './components/todoComponents/Foot.vue'
-import {getData, setData} from './util/storageUtil'
+import {setData} from './util/storageUtil'
+    import {mapState} from 'vuex'
     export default {
-        data(){
-            return {
-                todoLists: getData()
-            }
+        //原生方式
+        // data(){
+        //     return {
+        //         todoLists: getData()
+        //     }
+        // },
+        //vuex方式
+        computed: {
+            ...mapState(['todoLists'])
         },
         watch: {
             todoLists: {
@@ -27,17 +38,18 @@ import {getData, setData} from './util/storageUtil'
             }
         },
         methods: {
-            addList(list){
-                if(!list.content){
-                    return alert('不能为空！')
-                }
-                const{content ,completed} = list
-                this.todoLists.unshift({content, completed})
-            },
-            clear(){
-                const a = this.todoLists.filter(v=>v.completed!==true)
-                this.todoLists.splice(0, this.todoLists.length, ...a)  
-            }
+            //原生方式
+            // addList(list){
+            //     if(!list.content){
+            //         return alert('不能为空！')
+            //     }
+            //     const{content ,completed} = list
+            //     this.todoLists.unshift({content, completed})
+            // },
+            // clear(){
+            //     const a = this.todoLists.filter(v=>v.completed!==true)
+            //     this.todoLists.splice(0, this.todoLists.length, ...a)  
+            // }
         },
         components: {
             Head,
@@ -45,11 +57,14 @@ import {getData, setData} from './util/storageUtil'
             Foot
         },
         mounted(){
-            Pubsub.subscribe('deleteItem', (msg, index)=>{
-                if(confirm(`是否要删除${this.todoLists[index].content}？`)){
-                    this.todoLists.splice(index, 1)
-                }
-            })
+        // 通过订阅发布管理状态
+        //     Pubsub.subscribe('deleteItem', (msg, index)=>{
+        //         if(confirm(`是否要删除${this.todoLists[index].content}？`)){
+        //             this.todoLists.splice(index, 1)
+        //         }
+        //     })
+        // }
+        this.$store.dispatch('initial')
         }
     }
 </script>

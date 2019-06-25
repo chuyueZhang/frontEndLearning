@@ -4,12 +4,13 @@
             <input type="checkbox" v-model="todoList.completed"/>
             <span>{{todoList.content}}</span>
         </label>
-        <button class="btn btn-danger" style="display:none" @click="delteItem(index)">删除</button>
+        <button class="btn btn-danger" style="display:none" @click="deleteItem(index)">删除</button>
     </li>
 </template>
 
 <script>
-import Pubsub from 'pubsub-js'
+// 订阅发布方式
+// import Pubsub from 'pubsub-js'
     export default {
         props:{
             todoList: {
@@ -27,8 +28,13 @@ import Pubsub from 'pubsub-js'
             }
         },
         methods: {
-            delteItem(index){
-                Pubsub.publish('deleteItem', index)
+            //原生方式
+            // delteItem(index){
+            //     Pubsub.publish('deleteItem', index)
+            // }
+            //vuex方式
+            deleteItem(index){
+                this.$store.dispatch('deleteItem', index)
             }
         }
     }

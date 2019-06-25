@@ -9,14 +9,18 @@
 <script>
 import Item from './Item'
     export default {
-        props:{
-            todoLists: {
-                type: Array,
-                require: true
+        //原生方式
+        // props:{
+        //     todoLists: {
+        //         type: Array,
+        //         require: true
+        //     }
+        // },
+        //vuex方式
+        computed: {
+            todoLists(){
+                return this.$store.state.todoLists
             }
-        },
-        data(){
-            return {}
         },
         components: {
             Item

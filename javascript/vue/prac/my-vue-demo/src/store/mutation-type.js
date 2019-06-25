@@ -1,0 +1,7 @@
+export const INCREMENT = 'increment'
+export const DECREMENT = 'decrement'
+export const ADDITEM = 'addItem'
+export const CLEAR = 'clear'
+export const INITIAL = 'initial'
+export const DELETEITEM = 'deleteItem'
+export const SETALLSELECTED = 'setAllSelected'

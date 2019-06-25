@@ -15,7 +15,10 @@
         methods: {
             additem(){
                 const {content, completed} = this
-                this.$emit('addlist', {content, completed})
+            //原生方式
+            //  this.$emit('addlist', {content, completed})
+            //vuex方式
+                this.$store.dispatch('addItem', {content, completed})
                 this.content = ''
             }
         }

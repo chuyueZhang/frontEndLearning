@@ -871,7 +871,7 @@ MVVM.prototype._proxy = function(item){
   * getter: 注册好的getter对象
 * 方法:
   * dispatch(actionname, data): 分发调用action
-  * commit(mutationname, data): 直接调用mutation
+  * commit(mutationname, {data}): 直接调用mutation,第二个参数必须是对象
 #### state对象
 * 包含状态的对象
 #### mutations对象

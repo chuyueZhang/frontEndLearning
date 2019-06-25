@@ -11,30 +11,46 @@
 </template>
 
 <script>
+
+    import {mapState, mapActions, mapGetters} from 'vuex'
     export default {
-        props: {
-            todoLists: {
-                type: Array,
-                require: true
-            }
-        },
+        //原生方式
+        // props: {
+        //     todoLists: {
+        //         type: Array,
+        //         require: true
+        //     }
+        // },
         computed: {
-          completedNum(){
-            return this.todoLists.reduce((prev, current)=> prev += current.completed ? 1 : 0, 0)
-          },
+          //原生方式
+          // completedNum(){
+          //   return this.todoLists.reduce((prev, current)=> prev += current.completed ? 1 : 0, 0)
+          // },
+          //vuex方式
+          ...mapState(['todoLists']),
+          ...mapGetters(['completedNum']),
           all: {
             get(){
-              return this.completedNum===this.todoLists.length&&this.completedNum!==0 ? true : false
+              //原生方式
+              // return this.completedNum===this.todoLists.length&&this.completedNum!==0 ? true : false
+              //vuex方式
+              return this.$store.getters.isAllSelected
             },
             set(bool){
-                this.todoLists.map((v)=> v.completed=bool)
+              //原生方式
+                // this.todoLists.map((v)=> v.completed=bool)
+                //vuex
+                this.$store.commit('setAllSelected', bool)
             }
           }
         },
         methods: {
-          clear(){
-            this.$emit('clear')
-          }
+          //原生方式
+          // clear(){
+          //   this.$emit('clear')
+          // }
+          //vuex方式
+          ...mapActions(['clear'])
         }
     }
 </script>
