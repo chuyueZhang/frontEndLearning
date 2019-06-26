@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件模拟</title>
+</head>
+<style>
+    #test{
+        height: 100px;
+        width: 100px;
+        background-color: #aaa;
+    }
+</style>
+<body>
+    <div id="test">
+        点击后触发death事件
+    </div>
+    <script>
+        window.onload = function(){
+            let test = document.getElementById('test')
+            test.onclick = function(e){
+                let event = document.createEvent('CustomEvent')
+                event.initCustomEvent('death', true, true, {msg: 'u r dead'})
+                this.dispatchEvent(event)
+            }
+            test.addEventListener('death', function(e){
+                console.log(e, e.detail)
+            })
+        }
+    </script>
+</body>
+</html>

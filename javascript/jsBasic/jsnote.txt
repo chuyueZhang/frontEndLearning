@@ -1581,6 +1581,30 @@ DOM的遍历
     9.DOMContextLoad    在DOM树渲染完成后触发，不管CSS，JS文件是否渲染完毕
     以上四个事件触发机制: 当鼠标移动至绑定监听器的元素或者子元素时就会被触发
     区别: 前两者不会冒泡后两者会
+事件模拟
+    普通浏览器,还包括IE10及以上
+    API:
+    document.createEvent(eventname)
+        传入一个字符串当做参数，这个字符串在DOM2与DOM3标准中有不同的形式，DOM3中将复数变成单数，建议不要再使用DOM2的标准
+            1. UIEvents 一般化的UI事件，鼠标与键盘事件都继承自此事件，在DOM3中是UIEvent
+            2. MouseEvents 鼠标事件，在DOM3中是MouseEvent
+            3. MutationEvents   一般化的DOM变动事件，在DOM3中是MutationEvent
+            4. HTMLEvents    一般化的HTML事件，没有对应的DOM3事件
+        在DOM2中没有键盘事件，但是在DOM3中实现了KeyboardEvent
+        返回值是一个对应的event对象，根据不同的事件子类有不同的初始化方法
+        以MouseEvent为例，初始化方法为initMouseEvent，传入参数与事件类型有关，详细内容需要参考mdn文档
+        在DOM3中还定义了自定义事件CustomEvent，返回的对象通过initCustomEvent初始化
+    element.dispatchEvent(event)
+        传入一个事件对象
+        用来触发事件对象定义的事件
+    IE9及以下
+    API:
+    document.createEventObject()
+        没有参数
+        返回值是一个event对象，event的所有属性与方法都需要自定义，没有预设参数
+    element.fireEvent(eventname, event)
+        第一个参数是事件名，如onclick等
+        第二个参数是自定义的event，
 BOM
     1.Window
         代表浏览器窗口并且保存浏览器的全局对象
