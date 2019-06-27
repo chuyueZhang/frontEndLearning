@@ -1673,5 +1673,53 @@ json
         由于效率与安全问题，尽量不要使用
 左右查询
     对等号左右两边查询即左右查询，右查询没有找到时会直接报错，左查询没有找到时会在全局创建
+表单脚本
+    表单对应的是HTMLFormElement类型，继承自HTMLElement，并且有一些额外的属性和方法
+        acceptCharset: 服务器能够处理的字符集，等价于HTML中的accpet-charset特性
+        action：接受请求的url，等同于表单的action
+        elements：表单中所有控件的集合(HTMLCollection)
+        enctype: 请求的编码类型，等同于HTML中的enctype
+        length：表单中控件的数量
+        method：等价于HTML中的方法，通常是get或post
+        name：表单的名称
+        reset():将所有表单域重置为默认值
+        submit():提交表单
+        target：用于发送请求和接收相应的窗口名称，等价于HTML中的target
+    可以通过常规的DOM操作来获取表单元素，也可以通过document.forms来获取一个页面中所有表单的HTMLCollection
+    提交表单
+        当表单提交时会触发submit事件
+    重置表单
+        让表单重置时会触发reset事件，在体验上最好不要主动触发重置事件，会严重影响用户体验，必要时使用回退到上一个页面代替
+    表单字段
+        可以通过常规的DOM操作来获取表单内控件，也可以使用表单内属性elements返回一个表单控件的集合
+        这个集合是一个HTMLFormControlsCollection，它继承自HTMLCollection并重新封装了namedItem方法
+        当通过控件的name来访问时，如document.forms[0].elements['color'], 它的返回值是一个NodeList
+        也可以通过访问表单的属性来访问，如document.forms[0]['color']，但这是向后兼容的方式，最好不要使用
+    表单控件的共有属性
+        除了fieldset以外所有表单控件都公用一组属性
+            disabled    布尔值，表示当前控件是否被禁用
+            form    表示指向当前表单的指针
+            name    表示当前控件的名称
+            readOnly    布尔值，表示是否只读
+            tabIndex    表示tab键切换的序号
+            type    表示控件类型，在input中就是type类型，在button中默认是submit，在单选列表中是select-one，在多选列表中是select-mltiple
+            value   表示将会提交给服务器的值
+    表单控件的共有方法
+        每个表单控件都拥有两个方法
+            focus   使当前控件获取焦点
+            blur    使当前控件失去焦点
+        当对隐藏的控件调用这些方法时会抛出错误
+    表单控件的共有事件
+        除了支持鼠标，键盘，更改，HTML事件外所有控件都支持三个事件
+            change  对于input与textarea来说，失去焦点且值改变时触发，对select来说，切换就触发
+            blur    与change事件的先后顺序不定，不能提前假定某个事件一定先触发
+            focus
+    文本框脚本
+        在表单中有两种文本框text与textarea，两者特性大致上是相同的，但是仍然有些重要的区别
+            text可以设置maxlength来指定文本框最大能够输入的字符数量，size指定能够显示的最大字符数量即文本框大小，value指定文本初始值
+            textarea的文本初始值只能在<textarea></textarea>之间设定，文本框大小通过rows和cols来设置，不能设置最多能接受的字符数量
+        对于这两种文本框都最好使用value值来设定文本内容而不要使用标准DOM方法:
+            用setAttribute设置input的value
+            获取第一个子节点修改textarea的value
 
 
