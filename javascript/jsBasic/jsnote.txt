@@ -1329,6 +1329,45 @@ DOM的遍历
             previousSibling()
         通过这些方法可以实现在TreeWalker对象中任意跳转到目标元素
         W3C标准DOM2，但是IE不支持
+DOM范围
+    可以通过范围来选择文档中的一个区域而不必考虑节点的界限(选择在后台完成，对用户是不可见的)
+    以下属性可以获取到当前范围在文档中的位置信息
+        startContainer  
+            包含范围起点的节点，即起点的父节点
+        startOffset     
+            范围起点在startContainer中的偏移量
+            如果起点是文本节点，注释节点，cdata节点则值是范围起点节点距离startContainer需要跳过的字符串
+            如果起点是元素节点，则值是范围起点节点在startContainer中的子节点索引
+        endContainer
+            包含范围终点的节点，即终点的父节点
+        endOffset
+            范围终点在startContainer中的位置
+            值计算规则与startOffset相同
+        commonAncestorContainer
+            起点节点与终点节点共同的最近的那个祖先节点
+    通过以下方法可以进行选择范围操作
+        selectNode
+            选中传入参数的那个节点及内部节点
+        selectNodeContents
+            选中传入参数的那个节点的内部节点
+        setStartBefore(refnode)
+            将范围起点设置为refnode之前，refnode就成为了范围选区的第一个节点
+            startContainer变成refnode的父节点，startOffset的值变成refnode在父节点中的索引
+        setStartAfter(refnode)
+            将范围起点设置为refnode之后，refnode就成为了范围选区外的节点，下一个节点是范围选区内第一个节点
+            startContainer变成refnode的父节点，startOffset的值变成refnode在父节点中的索引加1
+        setEndBefore(refnode)
+            将范围终点设置为refnode之前，refnode就成为了范围选区的最后一个节点
+            startContainer变成refnode的父节点，startOffset的值变成refnode在父节点中的索引
+        setEndAfter(refnode)
+            将范围起点设置为refnode之后，refnode就成为了范围选区外的节点，下一个节点是范围选区内第一个节点
+            startContainer变成refnode的父节点，startOffset的值变成refnode在父节点中的索引加1
+        setStart()
+            传入两个参数，第一个参数是参照节点，第二个参数是偏移量
+            参照节点会被当做startContainer,偏移量会变成startOffset
+        setEnd()
+            传入两个参数，第一个参数是参照节点，第二个参数是偏移量
+            参照节点会被当做endContainer,偏移量会变成endOffset
 操作样式
     在css的属性中如果有用-来间接的情况，在style需要使用驼峰命名法来修改属性名从而设置或者读取对应的样式
     1.style
