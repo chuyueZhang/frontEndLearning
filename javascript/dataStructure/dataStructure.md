@@ -1418,3 +1418,150 @@ function BinarySearchTree(){
 * 而使用邻接表计算入度非常麻烦，但是也能够实现
 * 如果需要计算入度需要创建一个逆邻接表，但是开发中入度的使用比较少见
 ### 图结构的封装
+```javascript
+function Graph(){
+    //用来保存顶点的数组结构
+    this.vertexes = []
+    //用来保存边的字典结构，js中直接用对象代替
+    this.edge = {}
+}
+```
+### 图结构的实现
+* 在图中一般有一些常用方法:
+  1. setVertex(v)   传入一个参数v，字符串，用来表示顶点名
+  2. setEdge(v1, v2)  传入两个参数，分别表示两个顶点名
+  3. toString() 打印整个图的结构，以A->B,C,D的形式表示图内的关系
+  4. BFS(v, handler) 传入一个v作为起点进行广度优先搜索
+  5. DFS(v, handler) 传入一个v作为起点进行深度优先搜索
+```javascript
+function Graph(){
+    //用来保存顶点的数组结构
+    this.vertexes = []
+    //用来保存边的字典结构，js中直接用对象代替
+    this.edge = {}
+    Graph.prototype.setVertex = function(v){
+        //保存顶点，并在邻接表中生成一个数组
+        this.vertexes.push(v)
+        this.edge[v] = []
+    }
+    Graph.prototype.setEdge = function(v1, v2){
+        //顶点判断，此处实现无向图，因此没有对应的两个顶点则返回false
+        if(this.edge.hasOwnProperty(v1) && this.edge.hasOwnProperty(v1)){
+            //在邻接表中v1对应的位置压入要互相形成边的v2
+            this.edge[v1].push(v2)
+            //在邻接表中v2对应的位置压入要互相形成边的v1
+            this.edge[v2].push(v1)
+            return true
+        }
+        
+        return false
+    }
+    Graph.prototype.toString = function(){
+        //遍历邻接表中的顶点
+        let result = ''
+        for(key in this.edge){
+            result += `${key} -> `
+            this.edge[key].forEach(item=>{
+                result += `${item} `
+            })
+            result += '\n'
+        }
+        return result
+    }
+    Graph.prototype.initializeColor = function(){
+        //创建一个字典保存每个顶点的颜色用于遍历，每次遍历前初始化颜色为白色表示没有访问也没有探索过
+        //颜色使用数字表示，白-0，灰-1，黑-2
+        this.color = {}
+        this.vertexes.forEach(item=>{
+            this.color[item] = 0
+        })
+    }
+}
+```
+### 图的遍历
+* 图的遍历意味着要将图的每个顶点访问一次，并且不能有重复的访问
+* 有两种算法可以对图进行遍历
+  * 广度优先搜索(Breadth-first-search BFS)
+  * 深度优先搜索(Depth-first-search DFS)
+* 两种遍历算法都要指定一个入口节点
+* 为了记录顶点是否被访问过，使用三种状态来反应他们的状态
+  1. 白色：表示该顶点还没有被访问过
+  2. 灰色：表示该顶点被访问过但没有被探索过
+  3. 黑色：表示该顶点被访问过且被探索过
+#### 广度优先搜索思路
+* 广度优先算法会从指定的第一个顶点开始遍历图，先访问其相邻顶点
+* 对树结构的层次遍历也可以使用这种思想
+* 实现思路
+  1. 创建一个队列Q
+  2. 将V标注为被发现的(灰色)，并将V送入Q
+  3. 如果Q非空执行以下步骤
+     1. 将V从Q中取出
+     2. 将V标注为灰色
+     3. 将V所有所有未被访问过的邻接点(白色)，加入到队列中
+     4. 将V标注为黑色
+##### 示意图
+![](./BFS.png)
+##### 实现
+```javascript
+    Graph.prototype.BFS = function(v, handler){
+        //初始化颜色
+        this.initializeColor()
+        //创建队列来保存访问的顶点
+        let queue = new Queue()
+        //将第一个顶点压入队列
+        queue.enqueue(v)
+        //将第一个顶点置为灰色表示访问但未探索过
+        this.color[v] = 1
+        while(queue.size() > 0){
+            let current = queue.dequeue()
+            //判断当前取出的顶点有没有被探索过，探索过则取队列中下一个顶点
+            if(this.color[current] === 2){
+                continue
+            }
+            //将从队列取出的顶点置为黑色表示访问且探索过
+            this.color[current] = 2
+            //执行回调函数并传入顶点名作为参数
+            handler(current)
+            //将与取出的顶点相连的顶点都压入队列并将没有访问过的顶点置为灰色
+            this.edge[current].forEach(item=>{
+               queue.enqueue(item)
+               if(this.color[item] === 0){
+                   this.color[item] = 1
+               }
+            })
+        }
+    }
+```
+#### 深度优先搜索思路
+* 先随机寻找一条路径，走到路径的尽头再回过头来找另外的路径，直到走完所有路径
+* 与树的先序遍历思想类似
+* 可以使用栈也可以使用递归来实现
+##### 示意图
+![](./DFS.png)
+##### 实现
+```javascript
+    Graph.prototype.DFS = function(v, handler){
+        //初始化顶点颜色
+        this.initializeColor()
+        //执行递归
+        this.DFSPerVertex(v, handler)
+    }
+    Graph.prototype.DFSPerVertex = function(v, handler){
+        //已经探索过的节点退出递归
+        if(this.color[v] === 2){
+            return
+        }
+        //探索当前节点并将当前节点置为黑色
+        this.color[v] = 2
+        //执行回调
+        handler(v)
+        //访问与当前探索的顶点相连的其他顶点
+        this.edge[v].forEach(item=>{
+            //没有访问过的顶点置为灰色,访问过的顶点不再访问
+            if(this.color[item] === 0){
+                this.color[item] = 1
+                DFSPerVertex(item, handler)
+            }
+        })
+    }
+```
