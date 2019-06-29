@@ -1323,7 +1323,7 @@ function BinarySearchTree(){
 ![](./leftRotate.png)
 ![](./rightRotate.png)
 #### 左旋转规则
-* 让根节点成为根节点右子树的左子树，让涉及到的另外两个子树互相交换位置
+* 让根节点成为根节点右子树的左子树，让原根节点右子树的左子树变成原根节点的右子树
 * 步骤:
   1. 以X作为根节点，将X设置为X的右子节点Y的左子节点b
   2. 让b成为X的右子节点
@@ -1351,6 +1351,199 @@ function BinarySearchTree(){
   1. 以p为根节点进行左旋转变成情况四
   2. 以g为根节点进行右旋转
   3. 将p当做新插入节点，进行递归重新判断
+### 红黑树的实现
+```javascript
+function RedBlackTree(){
+    this.root = {
+        pointer: null
+    }
+    function Node(node){
+        this.key = node
+        this.left = null
+        this.right = null
+        this.parent = null
+        //0表示黑，1表示红，初始化为红
+        this.color = 1
+        this.isNIL = false
+    }
+    //创建红黑树中的叶子节点，唯一作用就是标识颜色
+    function NIL(){
+        this.parent = null
+        //NIL的颜色必定为黑
+        this.color = 0
+        this.isNIL = true
+    }
+    RedBlackTree.prototype.insert = function(node){
+        let current = this.root.pointer
+        let isleft = true
+        //初始化新节点及它的两个NIL子节点
+        const newNode = new Node(node)
+        const leftChild = new NIL()
+        const rightChild = new NIL()
+        //将两个NIL分别置为新节点的左右节点
+        newNode.left = leftChild
+        newNode.right = rightChild
+        //给NIL指定父节点
+        leftChild.parent = newNode
+        rightChild.parent = newNode
+        if(!!current){
+            //current存在时向下继续查找
+            while(!current.isNIL){
+                if(newNode.key < current.key){
+                    //保存下可能成为parent的节点
+                    const parent = current
+                    current = current.left
+                    isleft = true
+                }else{
+                    //保存下可能成为parent的节点
+                    const parent = current
+                    current = current.right
+                    isleft = false
+                }
+            }
+            //循环结束则current指向了应该插入的位置
+            current.parent[isleft ? 'left' : 'right'] = newNode
+            newNode.parent = current.parent
+        }else{
+            //current不存在时说明是新树，直接将新节点置为根节点
+            this.root.pointer = newNode
+            newNode.parent = this.root
+        }
+        //修改树结构以适应红黑树定义
+        this.applyRule(newNode)
+    }
+    //获取node节点的uncle节点
+    RedBlackTree.prototype.getUncle = function(node){
+        const grand = node.parent.parent
+        const parent = node.parent
+        return grand[(parent === grand.left) ? 'right' : 'left']
+    }
+    RedBlackTree.prototype.flipColor = function(node, color){
+        if(color === 'black'){
+            node.color = 0
+            return true
+        }else if(color === 'red'){
+            node.color = 1
+            return true
+        }
+        return false
+    }
+    RedBlackTree.prototype.applyRule = function(n){
+        //n不存在时退出递归
+        if(!n) return
+        //初始化节点n的父节点p,祖父节点g,叔叔节点u
+        const p = n.parent
+        let g = null
+        let u = null
+        //p不存在时不初始化g,u
+        if(!!p){
+            g = p.parent
+        //g不存在时不初始化u
+            if(!!g){
+                u = this.getUncle(n)
+            }
+        }
+        //情况一，n是根节点时直接将颜色置为黑色
+        if(n === this.root.pointer){
+            this.flipColor(n, 'black')
+        }else if(p.color === 0){
+            //情况二，p是黑色时，无需修改
+        }else if(p.color === 1 && u.color === 1){
+            //情况三，p,u是红色，将p,u置为黑色，g置为红色
+            this.flipColor(p, 'black')
+            this.flipColor(u, 'black')
+            this.flipColor(g, 'red')
+            //以现g为新n递归向上修改新树的结构以匹配红黑树规则
+            this.applyRule(g)
+        }else if(p.color === 1 && u.color ===0 && n === p.left){
+            //情况四, p是红色，u是黑色，n是p的左节点
+            //将p置为黑色，g置为红色
+            this.flipColor(p, 'black')
+            this.flipColor(g, 'red')
+            //以g为根进行右旋转
+            this.rightRotate(g)
+            //旋转完后原p成为现g,以现g为新n递归向上修改新树的结构以匹配红黑树规则
+            this.applyRule(p)
+        }else{
+            //情况五, p是红色，u是黑色，n是p的右节点
+            //将p置为黑色，g置为红色
+            this.flipColor(p, 'black')
+            this.flipColor(g, 'red')
+            //以p为根进行左旋转就变成了情况四
+            this.leftRotate(p)
+            //以g为根进行右旋转
+            this.rightRotate(g)
+            //旋转完后原n成为现g,以现g为新n递归向上修改新树的结构以匹配红黑树规则
+            this.applyRule(n)
+        }
+    }
+    RedBlackTree.prototype.leftRotate = function(root){
+        //获取根节点的右节点
+        const right = root.right
+        //获取右节点的左节点
+        const leftOfRight = right.left
+        //获取根节点的父节点
+        const parent = root.parent
+        //根节点的父节点是根节点的指针时特殊操作
+        if(parent === this.root){
+            parent.pointer = right
+        }else{
+            //获取根节点在父节点哪个位置
+            const isleft = (root === parent.left) ? true : false
+            //让右节点代替根节点的位置
+            parent[isleft ? 'left' : 'right'] = right
+        }
+        right.parent = parent
+        //让根节点成为右节点的左节点
+        right.left = root
+        root.parent = right
+        //让右节点的左节点成为根节点的右节点
+        root.right = leftOfRight
+        leftOfRight.parent = root
+    }
+    RedBlackTree.prototype.rightRotate = function(root){
+        //获取根节点的左节点
+        const left = root.left
+        //获取左节点的右节点
+        const rightOfLeft = left.right
+        //获取根节点的父节点
+        const parent = root.parent
+        //根节点的父节点是根节点的指针时特殊操作
+        if(parent === this.root){
+            parent.pointer = left
+        }else{
+            //获取根节点在父节点哪个位置
+            const isleft = (root === parent.left) ? true : false
+            //让右节点代替根节点的位置
+            parent[isleft ? 'left' : 'right'] = left
+        }
+        left.parent = parent
+        //让根节点代替左节点的右节点的位置
+        left.right = root
+        root.parent = left
+        //让左节点的右节点成为根节点的左节点
+        root.left = rightOfLeft
+        rightOfLeft.parent = root
+    }
+    //层次遍历
+    RedBlackTree.prototype.levelTraversal = function(handler){
+        //创建队列来辅助层次遍历
+        const queue = new Queue()
+        //将根节点压入队列
+        queue.enqueue(this.root.pointer)
+        //队列空时
+        while(queue.size() > 0){
+            const current = queue.dequeue()
+            if(current===null) return
+            if(current.isNIL) continue
+            handler(current.key)
+            queue.enqueue(current.left)
+            queue.enqueue(current.right)
+        }
+        
+    }
+}
+```
 ### 关于红黑树的删除问题
 * 二叉搜索树的删除操作比较
 * 红黑树的插入操作也比较复杂
