@@ -1758,3 +1758,291 @@ function Graph(){
         })
     }
 ```
+## 大O表示法
+* 计算机中粗略估计算法效率的方法被称为大O表示法
+* 在数据量变化时，算法的效率会随之发生改变
+* 通常使用算法速度是如果跟着数据量变化的来表示算法的性能
+### 常见的大O表示形式
+* O(1)  常数的
+* O(log(n))     对数的
+* O(n)          线性的
+* O(nlog(n))    线性和对数乘积
+* O(n<sup>2</sup>) 平方的
+* O(2<sup>n</sup>) 指数的
+### 推导大O表示法
+1. 从常量1代替所有加法中的常量
+2. 只保留最高次数项
+3. 去掉最高次数项的常数首项
+## 排序算法
+* 笔试中经常出现
+* 一旦将数据放置在某个数据结构中存储起来后很有可能根据需求对数据进行排序
+* 这里介绍五种排序算法:
+  * 简单排序
+    * 冒泡排序
+    * 选择排序
+    * 插入排序
+  * 复杂排序
+    * 希尔排序
+    * 快速排序
+### 排序前的准备工作
+* 为了方便排序算法的测试先封装一个列表结构，在列表中实现各种排序算法
+```javascript
+function ArrList(){
+    this.arr = []
+    ArrList.prototype.insert = function(v){
+        this.arr.push(v)
+    }
+    ArrList.prototype.toString = function(){
+        return this.arr.join(' ')
+    }
+    ArrList.prototype.swap = function(p1, p2){
+        let temp = this.arr[p1]
+        this.arr[p1] = this.arr[p2]
+        this.arr[p2] = temp
+    }
+}
+```
+### 冒泡排序
+* 效率最低但最简单的算法
+#### 算法示意图
+![](./bubbleSort.png)
+#### 算法思路
+1. 从一个列表的最前端开始
+2. 比较先一个值与后一个值的大小
+3. 如果先一个值大就交换位置
+4. 交换位置后从列表的下一个位置开始继续判断
+5. 循环步骤1-4，次数为n, n的初始值为length-1，每次循环完后n=n-1直到n为0
+6. 循环步骤1-5，次数为列表长度length-1次
+7. 完成排序
+* 每次完成1-5的步骤必定会有一个最大值被移动到列表末端与冒泡动作相似，所以叫冒泡排序
+#### 算法实现
+```javascript
+ArrList.prototype.bubbleSort = function(){
+    for(let j = this.arr.length-1; j > 0; j--){
+        for(let i = 0; i < j; i++){
+            if(this.arr[i] > this.arr[i+1]){
+                this.swap(i, i + 1)
+            }
+        }
+    }
+}
+```
+#### 算法时间复杂度
+* 查找效率O(n<sup>2</sup>)
+* 交换效率O(n<sup>2</sup>)
+### 选择排序
+* 是冒泡排序的一种改进
+* 改善了冒泡排序中即便已经找到最大值后面还会按照冒泡的规则去交换两数的情况
+* 减少了交换代码执行的次数
+#### 算法示意图
+![](./selectionSort.png)
+#### 算法思路
+1. 将数组中第一个值的索引保存到变量index中
+2. 从头到尾遍历数组n(length-1)次，每次遇到当前值大于index指向的值时，将当前值得索引保存到index中
+3. 交换数组位置处于n的值与index指向的值
+4. 重复步骤1-3，n=n-1，依次类推直到n=1
+#### 算法实现
+```javascript
+ArrList.prototype.selectionSort = function(){
+    for(let j = 0; j < this.arr.length-1; j++){
+        //用index保存最小值的索引，初始值是数组第一个值
+        let index = j
+        for(let i = j + 1; i < this.arr.length; i++){
+            //遇到值比index小时将index变成那个值的索引
+            if(this.arr[index] > this.arr[i]){
+                index = i
+            }
+        }
+        //将最小值放在数组最前面
+        this.swap(j, index)
+    }
+}
+```
+#### 算法时间复杂度
+* 查找效率O(n<sup>2</sup>)
+* 交换效率O(n), 优化了冒泡排序的交换次数
+### 插入排序
+* 另一种与冒泡排序完全不同的排序思路
+* 效率是简单排序中最高的
+* 引入了局部有序的概念，从而才使查找次数降低
+#### 算法示意图
+![](./insertionSort.png)
+#### 算法思路
+1. 默认只有一个值时属于局部有序
+2. 索引index指向数组第二个值，此时左边可以认为局部有序
+3. 将index指向的值插入左边局部有序的合理位置，使其仍然局部有序，然后index加一
+4. 重复步骤1-3直到index值为length退出排序
+#### 算法实现
+```javascript
+ArrList.prototype.insertionSort = function(){
+    //从数组第二个值开始遍历，因为第一个值被认为局部有序
+    for(let j = 1; j < this.arr.length; j++){
+        //保存当前分隔有序区域与无序区域的那个值
+        const current = this.arr[j]
+        //从后向前遍历有序区，将用来分隔的值插入有序区合适位置使其仍然有序
+        for(let i = j - 1; i >= 0; i--){
+            //current小于有序区中的当前遍历值时, 将这些值向后移动一格
+            if(current < this.arr[i]){
+                this.arr[i+1] = this.arr[i]
+                //遍历完有序区，有序区第一个值仍然比current大则直接将current放在有序区第一个位置
+                if(i === 0){
+                    this.arr[0] = current
+                }
+            }else{
+                //current大于有序区中的当前遍历值时，则说明找到了待插入位置，插入即可
+                this.arr[i+1] = current
+                break
+            }
+        }
+    }
+}
+```
+#### 算法时间复杂度
+* 交换与查找的时间相加跟前两种排序算法的查找时间相同
+* 查找效率O(n<sup>2</sup>/2)
+* 交换效率O(n<sup>2</sup>/2)
+### 希尔排序
+* 基于插入排序进行改的算法
+* 改善了最后几次在插入排序中需要插入的值需要去遍历局部有序的数组很多次才能找到合适位置的情况
+* 刚发明时首次让排序算法时间复杂度低于O(n<sup>2</sup>)
+#### 算法示意图
+![](./shellSort.png)
+#### 算法思路
+1. 以固定的方式生成一系列gap的数组
+2. 对于每一个gap执行步骤3-4
+3. 以固定的间隔gap来将数组中的数字分组
+4. 使用插入排序来将每组的数字进行排序
+5. 完成排序
+#### 算法实现
+```javascript
+ArrList.prototype.shellSort = function(){
+    //保存间隔
+    let gap = Math.floor(this.arr.length/2)
+    while(gap > 0){
+        //遍历所有的分组
+        for(let k = 0; k < this.arr.length-gap; k++){
+            //对每个分组进行插入排序
+             //从每个分组的第二个数字开始向右遍历,各个数字之间间隔为gap 
+             for(let i = k + gap; i < this.arr.length; i += gap){
+                 //获取当前遍历的数字当做待插入元素
+                 let current = this.arr[i]
+                 //将待插入数字插入部分有序区
+                 for(let a = i - gap; a >= k; a -= gap){
+                     //待插入数字大于部分有序区的数字时则需要将当前部分有序区的数字移向后一个格
+                     if(current < this.arr[a]){
+                         this.arr[a + gap] = this.arr[a]
+                         //如果到了当前分组的第一个数字都没有遇到比current小的,则直接将current赋值给分组的第一个数字
+                         if(a === k){
+                             this.arr[a] = current
+                         }
+                     }else{
+                         //待插入数字大于部分有序区的数字时则到了可插入位置然后插入
+                         this.arr[a + gap] = current
+                         break
+                     }
+                 }
+             }
+        }
+        //每次循环将间隔减少一半
+        gap = Math.floor(gap/2)
+    }
+}
+```
+#### 算法时间复杂度
+* 希尔排序的gap选值会影响算法的时间复杂度
+* 在原始算法中以length/2为开始的gap，之后每次减半直到变成1，最终成为普通的插入排序
+* 最坏的情况下才会到达O(n<sup>2</sup>/2)，其余情况都会小于这个效率
+### 快速排序
+* 快速排序在大多数情况下速度都是高于其他排序的，甚至快于希尔排序
+* 因此快速排序是排序中的最好选择
+#### 算法示意图
+![](./quickSort.png)
+#### 算法思想
+1. 从数组中挑选一个数字
+2. 让数组中其他数字小于它的放在它的左边
+3. 让数组中其他数字大于它的放在它的右边
+4. 分别在左右两边的数组中重复1-3步骤直到任意一边没有数字了停止排序
+#### 快速排序枢纽
+* 在快速排序中充当基准的那个数被称为枢纽
+* 枢纽的选择会很大影响快速排序的效率
+* 通常有以下选择方案:
+  1. 永远选择数组中的第一个数字
+  2. 从数组中随机选择一个数字
+  3. 选择数组中最前，最后，正中三个数字中的中位数
+* 第三种效率是最高也是最常用的
+#### 算法思路
+1. 从数组中选中一个合适的枢纽
+2. 将枢纽与数组中最后一个值交换位置
+3. 使用left与right两个指针分别指向数组的最左边和倒数第二个数(需要判断left是否在right左边)
+5. 使用left与right从当前位置分别向中间遍历数组
+6. 当left遇到比枢纽大的值或者遇到right时停下
+7. right是遇到比枢纽大的值才停下时
+   * 交换left与right指向的值的位置
+8. 如果是left与right相遇才停下时将left或者right指向的值与枢纽交换位置
+9. 重复4-6步骤直到进入步骤7
+10. 对枢纽左边的部分和右边的部分重复1-8步骤
+#### 算法实现
+```javascript
+ArrList.prototype.swap = function(p1, p2){
+    let temp = this.arr[p1]
+    this.arr[p1] = this.arr[p2]
+    this.arr[p2] = temp
+}
+//获取中间数字的索引并将首中尾按小到大的顺序排序
+ArrList.prototype.middleNum = function(first, last){
+    
+    const center = Math.floor((first + last)/2)
+    let middle = first
+    //冒泡排序
+    if(this.arr[first] > this.arr[center]){
+        this.swap(first, center)
+    }
+    if(this.arr[center] > this.arr[last]){
+        this.swap(center, last)
+    }
+    if(this.arr[first] > this.arr[center]){
+        this.swap(first, center)
+    }
+    return center
+}
+ArrList.prototype.quickSort = function(){
+    const left = 0
+    const right = this.arr.length-1
+    //快速排序递归入口
+    this.quick(left, right)
+}
+ArrList.prototype.quick = function(left, right){
+    //如果left与right左右顺序有错则退出递归
+    if(left >= right) return
+    //获取中位数索引并将三个数排好序
+    let center = this.middleNum(left, right)
+    //使left指向数组的最左边的位置
+    let l = left
+    //使right指向数组最右边-1的位置,因为中位数无需判断
+    let r = right-1
+    //将中位数与数组最后一个数交换位置，准备对中位数左边的值进行分类
+    this.swap(center, right)
+    //不断循环直到中位数靠左的数字全部分好类
+    while(true){
+        //移动left指针直到指向的值大于中位数
+        while(this.arr[l] < this.arr[right]  && r > l){
+            l++
+        }
+        //移动right指针直到指向的值小于中位数
+        while(this.arr[r] > this.arr[right] && r > l){
+            r--
+        }
+        //如果是left与right位置仍然正确才交换left指向的值与right指向的值
+        if(l < r){
+            this.swap(l, r)
+        }else{
+            break
+        }
+    }
+    //让中位数回到正确的位置
+    this.swap(right, l)
+    //对此时中位数的左右分别递归分类
+    this.quick(left, l-1)
+    this.quick(l+1, right)
+}
+```
