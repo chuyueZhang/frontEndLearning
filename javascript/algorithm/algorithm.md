@@ -123,3 +123,305 @@ function sum(nums, target){
      symmetric(root.left, root.right)
  }
 ```
+## 合并二叉树
+### 问题描述
+>给定两个二叉树，想象当你将它们中的一个覆盖到另一个上时，两个二叉树的一些节点便会重叠。
+
+你需要将他们合并为一个新的二叉树。合并的规则是如果两个节点重叠，那么将他们的值相加作为节点合并后的新值，否则不为 NULL 的节点将直接作为新二叉树的节点。
+### 示例
+* 输入
+```
+	Tree 1                     Tree 2                  
+          1                         2                             
+         / \                       / \                            
+        3   2                     1   3                        
+       /                           \   \                      
+      5                             4   7           
+```
+* 输出
+```
+	     3
+	    / \
+	   4   5
+	  / \   \ 
+	 5   4   7
+```
+### 根本思路
+* 本质是遍历
+* 将T1变成新生成的树结构，最后返回T1
+### 思路
+1. 递归判断T1的左子树与T2的左子树
+2. 递归判断T1的右子树与T2的右子树
+   1. 在递归中如果T1为null直接返回T2
+   2. 在递归中如果T2为null直接返回T1
+   3. 如果T1的左子树或右子树为null则将T2的左子树或右子树直接赋值给T1同时自己置为null(由于这一步存在,在递归中T1不可能为null)
+   4. 返回T1
+### 实现
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} t1
+ * @param {TreeNode} t2
+ * @return {TreeNode}
+ */
+var mergeTrees = function(t1, t2) {
+    function preTraversal(t1,t2){
+        if(t1 === null){
+            return t2
+        }
+        if(t2 === null){
+            return t1
+        }
+        t1.val += t2.val
+        if(t1.left === null){
+            t1.left = t2.left
+            t2.left = null
+        }
+        if(t1.right === null){
+            t1.right = t2.right
+            t2.right = null
+        }
+        preTraversal(t1.left,t2.left)
+        preTraversal(t1.right,t2.right)
+        return t1
+    }
+    return preTraversal(t1, t2)
+};
+```
+## 汉明距离
+### 问题描述
+>两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
+
+给出两个整数 x 和 y，计算它们之间的汉明距离。
+### 示例
+* 输入
+```
+x = 1, y = 4   
+```
+* 输出
+```
+2
+```
+* 解释
+```
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+```
+### 思路
+1. 对两个数字进行位异或操作，这个值的二进制位值为1则说明x,y的同一位置二进制值不同
+2. 除以2取余数，当余数为1时说明当前二进制值为1, 将这个数等于自身除以2
+3. 将余数为1的次数统计起来就是最终结果
+### 实现
+```javascript
+/**
+ * @param {number} x
+ * @param {number} y
+ * @return {number}
+ */
+var hammingDistance = function(x, y) {
+    let length = x^y
+    let counter = 0
+    while(length > 0){
+        if((length%2) === 1) counter++
+        length = Math.floor(length/2)
+    }
+    return counter
+};
+```
+## 翻转二叉树
+### 问题描述
+>翻转一棵二叉树。
+### 示例
+* 输入
+```
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+```
+* 输出
+```
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+```
+### 思路
+1. 如果当前节点为null直接返回当前节点
+2. 声明临时变量保存左子树
+3. 将左子树的指针指向右子树
+4. 将右子树的指针指向临时变量
+5. 以当前节点的左子树为参数进行递归
+6. 以当前节点的右子树为参数进行递归
+7. 返回当前节点
+### 实现
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function(root) {
+    if(root === null) return root
+    const temp = root.left
+    root.left = root.right
+    root.right = temp
+    invertTree(root.left)
+    invertTree(root.right)
+    return root
+};
+```
+## 二叉树的最大深度
+### 问题描述
+>给定一个二叉树，找出其最大深度。
+
+二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+
+说明: 叶子节点是指没有子节点的节点。
+### 示例
+* 输入
+```
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+* 输出
+```
+3
+```
+### 思路
+1. 判断当前节点root是不是null，是则直接返回
+2. 将root与当前深度deep当做参数开始递归
+   1. 如果当前节点不是null，深度deep++，否则直接返回deep
+   2. 分别保存递归左子树与递归右子树返回的值
+   3. 返回两者之间较大的值
+3. 返回递归函数最终的返回值
+### 实现
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    function find(root, deep){
+        if(root!==null){
+            deep++
+            const v1 = find(root.left, deep)
+            const v2 = find(root.right, deep)
+            if(v1 > v2) return v1
+            return v2
+        }else{
+            return deep
+        }
+    }
+    let deep = 0
+    if(root === null) return deep
+    return find(root, deep)
+};
+```
+## 反转链表
+### 问题描述
+>反转一个单链表。
+### 示例
+* 输入
+```
+1->2->3->4->5->NULL
+```
+* 输出
+```
+5->4->3->2->1->NULL
+```
+### 递归
+#### 思路
+1. 因为链表最后一定指向null所以先保存head的next为now再让head指向null
+2. 以head与now为参数开始递归
+   1. 如果now为null则直接返回head
+   2. 保存now的next为next
+   3. 将now的next指向head
+   4. 以now与next为参数重复递归
+3. 返回递归的返回值
+#### 实现
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+    function reverse(head, now){
+        if(now === null) return head
+        const next = now.next
+        now.next = head
+        return reverse(now, next)
+    }
+    if(head === null) return head
+    const next = head.next
+    head.next = null
+    return reverse(head, next)
+};
+```
+### 迭代
+#### 思路
+1. 单向链表末尾一定指向null因此先用now保存head的next再让head的next指向null
+2. 进入循环直到now的值为null时退出循环
+   1. 使用next保存now的next
+   2. 让now的next指向head
+   3. 使head变成现在的now
+   4. now变成变成现在的next
+3. 返回head
+#### 实现
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+    if(head === null) return head
+    let now = head.next
+    head.next = null
+    while(now !== null){
+            let next = now.next
+            now.next = head
+            head = now
+            now = next 
+    }
+    return head
+};
+```
