@@ -1368,6 +1368,17 @@ DOM范围
         setEnd()
             传入两个参数，第一个参数是参照节点，第二个参数是偏移量
             参照节点会被当做endContainer,偏移量会变成endOffset
+    创建范围之后可以使用以下方法对选中内容进行操作
+        deleteContents()
+            将选中的内容从文档中删除
+        extractContents()
+            将选中的内容从文档中提取出来并作为返回值返回
+        cloneContents()
+            拷贝一份选中的内容并作为返回值返回
+        insertNode()
+            将一个节点插入到范围的最开始处
+        surroundContents()
+            将范围内容插入到这个节点之内
 操作样式
     在css的属性中如果有用-来间接的情况，在style需要使用驼峰命名法来修改属性名从而设置或者读取对应的样式
     1.style
