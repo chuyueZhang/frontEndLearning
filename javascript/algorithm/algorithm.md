@@ -357,13 +357,13 @@ var maxDepth = function(root) {
 ```
 ### 递归
 #### 思路
-1. 因为链表最后一定指向null所以先保存head的next为now再让head指向null
-2. 以head与now为参数开始递归
-   1. 如果now为null则直接返回head
-   2. 保存now的next为next
-   3. 将now的next指向head
-   4. 以now与next为参数重复递归
-3. 返回递归的返回值
+1. 反转链表需要从最深处的节点开始，因此要先递归再操作
+2. 假设链表中某个节点Kn之后的节点都反转完成，从kn开始反转要进行以下操作
+   1. 如果当前节点是空直接返回反转链表头
+   2. 如果当前节点的下一个节点是空也返回反转链表头
+   3. 将kn-1.next.next = kn-1 将kn指向前一个节点
+   4. kn-1 = null   将kn前一个节点的next置为null，防止在最终反转的链表的最后一个节点会产生小循环
+   5. 将保存好的反转链表的链表头返回
 #### 实现
 ```javascript
 /**
@@ -378,16 +378,11 @@ var maxDepth = function(root) {
  * @return {ListNode}
  */
 var reverseList = function(head) {
-    function reverse(head, now){
-        if(now === null) return head
-        const next = now.next
-        now.next = head
-        return reverse(now, next)
-    }
-    if(head === null) return head
-    const next = head.next
+    if(head === null || head.next === null) return head
+    const p = reverseList(head.next)
+    head.next.next = head
     head.next = null
-    return reverse(head, next)
+    return p
 };
 ```
 ### 迭代
@@ -423,5 +418,102 @@ var reverseList = function(head) {
             now = next 
     }
     return head
+};
+```
+## 合并两个有序链表
+### 问题描述
+>将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+### 示例
+* 输入
+```
+1->2->4, 1->3->4
+```
+* 输出
+```
+1->1->2->3->4->4
+```
+### 递归
+#### 思路
+1. 将一个递归函数认为是一次正确的合并
+2. 如果l1的值小于l2的值则将l1的下一个节点与l2合并
+3. 否则将l2的下一个节点与l1合并
+4. 当l1是null时直接返回当前l2指向的那个节点
+5. 当l2是null时直接返回当前l1指向的那个节点
+#### 实现
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+        if(l1 === null){
+            return l2
+        }
+        if(l2 === null){
+            return l1
+        }
+        if(l1.val <= l2.val){
+            l1.next = mergeTwoLists(l1.next, l2)
+            return l1
+        }else{
+            l2.next = mergeTwoLists(l1, l2.next)
+            return l2
+        }
+};
+```
+### 迭代
+#### 思路
+1. 创建一个新的节点prehead方便保存最终链表的头部，val可以任意
+2. 声明prev来保存当前迭代将要插入在后面的前一个节点，初始值是prehead
+3. 比较l1与l2
+   1. l1值大则将l1插入prev的后面，让prev指向当前l1，l1赋值为l1的next那个节点
+   2. l2值大则将l2插入到prev的后面，让prev指向当前l2，l2赋值为l2的next那个节点
+4. 当l1为空则将剩余l2全部插入到prev后面
+5. 当l2为空则将剩余l1全部插入到prev后面
+6. 返回prehead的下一个节点，因为原prehead指向的节点是自己创建的，没有意义
+#### 实现
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+    const prehead = new ListNode(-1)
+    let prev = prehead
+    while(true){
+        if(l1 === null){
+            prev.next = l2
+            break
+        }
+        if(l2 === null){
+            prev.next = l1
+            break
+        }
+        if(l1.val <= l2.val){
+            prev.next = l1
+            l1 = l1.next
+            prev = prev.next
+        }else{
+            prev.next = l2
+            l2 = l2.next
+            prev = prev.next
+        }
+    }
+    return prehead.next
 };
 ```
