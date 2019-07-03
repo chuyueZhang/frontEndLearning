@@ -1379,6 +1379,48 @@ DOM范围
             将一个节点插入到范围的最开始处
         surroundContents()
             将范围内容插入到这个节点之内
+        collapse()
+            可以将选中的范围进行折叠，使范围起点与终点都指向同一个位置
+            传入一个布尔值作参数，true表示折叠到原范围的起点，false表示折叠到原范围的终点
+        compareBoundaryPoints()
+            传入两个参数，第一个参数是需要比较哪两个点的一个常量，值可以是Range.START_TO_START,Range.START_TO_END,Range.END_TO_START,Range.END_TO_END
+            第二个参数是需要比较的范围，如果调用这个方法的范围与传入的范围的需要比较的点是前者在前则返回-1，相同返回0，前者在后则返回1
+        detach()
+            在使用完范围后最好使用此方法来使范围从文档中分离，然后再删除引用，方便垃圾回收机制清理
+IE8及以下的文本范围
+    创建文本范围
+        在input，button，textarea，body等几个元素可以使用createTextRange来创建文本节点
+    选取文本范围
+        findText()
+            传入一个字符串参数，如果找到了对应的范围则返回值为true否则为false同时让范围包围这段文本
+        moveToElementText()
+            传入一个DOM节点，让范围包含这个节点的文本信息与标签信息，与selectNode作用类似
+        move()
+        moveStart()    
+        moveEnd()
+        expand()
+            这些方法都传入两个参数，第一个参数是移动单位，第二个参数是移动单位的数量
+            移动单位可以是以下值
+                character：逐个字符移动
+                word：逐个单词移动
+                sentence： 逐个句子(一系列以叹号问号句号结尾的字符)移动
+                textedit：移动到当前选区开始或结束的位置
+        move会将范围折叠
+        expand会将部分文本的范围变成完整文本的范围
+    修改范围内的内容
+        有text与pasteHTML()
+        前者改变文本，后者可以包括标签
+    折叠范围
+        与其他浏览器相同使用collapse()来折叠范围
+        但是没有collapsed属性来判断是否折叠，但是可以使用boundingWidth属性来判断范围宽度是否为0
+    比较范围
+        compareEndPoints()
+            用法与作用同compareBoundaryPoints类似
+            第一个参数是字符串，表示需要比较哪两个点如: StartToEnd等格式
+            第二个参数是待比较的范围
+    复制范围
+        duplicate()
+            作用与cloneContents()相同
 操作样式
     在css的属性中如果有用-来间接的情况，在style需要使用驼峰命名法来修改属性名从而设置或者读取对应的样式
     1.style
@@ -1764,12 +1806,50 @@ json
             change  对于input与textarea来说，失去焦点且值改变时触发，对select来说，切换就触发
             blur    与change事件的先后顺序不定，不能提前假定某个事件一定先触发
             focus
-    文本框脚本
-        在表单中有两种文本框text与textarea，两者特性大致上是相同的，但是仍然有些重要的区别
-            text可以设置maxlength来指定文本框最大能够输入的字符数量，size指定能够显示的最大字符数量即文本框大小，value指定文本初始值
-            textarea的文本初始值只能在<textarea></textarea>之间设定，文本框大小通过rows和cols来设置，不能设置最多能接受的字符数量
-        对于这两种文本框都最好使用value值来设定文本内容而不要使用标准DOM方法:
-            用setAttribute设置input的value
-            获取第一个子节点修改textarea的value
+文本框脚本
+    在表单中有两种文本框text与textarea，两者特性大致上是相同的，但是仍然有些重要的区别
+        text可以设置maxlength来指定文本框最大能够输入的字符数量，size指定能够显示的最大字符数量即文本框大小，value指定文本初始值
+        textarea的文本初始值只能在<textarea></textarea>之间设定，文本框大小通过rows和cols来设置，不能设置最多能接受的字符数量
+    对于这两种文本框都最好使用value值来设定文本内容而不要使用标准DOM方法:
+        用setAttribute设置input的value
+        获取第一个子节点修改textarea的value
+    两个文本框都支持select方法，可以用来全选文本
+    相对应的两个文本框都会触发select事件，除了IE8及以下的浏览器会在选中并释放鼠标触发，IE在选中时就触发
+    HTML5中还支持部分选中文本的api: setSelectionRange(start, end)接收两个参数表示偏移量
+    在IE8及以下想要部分选中需要使用文本范围的技术
+    剪切板操作
+        clipboardData对象
+            在IE中是window属性，其他浏览器中是event的属性并且只有触发剪切板相关事件才能访问
+        剪切板事件
+            beforecopy
+            copy
+            beforepaste
+            paste
+            beforecut
+            cut
+            其中before相关的事件在IE中只要显示了文本相关的上下文菜单都会被触发，在其他浏览器中是在copy,paste,cut等事件触发前触发
+        剪切板方法
+            setData()
+                第一个参数在普通浏览器中是MIME类型但在IE是text或URL
+                第二个参数是想要复制进剪切板的内容
+            getData()
+                第一个参数在普通浏览器中是MIME类型但在IE是text或URL，但是对普通浏览器使用text也会被识别成text/plain
+            clearData()
+                清除剪切板中的数据
+选择框脚本
+    通过select元素创建的是选择框，除了表单字段中列举的属性和方法它还具有以下属性和方法：
+        add(new, ref)   向控件中插入new，位置在ref之前
+        nultiple        布尔值，表示表单是否允许多选
+        options         控件中所有option的HTMLCollection
+        remove          移除给定位置的选项
+        selectedIndex   可读写number，基于0的选中项的索引，没有选中项则为-1，对于支持多选的只保留第一个选中项的索引，被赋值是指定项被选中其他项会取消选中
+        size            选择框中可见的行数，与等价于HTML中的size属性
+    每个option都有以下属性:
+        index           当前选项在option中的索引
+        label           当前选项的label
+        selected        可读写布尔值，当前选项是否被选中，对单选
+        text            文本节点的内容
+        value           value值
+
 
 
