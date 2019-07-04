@@ -395,4 +395,55 @@ ct.fillText('aaa', canvas.width/2 - a/2, canvas.height/2 - 60/2)
     * typeMismatch
     * patternMismatch
     * customError 当自定义验证触发时为true
-
+## 跨文档传输
+* 在H5中可以通过postMessage这个api在不同域之间进行消息传递，对于XDM来说，能够跨域的只有iframe与由当前页面弹出的页面
+* postMessage(msg, domain)
+  * 第一个参数是想要传递的数据，为了兼容性最好只是字符串，想要传递对象时使用JSON代替
+  * 第二个参数为表示消息的接收方来自于哪个域，当参数为\*时可以传递给任何域的文档但不推荐
+* 接收到XDM消息时会触发文档中window对象的message事件, 这个事件以异步的方式传递因此从发送到接收存在延迟, onmessage的事件对象有以下三个属性
+  * data
+    * 接收到的数据
+  * source
+    * 发送数据的域的window代理，只能使用其中的postMessage方法来向其发送回复
+  * origin
+    * 发送数据的域的字符串
+## 原生拖拽
+* 对于IE10及以上还有其他浏览器对目前的原生拖拽功能大部分已经支持
+* 默认情况下图像，链接和文本是可以拖拽的，其他元素可以拖拽，但是可以通过给这些元素设置draggable为true来启动它们的拖拽功能
+* 当一个元素进入拖拽状态直到被释放的时候会依次触发下列三个事件:
+  1. dragstart  拖拽开始
+  2. drag       拖拽中
+  3. dragend  拖拽结束
+* 当一个元素成为放置元素，即拖拽元素移入它内部时会依次触发下列事件:
+  1. dragenter  被拖拽元素进入放置元素时
+  2. dragover 被拖拽元素在放置元素内移动时
+  3. drop/dragleave 被拖拽元素被丢入放置元素中或者移出放置元素
+* 在所有拖拽事件被触发时，它们的事件对象会出现dataTransfer属性
+* dataTransfer包含下列方法与属性
+  * setData(type, str)
+    * type在IE老版本中是text或者URL字符串，在H5规范中可以是所有MIME类型，考虑到兼容性text会被映射成text/plain，URL会被映射成text/url-list
+    * str是一个需要保存的字符串
+    * 此api可以为每一种MIME类型保存一个字符串但会在drag相关事件结束时全部销毁
+  * getData(type)
+    * 是一个需要提取的字符串类型，text或者URL，规则同setData的type属性
+  * dropEffect
+    * 用来表示拖拽元素目前能够执行的放置行为，只能在dragenter事件触发时设置，具有以下值:
+      * none  不要触发任何行为
+      * move  要触发移动行为
+      * copy  要触发复制行为
+      * link  要触发打开链接的行为
+    * 以上任何值都能决定拖拽元素被移动到放置元素时光标显示的样子
+  * effectAllowed
+    * 用来表示拖拽元素允许触发的放置行为，只能在dragstart事件触发时设置, 具有以下值:
+      * uninitialized 没有给拖拽元素设置任何放置行为
+      * none  不允许触发任何放置行为
+      * copy  允许触发复制行为
+      * link  允许触发打开链接的行为
+      * move  允许触发移动行为
+      * copyLink  允许触发复制与打开链接的行为
+      * copyMove  允许触发复制与移动的行为
+      * linkMove  允许触发打开链接与移动的行为
+      * all 允许触发任何行为
+  * setDragImage(ele, x, y)
+    * 指定一副图像变成拖动时产生的副本样子
+    * ele可以是元素也可以是图像，如果是普通元素则显示渲染后的结果，否则直接显示图片
