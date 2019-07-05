@@ -447,3 +447,17 @@ ct.fillText('aaa', canvas.width/2 - a/2, canvas.height/2 - 60/2)
   * setDragImage(ele, x, y)
     * 指定一副图像变成拖动时产生的副本样子
     * ele可以是元素也可以是图像，如果是普通元素则显示渲染后的结果，否则直接显示图片
+  * addElement(ele)
+    * 为拖动操作添加一个元素，添加这个元素只影响数据，不会影响拖动操作时页面元素的外观, 只有火狐支持
+  * types
+    * 当前保存的数据类型，返回的是一个字符串的数组
+## 历史状态管理
+* 过去可以通过hashchange事件来管理状态的变化
+* H5通过更新history来管理状态的变化，通常是pushState, replaceState
+  * pushState(obj, sbj, url)
+    * 第一个参数是状态对象
+    * 第二个参数是新状态的标题，目前没有浏览器实现，可以是空字符串
+    * 第三个参数是可选的相对url
+  * replaceState
+    * 参数与上个api相同，不同在于是更新而非压入
+* 按下回退按钮或者调用history.back等浏览器动作时会触发popstate事件，可以通过访问时间对象的state属性来得到当前状态对象
