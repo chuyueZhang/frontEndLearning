@@ -10,7 +10,7 @@
 * property永远不会同步attribute
   #### 没有修改过property时
   * attribute会同步property
-  #### 没有修改过property时
+  #### 修改过property时
   * attribute不会再同步property
 * 在浏览器中被识别的和用户所操作的都是property
 # H5中的一些小功能
