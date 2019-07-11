@@ -1374,7 +1374,7 @@ DOM范围
         extractContents()
             将选中的内容从文档中提取出来并作为返回值返回
         cloneContents()
-            拷贝一份选中的内容并作为返回值返回
+            拷��一份选中的内容并作为返回值返回
         insertNode()
             将一个节点插入到范围的最开始处
         surroundContents()
@@ -1839,7 +1839,7 @@ json
 选择框脚本
     通过select元素创建的是选择框，除了表单字段中列举的属性和方法它还具有以下属性和方法：
         add(new, ref)   向控件中插入new，位置在ref之前
-        nultiple        布尔值，表示表单是否允许多选
+        multiple        布尔值，表示表单是否允许多选
         options         控件中所有option的HTMLCollection
         remove          移除给定位置的选项
         selectedIndex   可读写number，基于0的选中项的索引，没有选中项则为-1，对于支持多选的只保留第一个选中项的索引，被赋值是指定项被选中其他项会取消选中
@@ -1850,6 +1850,45 @@ json
         selected        可读写布尔值，当前选项是否被选中，对单选
         text            文本节点的内容
         value           value值
-
+错误处理机制
+    try-catch语句
+    finally子语句是可选的，且必定执行，无论catch语句有没有执行
+    当有finally存在时，try与catch中的return会失效
+    错误类型
+        Error
+        EvalError
+        RangeError
+        ReferrenceError
+        SyntaxError
+        TypeError
+        URLError
+        其中，Error是基类型，其他错误类型都继承自该类型
+        当没有把eval当做函数调用时会抛出EvalError错误
+        当超出数组范围或者值不合法时会抛出RangeError
+        当对象找不到时会抛出ReferenceError
+        当eval中执行的代码有语法错误时会抛出SyntaxError，如果在外部有语法错误会直接停止执行一般不会抛出此错误
+        当实际变量类型与预期不一致时会抛出TypeError
+        当使用decodeURL和encodeURL中的url格式错误时会抛出URLError
+    与try-catch相配的还有throw操作符
+        当遇到throw操作符时代码会停止运行，只有当try-catch捕获到时才会继续运行
+        抛出错误类型的实例时能够更加真实的模拟浏览器错误
+    自定义错误
+        通过原型链继承可以自定义错误类型，只要继承自error的对象都会被浏览器当做错误对象处理
+        当自定义错误时需要为新错误类型指定name与message
+JSON
+    JSON.stringify
+        第一个参数是一个JSON对象
+        第二个参数是个过滤数组或者函数，函数的两个形参是key, value, 对于每个key，函数返回值就是最终键值对的值
+        第三个参数是个数字，表示缩进的空格数
+    toJSON
+        每个对象都可以创建toJSON方法，在对这个对象使用JSON.stringify会先调用这个方法获取的返回值再对此进行操作
+    JSON.stringify的处理流程
+        1. 如果第一个参数有toJSON方法就先调用，否则不调用
+        2. 将toJSON的返回值或者第一个参数当做下一步的输入值
+        3. 如果有第二个参数就用来过滤上一步的输出值，如果没有就将结果当做下一步的输入值
+        4. 如果有第三个参数则按照这个值格式化上一步的输出值没有直接将最后的值返回
+    JSON.parse
+        第一个参数是JSON字符串
+        第二个参数是还原函数，有两个形参分别是key跟value，对于每个key，函数返回值就是最终结果的每个键值对中的值
 
 
