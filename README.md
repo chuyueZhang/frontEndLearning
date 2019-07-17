@@ -3,6 +3,7 @@
 * 有一些较大的案例
 * 供自己preview时进行参考
 * 标题中的链接是相关的学习视频，仅供参考，因为笔记里不只有这些内容
+* 由于链接中的网站可能会对跨域请求拦截，所以最稳妥的方式还是右键->复制链接来访问吧XD
 ## javascript
 1. [javascript基础](https://www.bilibili.com/video/av21589800)
 2. [javascript高级](https://www.bilibili.com/video/av27134850)
