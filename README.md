@@ -20,16 +20,16 @@
 1. CSS
    1. CSS
    
-      包含了两个学习的内容分别是[CSS基础](](https://www.bilibili.com/video/av21557880))，[CSS2.1](https://www.bilibili.com/video/av21585880)
+      包含了两个学习的内容分别是[CSS基础](https://www.bilibili.com/video/av21557880)，[CSS2.1](https://www.bilibili.com/video/av21585880)
       
    2. [CSS3](https://www.bilibili.com/video/av21586861)
 2. HTML
-   1. HTML4.1
+   1. [HTML4.1](https://www.bilibili.com/video/av21557880)
    2. [HTML5](https://www.bilibili.com/video/av21588133)
 3. [bootstrap](https://www.bilibili.com/video/av21587498)
-## [nodejs](https://www.bilibili.com/video/av50716000?from=search&seid=13539385795796862632)
-1. nodejs
-2. expressjs
+## node相关
+1. [nodejs](https://www.bilibili.com/video/av50716000?from=search&seid=13539385795796862632)
+2. [expressjs](https://www.bilibili.com/video/av50716000?from=search&seid=13539385795796862632)
 3. [mongodb](https://www.bilibili.com/video/av27140135)
 ## 自动化构建工具
 1. [grunt](https://www.bilibili.com/video/av27141121)
