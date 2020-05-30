@@ -38,3 +38,4 @@
 3. [webpack](https://www.bilibili.com/video/av27141684)
 ## webpack详解
 [Webpack5实战教程](https://www.bilibili.com/video/BV1e7411j7T5)
+[学习总结的文章链接](https://chuyuezhang.github.io/2020/03/11/webpack%E5%AE%9E%E6%88%98/)
