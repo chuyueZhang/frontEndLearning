@@ -1,0 +1,26 @@
+.bg(){
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 200px;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #aaa;
+    #title{
+        color: white;
+    }
+    #test1{
+        background-image: url(../img/react.png);
+        .bg()
+    }
+    #test2{
+        background-image: url(../img/vue.jpg);
+        .bg()
+    }
+    .grid {
+        display: flex;
+        backface-visibility: visible;
+    }
+}

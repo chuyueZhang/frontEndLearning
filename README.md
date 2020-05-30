@@ -36,3 +36,5 @@
 1. [grunt](https://www.bilibili.com/video/av27141121)
 2. [gulp](https://www.bilibili.com/video/av27141331)
 3. [webpack](https://www.bilibili.com/video/av27141684)
+## webpack详解
+[Webpack5实战教程](https://www.bilibili.com/video/BV1e7411j7T5)

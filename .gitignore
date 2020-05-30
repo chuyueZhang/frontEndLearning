@@ -1,3 +1,4 @@
 #ignore modules needed to be downloaded
 node_modules
+build
 /nodejs/mongodb
