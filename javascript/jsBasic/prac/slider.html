@@ -65,7 +65,7 @@
             dot.style.left = 540/2 - num*18/2 + "px";
             a[0].style.backgroundColor = "black";
             function setA(func){
-                move(ul, (-index * 540) -5, 30, 1, function(){
+                move(ul,"left", (-index * 540) -5, 30, function(){
                     func && func();
                     for(var i = 0; i < a.length; i++){
                         a[i].style.backgroundColor = "";
